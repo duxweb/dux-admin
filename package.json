@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@duxweb/dux-ui": "file:///Volumes/Web/dux-ui",
+    "@duxweb/dux-ui": "file:///Volumes/Web/duxweb/dux-ui",
     "@refinedev/cli": "^2.7.4",
     "@refinedev/core": "^4.28.2",
     "@refinedev/inferencer": "^4.3.2",
@@ -21,7 +21,6 @@
     "react-dom": "^18.0.0",
     "react-i18next": "^11.8.11",
     "react-router-dom": "^6.8.1",
-    "tdesign-react": "^1.1.17",
     "unocss": "^0.53.5"
   },
   "devDependencies": {

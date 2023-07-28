@@ -19,11 +19,10 @@ import { ForgotPassword } from './pages/forgotPassword'
 import { Login } from './pages/login'
 import { Register } from './pages/register'
 
-import { PrimeReactProvider } from 'primereact/api'
-import 'primereact/resources/primereact.min.css'
-import 'primereact/resources/themes/lara-light-indigo/theme.css'
+import { Provider } from '@duxweb/dux-ui'
 import '@unocss/reset/tailwind-compat.css'
 import 'virtual:uno.css'
+import '@duxweb/dux-ui/dist/style.css'
 
 function App() {
   const { t, i18n } = useTranslation()
@@ -35,7 +34,7 @@ function App() {
   }
 
   return (
-    <PrimeReactProvider>
+    <Provider>
       <BrowserRouter>
         <RefineKbarProvider>
           <Refine
@@ -115,7 +114,7 @@ function App() {
           </Refine>
         </RefineKbarProvider>
       </BrowserRouter>
-    </PrimeReactProvider>
+    </Provider>
   )
 }
 
