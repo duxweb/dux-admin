@@ -1,6 +1,6 @@
+// refine
 import { Authenticated, ErrorComponent, GitHubBanner, Refine } from '@refinedev/core'
 import { RefineKbar, RefineKbarProvider } from '@refinedev/kbar'
-
 import routerBindings, {
   CatchAllNavigate,
   DocumentTitleHandler,
@@ -10,6 +10,8 @@ import routerBindings, {
 import dataProvider from '@refinedev/simple-rest'
 import { useTranslation } from 'react-i18next'
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
+
+// components
 import './App.css'
 import { authProvider } from './authProvider'
 import { Layout } from './components/layout'
@@ -19,10 +21,14 @@ import { ForgotPassword } from './pages/forgotPassword'
 import { Login } from './pages/login'
 import { Register } from './pages/register'
 
-import { Provider } from '@duxweb/dux-ui'
+// tdesign
+import { ConfigProvider } from 'tdesign-react/esm'
+import 'tdesign-react/esm/style/index.js'
+import enConfig from 'tdesign-react/es/locale/en_US'
+import cnConfig from 'tdesign-react/es/locale/zh_CN'
+import './theme/theme.css'
 import '@unocss/reset/tailwind-compat.css'
 import 'virtual:uno.css'
-import '@duxweb/dux-ui/dist/style.css'
 
 function App() {
   const { t, i18n } = useTranslation()
@@ -34,7 +40,7 @@ function App() {
   }
 
   return (
-    <Provider>
+    <ConfigProvider globalConfig={cnConfig}>
       <BrowserRouter>
         <RefineKbarProvider>
           <Refine
@@ -114,7 +120,7 @@ function App() {
           </Refine>
         </RefineKbarProvider>
       </BrowserRouter>
-    </Provider>
+    </ConfigProvider>
   )
 }
 

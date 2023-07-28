@@ -6,10 +6,8 @@ import {
   transformerDirectives,
 } from 'unocss'
 
-import { presetDux } from '@duxweb/dux-ui'
-
 export default defineConfig({
-  presets: [presetUno(), presetIcons(), presetTypography(), presetDux()],
+  presets: [presetUno(), presetIcons(), presetTypography()],
   transformers: [transformerDirectives()],
   content: {
     pipeline: {
