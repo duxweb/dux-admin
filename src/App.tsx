@@ -9,7 +9,15 @@ import routerBindings, {
 } from '@refinedev/react-router-v6'
 import dataProvider from '@refinedev/simple-rest'
 import { useTranslation } from 'react-i18next'
-import { HashRouter, Outlet, Route, Routes, useRoutes } from 'react-router-dom'
+import {
+  HashRouter,
+  Outlet,
+  Route,
+  Routes,
+  useRoutes,
+  createHashRouter,
+  RouterProvider,
+} from 'react-router-dom'
 
 // components
 import './App.css'
@@ -29,11 +37,13 @@ import cnConfig from 'tdesign-react/es/locale/zh_CN'
 
 // app
 import { useAppStore } from './stores/app'
-import routes from './config/routes'
+import createCustomerRoutes from './config/routes'
 
 function App() {
   const dark = useAppStore((state) => state.dark)
   document.documentElement.setAttribute('theme-mode', dark ? 'dark' : '')
+
+  const router = createHashRouter(createCustomerRoutes())
 
   const { t, i18n } = useTranslation()
 
@@ -45,86 +55,9 @@ function App() {
 
   return (
     <ConfigProvider globalConfig={cnConfig}>
-      <HashRouter>
-        <RefineKbarProvider>
-          <Refine
-            dataProvider={dataProvider('https://api.fake-rest.refine.dev')}
-            authProvider={authProvider}
-            i18nProvider={i18nProvider}
-            routerProvider={routerBindings}
-            resources={[
-              {
-                name: 'blog_posts',
-                list: '/blog-posts',
-                create: '/blog-posts/create',
-                edit: '/blog-posts/edit/:id',
-                show: '/blog-posts/show/:id',
-                meta: {
-                  canDelete: true,
-                },
-              },
-              {
-                name: 'categories',
-                list: '/categories',
-                create: '/categories/create',
-                edit: '/categories/edit/:id',
-                show: '/categories/show/:id',
-                meta: {
-                  canDelete: true,
-                },
-              },
-            ]}
-            options={{
-              syncWithLocation: true,
-              warnWhenUnsavedChanges: true,
-              projectId: '75z1iv-x6xVpm-suPmVP',
-            }}
-          >
-            {useRoutes(routes)}
-            {/* <Routes>
-              <Route
-                element={
-                  <Authenticated fallback={<CatchAllNavigate to='/login' />}>
-                    <Layout>
-                      <Outlet />
-                    </Layout>
-                  </Authenticated>
-                }
-              >
-                <Route index element={<NavigateToResource resource='blog_posts' />} />
-                <Route path='/blog-posts'>
-                  <Route index element={<BlogPostList />} />
-                  <Route path='create' element={<BlogPostCreate />} />
-                  <Route path='edit/:id' element={<BlogPostEdit />} />
-                  <Route path='show/:id' element={<BlogPostShow />} />
-                </Route>
-                <Route path='/categories'>
-                  <Route index element={<CategoryList />} />
-                  <Route path='create' element={<CategoryCreate />} />
-                  <Route path='edit/:id' element={<CategoryEdit />} />
-                  <Route path='show/:id' element={<CategoryShow />} />
-                </Route>
-                <Route path='*' element={<ErrorComponent />} />
-              </Route>
-              <Route
-                element={
-                  <Authenticated fallback={<Outlet />}>
-                    <NavigateToResource />
-                  </Authenticated>
-                }
-              >
-                <Route path='/login' element={<Login />} />
-                <Route path='/register' element={<Register />} />
-                <Route path='/forgot-password' element={<ForgotPassword />} />
-              </Route>
-            </Routes> */}
-
-            <RefineKbar />
-            <UnsavedChangesNotifier />
-            <DocumentTitleHandler />
-          </Refine>
-        </RefineKbarProvider>
-      </HashRouter>
+      <RefineKbarProvider>
+        <RouterProvider router={router} />
+      </RefineKbarProvider>
     </ConfigProvider>
   )
 }
