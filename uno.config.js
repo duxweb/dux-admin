@@ -5,9 +5,10 @@ import {
   presetUno,
   transformerDirectives,
 } from 'unocss'
+import { presetDux } from './src/theme/preset'
 
 export default defineConfig({
-  presets: [presetUno(), presetIcons(), presetTypography()],
+  presets: [presetUno(), presetIcons(), presetTypography(), presetDux()],
   transformers: [transformerDirectives()],
   content: {
     pipeline: {
@@ -25,10 +26,8 @@ export default defineConfig({
   },
 
   //theme: presetDux().theme,
-  shortcuts: {
-    'text-placeholder': 'text-black/30 dark:text-gray/30',
-  },
+  shortcuts: {},
   screens: {
-    'dark-mode': { raw: '(prefers-color-scheme: dark)' },
+    'dark-mode': { raw: '[theme-mode=dark]' },
   },
 })

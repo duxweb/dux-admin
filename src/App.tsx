@@ -9,7 +9,7 @@ import routerBindings, {
 } from '@refinedev/react-router-v6'
 import dataProvider from '@refinedev/simple-rest'
 import { useTranslation } from 'react-i18next'
-import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
+import { HashRouter, Outlet, Route, Routes, useRoutes } from 'react-router-dom'
 
 // components
 import './App.css'
@@ -26,11 +26,15 @@ import { ConfigProvider } from 'tdesign-react/esm'
 import 'tdesign-react/esm/style/index.js'
 import enConfig from 'tdesign-react/es/locale/en_US'
 import cnConfig from 'tdesign-react/es/locale/zh_CN'
-import './theme/theme.css'
-import '@unocss/reset/tailwind-compat.css'
-import 'virtual:uno.css'
+
+// app
+import { useAppStore } from './stores/app'
+import routes from './config/routes'
 
 function App() {
+  const dark = useAppStore((state) => state.dark)
+  document.documentElement.setAttribute('theme-mode', dark ? 'dark' : '')
+
   const { t, i18n } = useTranslation()
 
   const i18nProvider = {
@@ -41,7 +45,7 @@ function App() {
 
   return (
     <ConfigProvider globalConfig={cnConfig}>
-      <BrowserRouter>
+      <HashRouter>
         <RefineKbarProvider>
           <Refine
             dataProvider={dataProvider('https://api.fake-rest.refine.dev')}
@@ -76,7 +80,8 @@ function App() {
               projectId: '75z1iv-x6xVpm-suPmVP',
             }}
           >
-            <Routes>
+            {useRoutes(routes)}
+            {/* <Routes>
               <Route
                 element={
                   <Authenticated fallback={<CatchAllNavigate to='/login' />}>
@@ -112,14 +117,14 @@ function App() {
                 <Route path='/register' element={<Register />} />
                 <Route path='/forgot-password' element={<ForgotPassword />} />
               </Route>
-            </Routes>
+            </Routes> */}
 
             <RefineKbar />
             <UnsavedChangesNotifier />
             <DocumentTitleHandler />
           </Refine>
         </RefineKbarProvider>
-      </BrowserRouter>
+      </HashRouter>
     </ConfigProvider>
   )
 }

@@ -5,6 +5,11 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [react(), UnoCSS()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
+  },
   css: {
     preprocessorOptions: {
       less: {
