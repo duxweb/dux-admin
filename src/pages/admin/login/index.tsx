@@ -1,7 +1,7 @@
 import { useLogin } from '@refinedev/core'
 import { Form, Input, Button, MessagePlugin, SubmitContext, Alert } from 'tdesign-react/esm'
 import { DesktopIcon, LockOnIcon } from 'tdesign-icons-react'
-import { useAppStore } from '../../stores/app'
+import { useAppStore } from '../../../stores/app'
 import { useState } from 'react'
 
 const { FormItem } = Form
