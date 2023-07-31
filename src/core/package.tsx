@@ -55,7 +55,7 @@ export const createRefine = ({
     children: [
       {
         element: (
-          <Authenticated fallback={<CatchAllNavigate to='/admin/login' />}>
+          <Authenticated fallback={<CatchAllNavigate to='login' />}>
             <Layout>
               <Outlet />
             </Layout>
@@ -77,15 +77,15 @@ export const createRefine = ({
         ),
         children: [
           {
-            path: 'admin/login',
+            path: 'login',
             element: <Login />,
           },
           {
-            path: 'admin/register',
+            path: 'register',
             element: <Register />,
           },
           {
-            path: 'admin/forgot-password',
+            path: 'forgot-password',
             element: <ForgotPassword />,
           },
         ],

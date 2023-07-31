@@ -8,7 +8,16 @@ import {
 import { presetDux } from './src/theme/preset'
 
 export default defineConfig({
-  presets: [presetUno(), presetIcons(), presetTypography(), presetDux()],
+  presets: [
+    presetUno({
+      dark: {
+        dark: '[theme-mode="dark"]',
+      },
+    }),
+    presetIcons(),
+    presetTypography(),
+    presetDux(),
+  ],
   transformers: [transformerDirectives()],
   content: {
     pipeline: {
@@ -27,7 +36,5 @@ export default defineConfig({
 
   //theme: presetDux().theme,
   shortcuts: {},
-  screens: {
-    'dark-mode': { raw: '[theme-mode=dark]' },
-  },
+  screens: {},
 })

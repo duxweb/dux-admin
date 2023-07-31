@@ -1,22 +1,30 @@
-import { useBreadcrumb } from "@refinedev/core";
-import { Link } from "react-router-dom";
+import { useBreadcrumb } from '@refinedev/core'
+import { Link } from 'react-router-dom'
+import { Breadcrumb as TdBreadcrumb } from 'tdesign-react'
+
+const { BreadcrumbItem } = TdBreadcrumb
 
 export const Breadcrumb = () => {
-  const { breadcrumbs } = useBreadcrumb();
+  const { breadcrumbs } = useBreadcrumb()
 
   return (
-    <ul className="breadcrumb">
-      {breadcrumbs.map((breadcrumb) => {
+    <TdBreadcrumb maxItemWidth='200px' separator={<div className='i-tabler:chevron-right'></div>}>
+      <BreadcrumbItem>
+        <Link to='/admin'>
+          <div className='i-tabler:home h-4 w-4'></div>
+        </Link>
+      </BreadcrumbItem>
+      {breadcrumbs.map((breadcrumb, index) => {
         return (
-          <li key={`breadcrumb-${breadcrumb.label}`}>
+          <BreadcrumbItem key={index}>
             {breadcrumb.href ? (
               <Link to={breadcrumb.href}>{breadcrumb.label}</Link>
             ) : (
-              <span>{breadcrumb.label}</span>
+              breadcrumb.label
             )}
-          </li>
-        );
+          </BreadcrumbItem>
+        )
       })}
-    </ul>
-  );
-};
+    </TdBreadcrumb>
+  )
+}

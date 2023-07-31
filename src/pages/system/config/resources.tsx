@@ -1,7 +1,14 @@
-import { App } from '@/src/core/helper'
+import { App } from '@/core/helper'
 
 export const adminResources = (app: App) => {
   app.addResources([
+    {
+      name: 'index',
+      list: 'index',
+      meta: {
+        label: 'Dashboard',
+      },
+    },
     {
       name: 'blog_posts',
       list: 'blog-posts',

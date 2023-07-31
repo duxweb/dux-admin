@@ -103,6 +103,7 @@ interface DuxTheme extends Theme {
 export const presetDux = (): Preset<DuxTheme> => {
   return {
     name: 'dux-theme',
+
     theme: {
       colors: {
         brand: {
@@ -125,7 +126,7 @@ export const presetDux = (): Preset<DuxTheme> => {
           'light-hover': 'var(--td-brand-color-2)',
         },
         warning: {
-          DEFAULT: 'var(--td-brand-color-5)',
+          DEFAULT: 'var(--td-warning-color-5)',
           1: 'var(--td-warning-color-1)',
           2: 'var(--td-warning-color-2)',
           3: 'var(--td-warning-color-3)',
@@ -144,7 +145,7 @@ export const presetDux = (): Preset<DuxTheme> => {
           'light-hover': 'var(--td-warning-color-2)',
         },
         success: {
-          DEFAULT: 'var(--td-brand-color-5)',
+          DEFAULT: 'var(--td-success-color-5)',
           1: 'var(--td-warning-color-1)',
           2: 'var(--td-warning-color-2)',
           3: 'var(--td-warning-color-3)',
@@ -163,40 +164,40 @@ export const presetDux = (): Preset<DuxTheme> => {
           'light-hover': 'var(--td-warning-color-2)',
         },
         error: {
-          DEFAULT: 'var(--td-brand-color-6)',
-          1: 'var(--td-warning-color-1)',
-          2: 'var(--td-warning-color-2)',
-          3: 'var(--td-warning-color-3)',
-          4: 'var(--td-warning-color-4)',
-          5: 'var(--td-warning-color-5)',
-          6: 'var(--td-warning-color-6)',
-          7: 'var(--td-warning-color-7)',
-          8: 'var(--td-warning-color-8)',
-          9: 'var(--td-warning-color-9)',
-          10: 'var(--td-warning-color-10)',
-          hover: 'var(--td-warning-color-5)',
-          focus: 'var(--td-warning-color-2)',
-          active: 'var(--td-warning-color-7)',
-          disabled: 'var(--td-warning-color-3)',
-          light: 'var(--td-warning-color-1)',
-          'light-hover': 'var(--td-warning-color-2)',
+          DEFAULT: 'var(--td-error-color-6)',
+          1: 'var(--td-error-color-1)',
+          2: 'var(--td-error-color-2)',
+          3: 'var(--td-error-color-3)',
+          4: 'var(--td-error-color-4)',
+          5: 'var(--td-error-color-5)',
+          6: 'var(--td-error-color-6)',
+          7: 'var(--td-error-color-7)',
+          8: 'var(--td-error-color-8)',
+          9: 'var(--td-error-color-9)',
+          10: 'var(--td-error-color-10)',
+          hover: 'var(--td-error-color-5)',
+          focus: 'var(--td-error-color-2)',
+          active: 'var(--td-error-color-7)',
+          disabled: 'var(--td-error-color-3)',
+          light: 'var(--td-error-color-1)',
+          'light-hover': 'var(--td-error-color-2)',
         },
         gray: {
           DEFAULT: 'var(--td-gray-color-7)',
-          1: 'var(--td-warning-color-1)',
-          2: 'var(--td-warning-color-2)',
-          3: 'var(--td-warning-color-3)',
-          4: 'var(--td-warning-color-4)',
-          5: 'var(--td-warning-color-5)',
-          6: 'var(--td-warning-color-6)',
-          7: 'var(--td-warning-color-7)',
-          8: 'var(--td-warning-color-8)',
-          9: 'var(--td-warning-color-9)',
-          10: 'var(--td-warning-color-10)',
-          11: 'var(--td-warning-color-10)',
-          12: 'var(--td-warning-color-10)',
-          13: 'var(--td-warning-color-10)',
-          14: 'var(--td-warning-color-10)',
+          1: 'var(--td-gray-color-1)',
+          2: 'var(--td-gray-color-2)',
+          3: 'var(--td-gray-color-3)',
+          4: 'var(--td-gray-color-4)',
+          5: 'var(--td-gray-color-5)',
+          6: 'var(--td-gray-color-6)',
+          7: 'var(--td-gray-color-7)',
+          8: 'var(--td-gray-color-8)',
+          9: 'var(--td-gray-color-9)',
+          10: 'var(--td-gray-color-10)',
+          11: 'var(--td-gray-color-11)',
+          12: 'var(--td-gray-color-12)',
+          13: 'var(--td-gray-color-13)',
+          14: 'var(--td-gray-color-14)',
         },
       },
       boxShadow: {
@@ -229,11 +230,16 @@ export const presetDux = (): Preset<DuxTheme> => {
             disabled: 'var(--td-text-color-disabled)',
             anti: 'var(--td-text-color-anti)',
           }
-          if (rules[c]) {
-            console.log(c)
-            return { color: rules[c] } as CSSObject
+          if (rules[c]) return { color: rules[c] } as CSSObject
+          if (theme.colors[c]) {
+            return {
+              color:
+                typeof theme.colors[c] === 'string'
+                  ? theme.colors[c]
+                  : (theme.colors[c] as Record<string, string>).DEFAULT,
+            } as CSSObject
           }
-          if (theme.colors[c]) return { color: theme.colors[c] } as CSSObject
+          return
         },
       ],
       [
