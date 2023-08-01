@@ -1,4 +1,7 @@
 {
+  "common": {
+    "search": "搜索"
+  },
   "pages": {
     "login": {
       "title": "登录您的账户",

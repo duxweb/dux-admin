@@ -1,4 +1,7 @@
 {
+  "common": {
+    "search": "Search"
+  },
   "pages": {
     "login": {
       "title": "Sign in to your account",

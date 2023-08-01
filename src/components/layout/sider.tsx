@@ -32,7 +32,7 @@ const MenuItem = ({ name, icon, active }: MenuItemProps) => {
 
 const Sider = () => {
   return (
-    <div className='fixed bottom-0 left-0 top-14 w-16 flex flex-none flex-col border-r border-gray-4 bg-container'>
+    <div className='fixed bottom-0 left-0 top-14 w-16 flex flex-none flex-col border-r border-gray-4 bg-container dark:border-gray-10'>
       <ul className='mt-10 flex flex-1 flex-col items-center gap-3 p-2 text-secondary'>
         <MenuItem name='Home' icon='i-tabler:home' active />
         <MenuItem name='Home' icon='i-tabler:message-circle-2' />

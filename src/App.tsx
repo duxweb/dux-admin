@@ -14,6 +14,10 @@ import cnConfig from 'tdesign-react/es/locale/zh_CN'
 import { useAppStore } from './stores/app'
 import { AppProvider } from './core/app'
 
+// echarts
+import { registerCharts } from './theme/echarts'
+registerCharts()
+
 function App() {
   const dark = useAppStore((state) => state.dark)
   document.documentElement.setAttribute('theme-mode', dark ? 'dark' : '')

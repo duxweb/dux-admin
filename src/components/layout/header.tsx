@@ -1,5 +1,5 @@
-import { PropsWithChildren } from 'react'
-import { useSetLocale } from '@refinedev/core'
+import { PropsWithChildren, useEffect } from 'react'
+import { useSetLocale, useTranslate, useGetLocale } from '@refinedev/core'
 import { Avatar, Dropdown, Button, DropdownOption, Radio } from 'tdesign-react'
 import { TranslateIcon, SearchIcon } from 'tdesign-icons-react'
 import { useAppStore } from '@/stores/app'
@@ -18,30 +18,32 @@ const User = () => {
 
 const Lang = () => {
   const changeLanguage = useSetLocale()
+  const locale = useGetLocale()
+  console.log('lang', locale())
   const options: DropdownOption[] = [
     {
+      value: 'en',
       content: 'English',
       prefixIcon: <div>🇬🇧</div>,
     },
     {
+      value: 'zh',
       content: '中文',
       prefixIcon: <div>🇨🇳</div>,
     },
   ]
-  console.log(options)
+
   return (
-    <>
-      <Dropdown
-        options={options}
-        onClick={(data) => {
-          changeLanguage(data.value as string)
-        }}
-      >
-        <Button variant='text' shape='circle'>
-          <TranslateIcon />
-        </Button>
-      </Dropdown>
-    </>
+    <Dropdown
+      options={options}
+      onClick={(data) => {
+        changeLanguage(data.value as string)
+      }}
+    >
+      <Button variant='text' shape='circle'>
+        <TranslateIcon />
+      </Button>
+    </Dropdown>
   )
 }
 
@@ -72,14 +74,17 @@ const Item = ({ children }: PropsWithChildren) => {
 }
 
 const Header = () => {
+  const translate = useTranslate()
   return (
     <div className='fixed left-0 right-0 top-0 h-14 flex border-b border-gray-4 px-3 bg-container dark:border-gray-10'>
       <div className='flex items-center gap-2'>
         <div className='text-7 font-bold font-sans'>Dux</div>
       </div>
       <div className='flex flex-1 items-center justify-center'>
-        <div className='h-8 max-w-50 w-full flex cursor-pointer border rounded px-2 text-sm transition-all bg-component hover:border hover:border-brand hover:bg-secondarycontainer'>
-          <div className='flex flex-1 items-center text-placeholder'>Search...</div>
+        <div className='h-8 max-w-30% w-full flex cursor-pointer border border-transparent rounded px-2 text-sm transition-all bg-component hover:border hover:border-brand hover:bg-secondarycontainer'>
+          <div className='flex flex-1 items-center text-placeholder'>
+            {translate('common.search')}...
+          </div>
           <div className='flex items-center'>
             <SearchIcon size={16} />
           </div>

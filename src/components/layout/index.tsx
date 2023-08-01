@@ -4,7 +4,7 @@ import Header from './header'
 import Sider from './sider'
 import { Main } from '../main/main'
 
-export const Layout: React.FC<PropsWithChildren> = ({ children }) => {
+export const Layout = ({ children }: PropsWithChildren) => {
   return (
     <div className='pl-16 pt-14'>
       <Header />
