@@ -230,16 +230,7 @@ export const presetDux = (): Preset<DuxTheme> => {
             disabled: 'var(--td-text-color-disabled)',
             anti: 'var(--td-text-color-anti)',
           }
-          if (rules[c]) return { color: rules[c] } as CSSObject
-          if (theme.colors[c]) {
-            return {
-              color:
-                typeof theme.colors[c] === 'string'
-                  ? theme.colors[c]
-                  : (theme.colors[c] as Record<string, string>).DEFAULT,
-            } as CSSObject
-          }
-          return
+          return refultCSS('color', c, rules, theme)
         },
       ],
       [
@@ -267,18 +258,31 @@ export const presetDux = (): Preset<DuxTheme> => {
             'mask-active': 'var(--td-mask-active)',
             'mask-disabled': 'var(--td-mask-disabled)',
           }
-          if (rules[c]) return { 'background-color': rules[c] } as CSSObject
-          if (theme.colors[c]) {
-            return {
-              'background-color':
-                typeof theme.colors[c] === 'string'
-                  ? theme.colors[c]
-                  : (theme.colors[c] as Record<string, string>).DEFAULT,
-            } as CSSObject
+          return refultCSS('background-color', c, rules, theme)
+        },
+      ],
+      [
+        /^border-(.*)$/,
+        ([, c], { theme }: RuleContext<DuxTheme>) => {
+          const rules: Record<string, string> = {
+            component: 'var(--td-component-border)',
           }
-          return
+          return refultCSS('border-color', c, rules, theme)
         },
       ],
     ],
   }
+}
+
+const refultCSS = (name: string, value: string, rules: Record<string, string>, theme: DuxTheme) => {
+  if (rules[value]) return { [name]: rules[value] } as CSSObject
+  if (theme.colors[value]) {
+    return {
+      [name]:
+        typeof theme.colors[value] === 'string'
+          ? theme.colors[value]
+          : (theme.colors[value] as Record<string, string>).DEFAULT,
+    } as CSSObject
+  }
+  return
 }

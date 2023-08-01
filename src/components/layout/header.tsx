@@ -76,12 +76,9 @@ const Item = ({ children }: PropsWithChildren) => {
 const Header = () => {
   const translate = useTranslate()
   return (
-    <div className='fixed left-0 right-0 top-0 h-14 flex border-b border-gray-4 px-3 bg-container dark:border-gray-10'>
-      <div className='flex items-center gap-2'>
-        <div className='text-7 font-bold font-sans'>Dux</div>
-      </div>
-      <div className='flex flex-1 items-center justify-center'>
-        <div className='h-8 max-w-30% w-full flex cursor-pointer border border-transparent rounded px-2 text-sm transition-all bg-component hover:border hover:border-brand hover:bg-secondarycontainer'>
+    <div className='border-component fixed left-16 right-0 top-0 h-14 flex border-b px-3 bg-container'>
+      <div className='flex flex-1 items-center'>
+        <div className='ml-6 h-8 max-w-50 w-full flex cursor-pointer border border-transparent rounded px-2 text-sm transition-all bg-component hover:border hover:border-brand hover:bg-secondarycontainer'>
           <div className='flex flex-1 items-center text-placeholder'>
             {translate('common.search')}...
           </div>

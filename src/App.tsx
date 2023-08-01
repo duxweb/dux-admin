@@ -19,6 +19,7 @@ import { registerCharts } from './theme/echarts'
 registerCharts()
 
 function App() {
+  console.log(1)
   const dark = useAppStore((state) => state.dark)
   document.documentElement.setAttribute('theme-mode', dark ? 'dark' : '')
 
