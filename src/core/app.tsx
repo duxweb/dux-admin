@@ -117,7 +117,6 @@ export const AppProvider = () => {
         })
       )
     })
-
     return createHashRouter(routes)
   }, [])
 
