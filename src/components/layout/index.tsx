@@ -6,7 +6,7 @@ import { Main } from '../main/main'
 
 export const Layout = ({ children }: PropsWithChildren) => {
   return (
-    <div className='pl-16 pt-14'>
+    <div className='pl-18 pt-16'>
       <Header />
       <Sider />
       <div>{children}</div>

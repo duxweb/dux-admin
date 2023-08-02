@@ -28,6 +28,7 @@
     "react-i18next": "^11.8.11",
     "react-router-dom": "^6.8.1",
     "remeda": "^1.24.0",
+    "sass": "^1.64.2",
     "tdesign-react": "^1.1.17",
     "unocss": "^0.53.5",
     "zustand": "^4.3.9"

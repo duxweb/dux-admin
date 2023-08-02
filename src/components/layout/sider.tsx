@@ -32,7 +32,7 @@ const MenuItem = ({ name, icon, active }: MenuItemProps) => {
 
 const Sider = () => {
   return (
-    <div className='border-component fixed bottom-0 left-0 top-0 w-16 flex flex-none flex-col border-r bg-container'>
+    <div className='border-component fixed bottom-0 left-0 top-0 w-18 flex flex-none flex-col border-r bg-container'>
       <div className='h-14 flex items-center justify-center gap-2'>
         <div className='text-5 font-bold font-sans'>Dux</div>
       </div>

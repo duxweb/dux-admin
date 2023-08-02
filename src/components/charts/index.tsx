@@ -3,6 +3,7 @@ import ReactECharts from 'echarts-for-react'
 import { useAppStore } from '@/stores/app'
 import { useMemo } from 'react'
 import merge from 'deepmerge'
+import defineConfig from '../../../vite.config'
 
 interface ChartsProps {
   options?: EChartsOption[]
@@ -15,9 +16,16 @@ const Charts = ({ single, options, min }: ChartsProps) => {
 
   const option: EChartsOption = useMemo(() => {
     const config = options || []
-    let minConfig = {}
+    let defaultConfig: EChartsOption = {
+      grid: {
+        top: 30,
+        right: 30,
+        left: 30,
+        bottom: 30,
+      },
+    }
     if (min) {
-      minConfig = {
+      defaultConfig = {
         grid: {
           top: 5,
           right: 5,
@@ -33,8 +41,7 @@ const Charts = ({ single, options, min }: ChartsProps) => {
         },
       }
     }
-    console.log(config)
-    return merge.all([minConfig, ...config]) as EChartsOption
+    return merge.all([defaultConfig, ...config]) as EChartsOption
   }, [min, options])
 
   return (
@@ -60,9 +67,14 @@ export interface ChartsDataProps {
   data?: any[]
 }
 
-export const ChartBar = ({ labels, data, min, options }: ChartProps) => {
+interface ChartBarProps extends ChartProps {
+  legend?: boolean
+  single?: boolean
+}
+
+export const ChartBar = ({ labels, data, legend, min, options }: ChartBarProps) => {
   const config = useMemo<EChartsOption>(() => {
-    return {
+    const defineConfig = {
       xAxis: {
         type: 'category',
         data: labels,
@@ -71,6 +83,7 @@ export const ChartBar = ({ labels, data, min, options }: ChartProps) => {
         type: 'value',
       },
       series: data?.map((item) => ({
+        name: item.name,
         data: item.data,
         type: 'bar',
       })),
@@ -78,7 +91,14 @@ export const ChartBar = ({ labels, data, min, options }: ChartProps) => {
         trigger: 'axis',
       },
     } as EChartsOption
-  }, [data, labels])
+
+    if (legend) {
+      defineConfig.legend = {
+        show: true,
+      }
+    }
+    return defineConfig
+  }, [data, labels, legend])
   return <Charts options={[config, options || {}]} min={min} />
 }
 
@@ -135,13 +155,47 @@ export const ChartArea = ({ labels, data, min, options }: ChartProps) => {
   return <Charts options={[config, options || {}]} min={min} />
 }
 
-interface ChartHalfPieProps {
-  data?: ChartHalfPieDataProps[]
+export interface ChartRingProps {
+  data?: Record<string, any>[]
   min?: boolean
+  single?: boolean
   options?: EChartsOption
 }
 
-export interface ChartHalfPieDataProps {
-  name?: string
-  value?: any
+export const ChartRing = ({ data, min, options, single }: ChartRingProps) => {
+  const dark = useAppStore((state) => state.dark)
+  const config = useMemo<EChartsOption>(() => {
+    return {
+      tooltip: {
+        trigger: 'item',
+      },
+      legend: {
+        orient: 'horizontal',
+        left: 'center',
+        top: 'bottom',
+      },
+      series: [
+        {
+          type: 'pie',
+          radius: ['40%', '70%'],
+          center: ['50%', '40%'],
+          avoidLabelOverlap: false,
+          itemStyle: {
+            borderRadius: 5,
+            borderColor: !dark ? '#fff' : '#242424',
+            borderWidth: 2,
+          },
+          label: {
+            show: false,
+            position: 'center',
+          },
+          labelLine: {
+            show: false,
+          },
+          data: data,
+        },
+      ],
+    }
+  }, [dark, data])
+  return <Charts options={[config, options || {}]} min={min} single={single} />
 }
