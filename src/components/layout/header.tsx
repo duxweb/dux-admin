@@ -76,7 +76,7 @@ const Item = ({ children }: PropsWithChildren) => {
 const Header = () => {
   const translate = useTranslate()
   return (
-    <div className='border-component fixed left-16 right-0 top-0 h-16 flex border-b px-3 bg-container'>
+    <div className='border-component h-16 flex flex-none border-b px-3 bg-container'>
       <div className='flex flex-1 items-center'>
         <div className='ml-6 h-8 max-w-50 w-full flex cursor-pointer border border-transparent rounded px-2 text-sm transition-all bg-component hover:border hover:border-brand hover:bg-secondarycontainer'>
           <div className='flex flex-1 items-center text-placeholder'>

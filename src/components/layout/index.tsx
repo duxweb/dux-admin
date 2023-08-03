@@ -6,10 +6,13 @@ import { Main } from '../main/main'
 
 export const Layout = ({ children }: PropsWithChildren) => {
   return (
-    <div className='pl-18 pt-16'>
-      <Header />
+    <div className='inset-0 h-screen w-screen flex flex-row overflow-hidden'>
       <Sider />
-      <div>{children}</div>
+
+      <div className='flex flex-1 flex-col'>
+        <Header />
+        <div className='flex-1 overflow-auto'>{children}</div>
+      </div>
     </div>
     // <div className='layout'>
     //   <Menu />

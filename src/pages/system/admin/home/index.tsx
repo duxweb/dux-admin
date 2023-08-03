@@ -7,8 +7,11 @@ import { Card, Link, Space } from 'tdesign-react'
 import Descriptions from '@/components/descriptions'
 import MediaText from '@/components/mediaText'
 import { List } from '@/components/list'
+import { useTranslate } from '@refinedev/core'
 
 const Index = () => {
+  const translate = useTranslate()
+
   const demoData = [100, 300, 200, 600, 200, 400, 800]
 
   const avatarUrl = 'https://tdesign.gtimg.com/list-icon.png'
@@ -17,10 +20,10 @@ const Index = () => {
     { id: 2, content: '列表内容列表内容列表内容' },
     { id: 3, content: '列表内容列表内容列表内容' },
     { id: 4, content: '列表内容列表内容列表内容' },
-    { id: 4, content: '列表内容列表内容列表内容' },
-    { id: 4, content: '列表内容列表内容列表内容' },
-    { id: 4, content: '列表内容列表内容列表内容' },
-    { id: 4, content: '列表内容列表内容列表内容' },
+    { id: 5, content: '列表内容列表内容列表内容' },
+    { id: 6, content: '列表内容列表内容列表内容' },
+    { id: 7, content: '列表内容列表内容列表内容' },
+    { id: 8, content: '列表内容列表内容列表内容' },
   ]
 
   return (
@@ -28,7 +31,7 @@ const Index = () => {
       <MainHeader></MainHeader>
       <div className='grid mb-4 gap-4 lg:grid-cols-2 xl:grid-cols-4'>
         <div>
-          <StatsChart name='来源占比' data={'1,000'}>
+          <StatsChart name={translate('system.SourceRate')} data={'1,000'}>
             <div className='h-46.5'>
               <ChartRing
                 data={[

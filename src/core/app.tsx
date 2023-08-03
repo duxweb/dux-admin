@@ -13,6 +13,7 @@ export interface appContext {
   createApp: (name: string, app: App) => void
   getApp: (name: string) => App
   getApps: () => App[]
+  addI18n: (lng: string, ns: string, resources: any) => void
 }
 
 export interface appConfig {
@@ -21,17 +22,13 @@ export interface appConfig {
   run?: (context: appContext) => void
 }
 
-const useI18n = (): I18nProvider => {
-  const { t, i18n } = useTranslation()
-  return {
-    translate: (key: string, params: object) => t(key, params),
-    changeLocale: (lang: string) => i18n.changeLanguage(lang),
-    getLocale: () => i18n.language,
-  }
+interface HookApp {
+  i18nProvider: I18nProvider
+  apps: Record<string, App>
 }
 
-export const AppProvider = () => {
-  const i18n = useI18n()
+const useApp = (): HookApp => {
+  const { t, i18n } = useTranslation()
 
   const apps = useMemo<Record<string, App>>(() => {
     const apps: Record<string, App> = {}
@@ -48,32 +45,37 @@ export const AppProvider = () => {
       return Object.values(apps.current)
     }
 
+    const addI18n = (lng: string, ns: string, resources: any) => {
+      i18n.addResourceBundle(lng, ns, resources)
+    }
+
     appsData.map((item) => {
-      item?.init?.({
-        createApp: createApp,
-        getApp: getApp,
-        getApps: getApps,
-      })
+      item?.init?.({ createApp, getApp, getApps, addI18n })
     })
 
     appsData.map((item) => {
-      item?.register?.({
-        createApp: createApp,
-        getApp: getApp,
-        getApps: getApps,
-      })
+      item?.register?.({ createApp, getApp, getApps, addI18n })
     })
 
     appsData.map((item) => {
-      item?.run?.({
-        createApp: createApp,
-        getApp: getApp,
-        getApps: getApps,
-      })
+      item?.run?.({ createApp, getApp, getApps, addI18n })
     })
 
     return apps
-  }, [])
+  }, [i18n])
+
+  return {
+    i18nProvider: {
+      translate: (key: string, params: object) => t(key, params),
+      changeLocale: (lang: string) => i18n.changeLanguage(lang),
+      getLocale: () => i18n.language,
+    },
+    apps: apps,
+  }
+}
+
+export const AppProvider = () => {
+  const app = useApp()
 
   const router = useMemo(() => {
     const routes: RouteObject[] = [
@@ -90,13 +92,13 @@ export const AppProvider = () => {
       return typeof res === 'string' && name ? ['/' + name, res].join('/') : res
     }
 
-    Object.keys(apps).map((name) => {
+    Object.keys(app.apps).map((name) => {
       const refine = createRefine({
         prefix: name ? '/' + name : undefined,
-        i18nProvider: i18n,
-        authProvider: apps[name].authProvider,
-        router: apps[name].getRouter(),
-        resources: apps[name].getResources().map((item) => {
+        i18nProvider: app.i18nProvider,
+        authProvider: app.apps[name].authProvider,
+        router: app.apps[name].getRouter(),
+        resources: app.apps[name].getResources().map((item) => {
           item.list = formatResources(name, item.list)
           item.create = formatResources(name, item.create)
           item.clone = formatResources(name, item.clone)
@@ -108,7 +110,7 @@ export const AppProvider = () => {
       routes.push(refine)
     })
     return createHashRouter(routes)
-  }, [apps, i18n])
+  }, [app])
 
   return <RouterProvider router={router} />
 }

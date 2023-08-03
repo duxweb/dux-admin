@@ -4,6 +4,8 @@ import { authProvider } from './provider/authProvider'
 import { createApp } from '../../core/helper'
 import { adminRouter } from './config/router'
 import { adminResources } from './config/resources'
+import zhLang from './locales/zh/common.json'
+import enLang from './locales/en/common.json'
 
 const init = (context: appContext) => {
   context.createApp(
@@ -12,6 +14,8 @@ const init = (context: appContext) => {
       authProvider: authProvider,
     })
   )
+  context.addI18n('zh', 'common', zhLang)
+  context.addI18n('en', 'common', enLang)
   return null
 }
 
