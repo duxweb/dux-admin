@@ -9,7 +9,7 @@ export interface PageTableProps extends CardTableProps {
 
 export const PageTable = ({ title, headerRender, table, filterRender }: PageTableProps) => {
   const [filter, setFilter] = useState<Record<string, any>>({
-    qqq: '333',
+    qqq: '4443',
   })
   return (
     <Main>
