@@ -8,7 +8,9 @@ export interface PageTableProps extends CardTableProps {
 }
 
 export const PageTable = ({ title, headerRender, table, filterRender }: PageTableProps) => {
-  const [filter, setFilter] = useState<Record<string, any>>({})
+  const [filter, setFilter] = useState<Record<string, any>>({
+    qqq: '333',
+  })
   return (
     <Main>
       <MainHeader>{headerRender?.()}</MainHeader>
@@ -19,7 +21,7 @@ export const PageTable = ({ title, headerRender, table, filterRender }: PageTabl
         filterData={filter}
         onFilterChange={(values) => {
           //setFilter(values)
-          console.log(values)
+          //console.log(values)
         }}
       />
     </Main>

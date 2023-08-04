@@ -1,28 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import {
-  IResourceComponentsProps,
-  useNavigation,
-  useTranslate,
-  GetManyResponse,
-  useMany,
-} from '@refinedev/core'
-import { useTable, HttpError } from '@refinedev/core'
-import { ColumnDef, flexRender } from '@tanstack/react-table'
-import {
-  PrimaryTableCol,
-  TableSort,
-  SortOptions,
-  Card,
-  Button,
-  Input,
-  TableProps,
-} from 'tdesign-react'
-import { Main, MainHeader } from '@/components/main'
+import React from 'react'
+import { useNavigation, useTranslate } from '@refinedev/core'
+import { PrimaryTableCol, Button, Input } from 'tdesign-react'
 import { PageTable, FilterItem } from '@/components/table'
 
 export const BlogPostList = () => {
   const translate = useTranslate()
-
+  const { edit, show, create } = useNavigation()
   const columns = React.useMemo<PrimaryTableCol[]>(
     () => [
       {
@@ -35,24 +18,6 @@ export const BlogPostList = () => {
         colKey: 'title',
         title: translate('blog_posts.fields.title'),
       },
-      // {
-      //   id: 'category',
-      //   title: translate('blog_posts.fields.category'),
-      //   colKey: 'category.id',
-      //   cell: ({ getValue, table }) {
-      //     const meta = table.options.meta as {
-      //       categoryData: GetManyResponse
-      //     }
-
-      //     try {
-      //       const category = meta.categoryData?.data?.find((item) => item.id == getValue<any>())
-
-      //       return category?.title ?? 'Loading...'
-      //     } catch (error) {
-      //       return null
-      //     }
-      //   },
-      // },
       {
         colKey: 'status',
         title: translate('blog_posts.fields.status'),
@@ -101,12 +66,9 @@ export const BlogPostList = () => {
         },
       },
     ],
-    [translate]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   )
-
-  const { edit, show, create } = useNavigation()
-
-  //console.log(tableQueryResult)
 
   return (
     <PageTable

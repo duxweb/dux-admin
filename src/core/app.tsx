@@ -62,14 +62,20 @@ const useApp = (): HookApp => {
     })
 
     return apps
-  }, [i18n])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-  return {
-    i18nProvider: {
+  const i18nProvider = useMemo<I18nProvider>(() => {
+    return {
       translate: (key: string, params: object) => t(key, params),
       changeLocale: (lang: string) => i18n.changeLanguage(lang),
       getLocale: () => i18n.language,
-    },
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  return {
+    i18nProvider: i18nProvider,
     apps: apps,
   }
 }
@@ -110,7 +116,8 @@ export const AppProvider = () => {
       routes.push(refine)
     })
     return createHashRouter(routes)
-  }, [app])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return <RouterProvider router={router} />
 }

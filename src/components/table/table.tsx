@@ -69,6 +69,7 @@ export const CardTable = ({
   }, [])
 
   useEffect(() => {
+    console.log(filterData)
     setFilters(formatFilter(filterData || {}))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterData])
