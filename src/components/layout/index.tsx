@@ -9,7 +9,7 @@ export const Layout = ({ children }: PropsWithChildren) => {
     <div className='inset-0 h-screen w-screen flex flex-row overflow-hidden'>
       <Sider />
 
-      <div className='flex flex-1 flex-col'>
+      <div className='w-1 flex flex-1 flex-col'>
         <Header />
         <div className='flex-1 overflow-auto'>{children}</div>
       </div>

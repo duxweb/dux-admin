@@ -80,11 +80,9 @@ const Sider = () => {
     return menuItems.find((item) => active[active.length - 1] == item.key)
   }, [active, menuItems])
 
-  console.log(menuInfo)
-
   return (
     <div className='z-1 flex flex-none flex-row'>
-      <div className='h-screen w-18 flex flex-col border-r bg-container border-component'>
+      <div className='border-component h-screen w-18 flex flex-col border-r bg-container'>
         <div className='h-14 flex items-center justify-center gap-2'>
           <div className='text-5 font-bold font-sans'>Dux</div>
         </div>

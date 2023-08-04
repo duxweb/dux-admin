@@ -806,10 +806,10 @@
     temp "^0.9.4"
     tslib "^2.3.1"
 
-"@refinedev/core@4.32.0", "@refinedev/core@^4.32.0":
-  version "4.32.0"
-  resolved "https://registry.yarnpkg.com/@refinedev/core/-/core-4.32.0.tgz#bff31a519329cc07179f9059ef1bfa57591cfeb7"
-  integrity sha512-m8gHpecNGxbTLTJ6TYlUTB34u9H2HqNNK9DiDK9YM8r19f3waFuuc/OAY1/ZwQUZuM9M/9Rg5pBnQIt8dCPFRg==
+"@refinedev/core@4.32.2", "@refinedev/core@^4.32.2":
+  version "4.32.2"
+  resolved "https://registry.yarnpkg.com/@refinedev/core/-/core-4.32.2.tgz#e0515f2494fa3fe9a7f08ced166a06af7d119c0c"
+  integrity sha512-9fd6JYg9lvAKl8tkOLMwBoeEVvXHFXEm44osWqVLxuBIvbMEyj9XS4/EHaosr6i+aF4jLUfp3aEH2AFYZ/enEQ==
   dependencies:
     "@tanstack/react-query" "^4.10.1"
     export-to-csv-fix-source-map "^0.2.1"
@@ -821,13 +821,13 @@
     tslib "^2.3.1"
     warn-once "^0.1.0"
 
-"@refinedev/inferencer@4.5.0":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@refinedev/inferencer/-/inferencer-4.5.0.tgz#f49bcab445a400014160cef7e2b1ea71f3a79645"
-  integrity sha512-bzpYXQ9OpRUMmxFP0md7iciUSzWZo7FJErmlJJ7NBzyh4qw4xgPi6aXHbTHihfrncMBBlIGsUcFb430/4gEEeg==
+"@refinedev/inferencer@4.5.2":
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/@refinedev/inferencer/-/inferencer-4.5.2.tgz#3a5b02431e541961fe9dc893653fd34452f48900"
+  integrity sha512-uH0vvucXkjXrOhjIjpAoqJWOBXR537jvj548aYs2tuYz1mRG3tvP3JHxFwcTcEVnRglXzmJBmh5+KC3oMJllow==
   dependencies:
     "@aliemir/react-live" "^4.0.0"
-    "@refinedev/core" "^4.32.0"
+    "@refinedev/core" "^4.32.2"
     "@tabler/icons" "^1.1.0"
     dayjs "^1.10.7"
     lodash "^4.17.21"
@@ -846,10 +846,10 @@
   dependencies:
     kbar "^0.1.0-beta.40"
 
-"@refinedev/react-hook-form@4.8.0":
-  version "4.8.0"
-  resolved "https://registry.yarnpkg.com/@refinedev/react-hook-form/-/react-hook-form-4.8.0.tgz#ffa30f8ca1ff059cde5b1c405d979cca44649aa0"
-  integrity sha512-7WwNxi+4xYfDiF0JZgBvBtsX8faKYFAUnZRlX8HWaaZI8o8rCc9XgA44f4i/uNAf1sIiJsGI626SELCIkyWyFA==
+"@refinedev/react-hook-form@4.8.2":
+  version "4.8.2"
+  resolved "https://registry.yarnpkg.com/@refinedev/react-hook-form/-/react-hook-form-4.8.2.tgz#d68033db450c9a85af5e726c477267d9ede34d40"
+  integrity sha512-yCHI7F54Z1HwjisH9u3RH5bT+dsRqTJ0Wks3vtfkEeBvY1IjZ+orqpSFkAzBedxYL+LAbHRppXp0CwmgHHe91Q==
   dependencies:
     react-hook-form "^7.30.0"
 

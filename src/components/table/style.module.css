@@ -1,0 +1,6 @@
+.card {
+
+}
+.card .t-card__body {
+  @apply p-0;
+}
