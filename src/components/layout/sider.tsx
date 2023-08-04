@@ -46,7 +46,7 @@ const CollapseMenu = ({ item, children }: CollapseMenuProps) => {
   return (
     <div className='my-4 px-2 text-sm'>
       <div
-        className='mb-1 flex cursor-pointer items-center gap-2 rounded p-2 hover:bg-gray-1'
+        className='mb-1 flex cursor-pointer items-center gap-2 rounded p-2 hover:bg-secondarycontainer'
         onClick={() => {
           setCollapse((status) => !status)
         }}
@@ -55,7 +55,10 @@ const CollapseMenu = ({ item, children }: CollapseMenuProps) => {
         <div className='flex-1'>{item.label}</div>
         <div>
           <div
-            className={clsx([collapse ? 'i-tabler:chevron-down' : 'i-tabler:chevron-right'])}
+            className={clsx([
+              'i-tabler:chevron-down transition-all',
+              collapse ? 'rotate-0' : '-rotate-90',
+            ])}
           ></div>
         </div>
       </div>
@@ -81,7 +84,7 @@ const Sider = () => {
 
   return (
     <div className='z-1 flex flex-none flex-row'>
-      <div className='border-component h-screen w-18 flex flex-col border-r bg-container'>
+      <div className='h-screen w-18 flex flex-col border-r bg-container border-component'>
         <div className='h-14 flex items-center justify-center gap-2'>
           <div className='text-5 font-bold font-sans'>Dux</div>
         </div>
@@ -116,50 +119,52 @@ const Sider = () => {
           </ul>
         </div>
       </div>
-      <div
-        className={clsx([
-          'border-component h-screen flex flex-col transition-all bg-container',
-          collapse && menuInfo?.children?.length > 0
-            ? 'w-45 opacity-100 border-r'
-            : 'w-0 opacity-0 border-none',
-        ])}
-      >
-        <div className='h-14 flex items-center px-4'>
-          {menuInfo.meta?.element || (
-            <div className='font-bold text-secondary'>{menuInfo.label}</div>
-          )}
-        </div>
-        {menuInfo.children.map((item: TreeMenuItem, index: number) => (
-          <CollapseMenu key={index} item={item}>
-            {item?.children?.length > 0 && (
-              <ul className='flex flex-col'>
-                {item.children.map((sub: TreeMenuItem, key: number) => (
-                  <li key={key}>
-                    <div
-                      className={clsx([
-                        'cursor-pointer rounded pr-2 pl-8 py-2',
-                        active[active.length - 1] == menuInfo.key &&
-                        active[active.length - 2] == item.key &&
-                        active[active.length - 3] == sub.key
-                          ? 'text-brand bg-brand-1'
-                          : 'text-secondary hover:bg-gray-1',
-                      ])}
-                      onClick={() => {
-                        setActive([sub.key, item.key, menuInfo.key])
-                        go({
-                          to: sub.route,
-                        })
-                      }}
-                    >
-                      {sub.label}
-                    </div>
-                  </li>
-                ))}
-              </ul>
+      {menuInfo && (
+        <div
+          className={clsx([
+            'border-component h-screen flex flex-col transition-all bg-container',
+            collapse && menuInfo?.children?.length > 0
+              ? 'w-45 opacity-100 border-r'
+              : 'w-0 opacity-0 border-none',
+          ])}
+        >
+          <div className='h-14 flex items-center px-4'>
+            {menuInfo?.meta?.element || (
+              <div className='font-bold text-secondary'>{menuInfo?.label}</div>
             )}
-          </CollapseMenu>
-        ))}
-      </div>
+          </div>
+          {menuInfo?.children?.map((item: TreeMenuItem, index: number) => (
+            <CollapseMenu key={index} item={item}>
+              {item?.children?.length > 0 && (
+                <ul className='flex flex-col'>
+                  {item.children.map((sub: TreeMenuItem, key: number) => (
+                    <li key={key}>
+                      <div
+                        className={clsx([
+                          'cursor-pointer rounded pr-2 pl-8 py-2',
+                          active[active.length - 1] == menuInfo.key &&
+                          active[active.length - 2] == item.key &&
+                          active[active.length - 3] == sub.key
+                            ? 'text-brand bg-brand-1'
+                            : 'text-secondary hover:bg-secondarycontainer',
+                        ])}
+                        onClick={() => {
+                          setActive([sub.key, item.key, menuInfo.key])
+                          go({
+                            to: sub.route,
+                          })
+                        }}
+                      >
+                        {sub.label}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </CollapseMenu>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
