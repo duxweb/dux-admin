@@ -8,6 +8,7 @@ import {
   NamePath,
   Card,
   PrimaryTableCol,
+  SelectOptions,
 } from 'tdesign-react'
 import { useWindowSize } from '@/core/helper'
 
@@ -22,7 +23,10 @@ export interface CardTableProps {
   filterData?: Record<string, any>
   filterRender?: () => React.ReactNode
   onFilterChange?: (values: Record<string, any>) => void
-  batchRender?: () => React.ReactNode
+  batchRender?: (
+    rowKeys?: Array<string | number>,
+    selectedOptions?: SelectOptions<any>
+  ) => React.ReactNode
 }
 
 export const CardTable = ({
@@ -94,7 +98,8 @@ export const CardTable = ({
   }, [filters])
 
   const [size, sizeMap] = useWindowSize()
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
+  const [selectedRowKeys, setSelectedRowKeys] = useState<Array<string | number>>()
+  const [selectedOptions, setSelectedOptions] = useState<SelectOptions<any>>()
 
   const tableCloumns = useMemo(() => {
     let cols = columns || []
@@ -150,7 +155,9 @@ export const CardTable = ({
             setCurrent(pageInfo.current)
             setPageSize(pageInfo.pageSize)
           },
-          totalContent: batchRender ? <div>{batchRender?.(selectedRowKeys)}</div> : undefined,
+          totalContent: batchRender ? (
+            <div>{batchRender?.(selectedRowKeys, selectedOptions)}</div>
+          ) : undefined,
           theme: table?.pagination?.theme || size <= sizeMap.xl ? 'simple' : 'default',
         }}
         sort={sort}
@@ -171,7 +178,7 @@ export const CardTable = ({
         selectedRowKeys={selectedRowKeys}
         onSelectChange={(selectedRowKeys, options) => {
           setSelectedRowKeys(selectedRowKeys)
-          console.log(selectedRowKeys, options)
+          setSelectedOptions(options)
         }}
       />
       {footer}
