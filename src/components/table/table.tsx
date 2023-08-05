@@ -7,14 +7,22 @@ import {
   Form,
   NamePath,
   Card,
+  PrimaryTableCol,
 } from 'tdesign-react'
+import { useWindowSize } from '@/core/helper'
 
 export interface CardTableProps {
-  title?: string
-  table: TableProps
+  title?: React.ReactNode
+  header?: React.ReactNode
+  banner?: React.ReactNode
+  footer?: React.ReactNode
+  table?: TableProps
+  rowKey?: string
+  columns?: PrimaryTableCol[]
   filterData?: Record<string, any>
   filterRender?: () => React.ReactNode
   onFilterChange?: (values: Record<string, any>) => void
+  batchRender?: () => React.ReactNode
 }
 
 export const CardTable = ({
@@ -22,7 +30,13 @@ export const CardTable = ({
   filterData,
   filterRender,
   onFilterChange,
+  rowKey,
   table,
+  columns,
+  header,
+  banner,
+  footer,
+  batchRender,
 }: CardTableProps) => {
   const [data, setData] = useState<Array<any>>([])
   const [total, setTotal] = useState(0)
@@ -79,12 +93,29 @@ export const CardTable = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters])
 
+  const [size, sizeMap] = useWindowSize()
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
+
+  const tableCloumns = useMemo(() => {
+    let cols = columns || []
+    if (batchRender) {
+      cols = [
+        {
+          colKey: 'row-select',
+          type: 'multiple',
+        },
+        ...cols,
+      ]
+    }
+    return cols
+  }, [batchRender, columns])
+
   return (
     <Card
       headerBordered
       header={
         <div className='flex flex-1 items-center justify-between'>
-          <div className='text-base'>{title}</div>
+          {header || <div className='text-base'>{title}</div>}
           <div>
             <Form
               labelWidth={0}
@@ -100,7 +131,11 @@ export const CardTable = ({
         </div>
       }
     >
+      {banner}
       <TdTable
+        {...table}
+        rowKey={rowKey || 'id'}
+        columns={tableCloumns}
         data={data}
         cellEmptyContent={'-'}
         stripe
@@ -115,6 +150,8 @@ export const CardTable = ({
             setCurrent(pageInfo.current)
             setPageSize(pageInfo.pageSize)
           },
+          totalContent: batchRender ? <div>{batchRender?.(selectedRowKeys)}</div> : undefined,
+          theme: table?.pagination?.theme || size <= sizeMap.xl ? 'simple' : 'default',
         }}
         sort={sort}
         multipleSort
@@ -131,8 +168,13 @@ export const CardTable = ({
             sorters.map((item) => ({ field: item.sortBy, order: item.descending ? 'desc' : 'asc' }))
           )
         }}
-        {...table}
+        selectedRowKeys={selectedRowKeys}
+        onSelectChange={(selectedRowKeys, options) => {
+          setSelectedRowKeys(selectedRowKeys)
+          console.log(selectedRowKeys, options)
+        }}
       />
+      {footer}
     </Card>
   )
 }

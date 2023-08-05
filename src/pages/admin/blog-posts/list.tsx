@@ -13,20 +13,24 @@ export const BlogPostList = () => {
         sorter: true,
         sortType: 'all',
         title: translate('blog_posts.fields.id'),
+        width: 100,
       },
       {
         colKey: 'title',
         title: translate('blog_posts.fields.title'),
+        minWidth: 200,
       },
       {
         colKey: 'status',
         title: translate('blog_posts.fields.status'),
+        width: 100,
       },
       {
         colKey: 'createdAt',
         title: translate('blog_posts.fields.createdAt'),
         sorter: true,
         sortType: 'all',
+        width: 200,
         cell: ({ row }) => {
           return new Date(row.createdAt).toLocaleString(undefined, {
             timeZone: 'UTC',
@@ -37,6 +41,7 @@ export const BlogPostList = () => {
         colKey: 'link',
         title: translate('table.actions'),
         fixed: 'right',
+        width: 180,
         cell: ({ row }) => {
           return (
             <div
@@ -72,11 +77,8 @@ export const BlogPostList = () => {
 
   return (
     <PageTable
+      columns={columns}
       title={translate('blog_posts.fields.title')}
-      table={{
-        rowKey: 'id',
-        columns: columns,
-      }}
       headerRender={() => {
         return <Button>创建</Button>
       }}
@@ -91,6 +93,9 @@ export const BlogPostList = () => {
             </FilterItem>
           </>
         )
+      }}
+      batchRender={() => {
+        return <div>w</div>
       }}
     />
   )

@@ -7,7 +7,13 @@ export interface PageTableProps extends CardTableProps {
   headerRender?: () => React.ReactNode
 }
 
-export const PageTable = ({ title, headerRender, table, filterRender }: PageTableProps) => {
+export const PageTable = ({
+  title,
+  headerRender,
+  table,
+  filterRender,
+  ...props
+}: PageTableProps) => {
   const [filter, setFilter] = useState<Record<string, any>>({
     qqq: '4443',
   })
@@ -16,13 +22,14 @@ export const PageTable = ({ title, headerRender, table, filterRender }: PageTabl
       <MainHeader>{headerRender?.()}</MainHeader>
       <CardTable
         title={title}
-        table={{ ...table }}
+        table={table}
         filterRender={filterRender}
         filterData={filter}
         onFilterChange={(values) => {
           //setFilter(values)
           //console.log(values)
         }}
+        {...props}
       />
     </Main>
   )
