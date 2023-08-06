@@ -1,7 +1,7 @@
 import { App } from '@/core/helper'
 
 import { NavigateToResource } from '@refinedev/react-router-v6'
-import { BlogPostCreate, BlogPostEdit, BlogPostList, BlogPostShow } from '../../admin/blog-posts'
+import { BlogPostList } from '../../admin/blog-posts'
 import { CategoryCreate, CategoryEdit, CategoryList, CategoryShow } from '../../admin/categories'
 import { lazyComponent } from '@/core/package'
 
@@ -21,18 +21,6 @@ export const adminRouter = (app: App) => {
         {
           index: true,
           element: <BlogPostList />,
-        },
-        {
-          path: 'create',
-          element: <BlogPostCreate />,
-        },
-        {
-          path: 'edit/:id',
-          element: <BlogPostEdit />,
-        },
-        {
-          path: 'show/:id',
-          element: <BlogPostShow />,
         },
       ],
     },

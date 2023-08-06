@@ -1,9 +1,9 @@
 import clsx from 'clsx'
-import { Tooltip } from 'tdesign-react'
+import { Tooltip } from 'tdesign-react/esm'
 import { useLogout, useMenu, ITreeMenu, useGo } from '@refinedev/core'
 import { useCallback, useMemo, useState } from 'react'
 import { TreeMenuItem } from '@refinedev/core/dist/hooks/menu/useMenu'
-import { Menu, MessagePlugin, Button } from 'tdesign-react'
+import { Menu, MessagePlugin, Button } from 'tdesign-react/esm'
 const { HeadMenu, MenuItem, SubMenu } = Menu
 
 interface MenuAppProps {
@@ -82,7 +82,7 @@ const Sider = () => {
 
   return (
     <div className='z-1 flex flex-none flex-row'>
-      <div className='border-component h-screen w-18 flex flex-col border-r bg-container'>
+      <div className='h-screen w-18 flex flex-col border-r bg-container border-component'>
         <div className='h-14 flex items-center justify-center gap-2'>
           <div className='text-5 font-bold font-sans'>Dux</div>
         </div>

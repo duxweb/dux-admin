@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { lazy, useRef } from 'react'
 import { useNavigation, useTranslate } from '@refinedev/core'
-import { PrimaryTableCol, Button, Input } from 'tdesign-react'
-import { PageTable, FilterItem } from '@/components/table'
+import { PrimaryTableCol, Button, Input, DialogPlugin } from 'tdesign-react/esm'
+import { PageTable, FilterItem, CardTableRef } from '@/components/table'
+import { lazyComponent } from '@/core/package'
+import BlogPostCreate from './create'
+import { Modal, openModal } from '@/components/modal'
 
 export const BlogPostList = () => {
   const translate = useTranslate()
   const { edit, show, create } = useNavigation()
+
+  const table = useRef<CardTableRef>(null)
+
   const columns = React.useMemo<PrimaryTableCol[]>(
     () => [
       {
@@ -77,10 +83,25 @@ export const BlogPostList = () => {
 
   return (
     <PageTable
+      ref={table}
       columns={columns}
       title={translate('blog_posts.fields.title')}
       headerRender={() => {
-        return <Button>创建</Button>
+        return (
+          <>
+            <Button
+              onClick={() => {
+                openModal({
+                  title: '创建',
+                  desc: '创建内容',
+                  component: () => import('./create'),
+                })
+              }}
+            >
+              创建
+            </Button>
+          </>
+        )
       }}
       filterRender={() => {
         return (
@@ -94,9 +115,17 @@ export const BlogPostList = () => {
           </>
         )
       }}
-      batchRender={() => {
-        return <div>w</div>
-      }}
+      batchRender={
+        <>
+          <div
+            onClick={() => {
+              table.current?.refetch()
+            }}
+          >
+            w
+          </div>
+        </>
+      }
     />
   )
 }

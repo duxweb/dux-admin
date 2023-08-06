@@ -1,6 +1,6 @@
 import { PropsWithChildren, useEffect } from 'react'
 import { useSetLocale, useTranslate, useGetLocale } from '@refinedev/core'
-import { Avatar, Dropdown, Button, DropdownOption, Radio } from 'tdesign-react'
+import { Avatar, Dropdown, Button, DropdownOption, Radio } from 'tdesign-react/esm'
 import { TranslateIcon, SearchIcon } from 'tdesign-icons-react'
 import { useAppStore } from '@/stores/app'
 
@@ -76,9 +76,9 @@ const Item = ({ children }: PropsWithChildren) => {
 const Header = () => {
   const translate = useTranslate()
   return (
-    <div className='border-component h-16 flex flex-none border-b px-3 bg-container'>
+    <div className='h-16 flex flex-none border-b px-3 bg-container border-component'>
       <div className='flex flex-1 items-center'>
-        <div className='ml-6 h-8 max-w-50 w-full flex cursor-pointer border border-transparent rounded px-2 text-sm transition-all bg-component hover:border hover:border-brand hover:bg-secondarycontainer'>
+        <div className='ml-6 h-8 max-w-50 w-full flex cursor-pointer border rounded px-2 text-sm transition-all bg-component border-transparent hover:border hover:bg-secondarycontainer hover:border-brand'>
           <div className='flex flex-1 items-center text-placeholder'>
             {translate('common.search')}...
           </div>

@@ -1,6 +1,6 @@
 import { useBreadcrumb } from '@refinedev/core'
 import { Link } from 'react-router-dom'
-import { Breadcrumb as TdBreadcrumb } from 'tdesign-react'
+import { Breadcrumb as TdBreadcrumb } from 'tdesign-react/esm'
 
 const { BreadcrumbItem } = TdBreadcrumb
 

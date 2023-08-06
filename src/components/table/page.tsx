@@ -1,36 +1,20 @@
-import { useState } from 'react'
+import React, { forwardRef } from 'react'
 import { Main, MainHeader } from '../main'
-import { CardTable, CardTableProps } from './table'
+import { CardTable, CardTableProps, CardTableRef } from './table'
 
 export interface PageTableProps extends CardTableProps {
-  title?: string
   headerRender?: () => React.ReactNode
 }
 
-export const PageTable = ({
-  title,
-  headerRender,
-  table,
-  filterRender,
-  ...props
-}: PageTableProps) => {
-  const [filter, setFilter] = useState<Record<string, any>>({
-    qqq: '4443',
-  })
-  return (
-    <Main>
-      <MainHeader>{headerRender?.()}</MainHeader>
-      <CardTable
-        title={title}
-        table={table}
-        filterRender={filterRender}
-        filterData={filter}
-        onFilterChange={(values) => {
-          //setFilter(values)
-          //console.log(values)
-        }}
-        {...props}
-      />
-    </Main>
-  )
-}
+export const PageTable = forwardRef(
+  ({ headerRender, ...props }: PageTableProps, ref: React.ForwardedRef<CardTableRef>) => {
+    return (
+      <Main>
+        <MainHeader>{headerRender?.()}</MainHeader>
+        <CardTable ref={ref} {...props} />
+      </Main>
+    )
+  }
+)
+
+PageTable.displayName = 'PageTable'
