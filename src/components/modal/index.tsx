@@ -29,11 +29,10 @@ const context = createContext<ModalContextProps>({})
 
 export interface ModalProps {
   title?: string
-  desc?: string
   trigger?: ReactElement<TriggerProps>
   children?: ReactNode | ((onClose: () => void) => ReactNode)
   component?: () => Promise<{ default: ComponentType<any> }>
-  componentProps?: { [key: string]: any }
+  componentProps?: Record<string, any>
   className?: string
   width?: number
   defaultOpen?: boolean
@@ -46,10 +45,7 @@ interface TriggerProps {
 }
 
 const ModalComp = forwardRef<ModalContextProps, ModalProps>(
-  (
-    { title, desc, trigger, children, component, componentProps, onClose, defaultOpen = false },
-    ref
-  ) => {
+  ({ title, trigger, children, component, componentProps, onClose, defaultOpen = false }, ref) => {
     const [open, setOpen] = useState(defaultOpen)
     const AsyncContent = component ? lazy(component) : undefined
 
@@ -89,22 +85,6 @@ const ModalComp = forwardRef<ModalContextProps, ModalProps>(
 )
 
 ModalComp.displayName = 'Modal'
-
-export const openModal = (props: ModalProps) => {
-  const div = document.createElement('div')
-  document.body.appendChild(div)
-  const root = createRoot(div)
-  root.render(
-    <Modal
-      {...props}
-      defaultOpen={true}
-      onClose={() => {
-        document.body.removeChild(div)
-        props?.onClose?.()
-      }}
-    />
-  )
-}
 
 export const useModal = () => {
   return useContext(context)

@@ -4,7 +4,7 @@ import { PrimaryTableCol, Button, Input, DialogPlugin } from 'tdesign-react/esm'
 import { PageTable, FilterItem, CardTableRef } from '@/components/table'
 import { lazyComponent } from '@/core/package'
 import BlogPostCreate from './create'
-import { Modal, openModal } from '@/components/modal'
+import { Modal } from '@/components/modal'
 
 export const BlogPostList = () => {
   const translate = useTranslate()
@@ -65,13 +65,11 @@ export const BlogPostList = () => {
               >
                 {translate('buttons.show')}
               </button>
-              <button
-                onClick={() => {
-                  edit('blog_posts', row.id)
-                }}
-              >
-                {translate('buttons.edit')}
-              </button>
+              <Modal
+                trigger={<Button>{translate('buttons.edit')}</Button>}
+                component={() => import('./edit')}
+                componentProps={{ id: row.id }}
+              ></Modal>
             </div>
           )
         },
@@ -89,17 +87,7 @@ export const BlogPostList = () => {
       headerRender={() => {
         return (
           <>
-            <Button
-              onClick={() => {
-                openModal({
-                  title: '创建',
-                  desc: '创建内容',
-                  component: () => import('./create'),
-                })
-              }}
-            >
-              创建
-            </Button>
+            <Modal trigger={<Button>创建</Button>} component={() => import('./create')}></Modal>
           </>
         )
       }}

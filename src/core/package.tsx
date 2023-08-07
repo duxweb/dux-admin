@@ -1,7 +1,12 @@
 import { Authenticated, ErrorComponent, Refine } from '@refinedev/core'
-import type { I18nProvider, AuthBindings, ResourceProps } from '@refinedev/core'
-import dataProvider from '@refinedev/simple-rest'
-import { ComponentType, Suspense, lazy } from 'react'
+import type {
+  I18nProvider,
+  AuthBindings,
+  ResourceProps,
+  NotificationProvider,
+} from '@refinedev/core'
+import { ComponentType, Suspense, lazy, useCallback, useMemo } from 'react'
+import { NotificationPlugin, NotificationInstance, Button } from 'tdesign-react/esm'
 import { RouteObject, Outlet } from 'react-router-dom'
 import routerBindings, { CatchAllNavigate, NavigateToResource } from '@refinedev/react-router-v6'
 import { Layout } from '../components/layout'
@@ -9,6 +14,7 @@ import { ForgotPassword } from '../pages/admin/forgotPassword'
 import { Login } from '../pages/admin/login'
 import { Register } from '../pages/admin/register'
 import config from '../config'
+import { dataProvider } from '@/dataProvider'
 
 export const lazyComponent = (importComp: () => Promise<{ default: ComponentType<any> }>) => {
   const Comp = lazy(importComp)
@@ -34,6 +40,64 @@ export const createRefine = ({
   router,
   resources,
 }: createRefineProps): RouteObject => {
+  const notifyMaps: Record<string, Promise<NotificationInstance>> = {}
+
+  const notificationProvider: NotificationProvider = {
+    open: ({ message, description, key, type, cancelMutation, undoableTimeout }) => {
+      const notifyConfig = {
+        title: description,
+        content: message,
+        offset: [-20, 20],
+        closeBtn: true,
+        onCloseBtnClick: () => {
+          if (key) {
+            delete notifyMaps[key]
+          }
+        },
+        onDurationEnd: () => {
+          if (key) {
+            delete notifyMaps[key]
+          }
+        },
+      }
+
+      if (type === 'success') {
+        const msg = NotificationPlugin.success(notifyConfig)
+        if (key) {
+          notifyMaps[key] = msg
+        }
+      }
+      if (type === 'error') {
+        const msg = NotificationPlugin.error(notifyConfig)
+        if (key) {
+          notifyMaps[key] = msg
+        }
+      }
+      if (type === 'progress') {
+        const msg = NotificationPlugin.warning({
+          ...notifyConfig,
+          closeBtn: false,
+          footer: (
+            <div slot='footer'>
+              <Button theme='default' variant='text' onClick={cancelMutation}>
+                撤销
+              </Button>
+            </div>
+          ),
+          duration: undoableTimeout,
+        })
+        if (key) {
+          notifyMaps[key] = msg
+        }
+      }
+    },
+    close: (key) => {
+      if (Object.prototype.hasOwnProperty.call(notifyMaps, key)) {
+        NotificationPlugin.close(notifyMaps[key])
+      }
+    },
+  }
+
   return {
     path: prefix,
     element: (
@@ -42,6 +106,7 @@ export const createRefine = ({
         authProvider={authProvider}
         i18nProvider={i18nProvider}
         routerProvider={routerBindings}
+        notificationProvider={notificationProvider}
         resources={resources}
         options={{
           syncWithLocation: true,

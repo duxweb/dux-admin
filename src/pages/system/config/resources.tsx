@@ -32,7 +32,7 @@ export const adminResources = (app: App) => {
       list: 'blog-posts',
       create: 'blog-posts/create',
       edit: 'blog-posts/edit/:id',
-      show: 'blog-posts/show/:id',
+      show: 'blog-posts/show/:id/:test',
       meta: {
         canDelete: true,
         parent: 'blog-content',
