@@ -81,7 +81,7 @@ const Sider = () => {
   }, [active, menuItems])
 
   return (
-    <div className='z-1 flex flex-none flex-row'>
+    <div className='z-1 hidden flex-none flex-row md:flex'>
       <div className='h-screen w-18 flex flex-col border-r bg-container border-component'>
         <div className='h-14 flex items-center justify-center gap-2'>
           <div className='text-5 font-bold font-sans'>Dux</div>

@@ -1,20 +1,26 @@
-import React, { useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react'
-import { useTable, CrudFilter, LogicalFilter } from '@refinedev/core'
+import React, { useImperativeHandle, useMemo } from 'react'
 import {
   EnhancedTable as TdTable,
-  TableSort,
   TableProps,
   Form,
   NamePath,
   Card,
   PrimaryTableCol,
-  SelectOptions,
+  Radio,
 } from 'tdesign-react/esm'
 import { useWindowSize } from '@/core/helper'
+import { useTable } from './useTable'
+
+export interface CardTableTab {
+  label: string
+  value: string
+  icon?: string
+}
 
 export interface CardTableProps {
   title?: React.ReactNode
   header?: React.ReactNode
+  tabs?: Array<CardTableTab>
   banner?: React.ReactNode
   footer?: React.ReactNode
   table?: TableProps
@@ -28,40 +34,37 @@ export interface CardTableProps {
 
 export interface CardTableRef {
   refetch: () => void
-  selectedRowKeys: Array<string | number>
-  selectedOptions?: SelectOptions<any>
+  selecteds: Array<string | number>
+  filters: Record<string, any>
 }
 
 export const CardTable = React.forwardRef(
   (
     {
       title,
-      filterData,
       filterRender,
-      onFilterChange,
       rowKey,
       table,
       columns,
       header,
+      tabs,
       banner,
       footer,
       batchRender,
     }: CardTableProps,
     ref: React.ForwardedRef<CardTableRef>
   ) => {
-    const [data, setData] = useState<Array<any>>([])
-    const [total, setTotal] = useState(0)
-    const [sort, setSort] = useState<TableSort>([])
-
     const {
-      tableQueryResult,
-      current,
-      setCurrent,
-      pageSize,
-      setPageSize,
+      data,
+      pagination,
+      selecteds,
+      setSelecteds,
+      sorters,
       setSorters,
       filters,
       setFilters,
+      refetch,
+      loading,
     } = useTable({
       pagination: {
         current: 0,
@@ -69,44 +72,7 @@ export const CardTable = React.forwardRef(
       },
     })
 
-    const formatValues = useCallback((filters: LogicalFilter[]) => {
-      return filters.reduce<Record<string, any>>((acc, item) => {
-        acc[item.field] = item.value
-        return acc
-      }, {})
-    }, [])
-
-    const formatFilter = useCallback((values: Record<string, any>) => {
-      return Object.keys(values).map((key) => ({
-        field: key,
-        value: values[key],
-      })) as LogicalFilter[]
-    }, [])
-
-    useEffect(() => {
-      setData(tableQueryResult?.data?.data ?? [])
-      setTotal(tableQueryResult?.data?.total ?? 0)
-    }, [tableQueryResult?.data])
-
-    const initData = useMemo(() => {
-      return formatValues(filters as LogicalFilter[])
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    useEffect(() => {
-      console.log(filterData)
-      setFilters(formatFilter(filterData || {}))
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterData])
-
-    useEffect(() => {
-      onFilterChange?.(formatValues(filters as LogicalFilter[]))
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filters])
-
     const [size, sizeMap] = useWindowSize()
-    const [selectedRowKeys, setSelectedRowKeys] = useState<Array<string | number>>([])
-    const [selectedOptions, setSelectedOptions] = useState<SelectOptions<any>>()
 
     const tableCloumns = useMemo(() => {
       let cols = columns || []
@@ -119,37 +85,50 @@ export const CardTable = React.forwardRef(
           ...cols,
         ]
       }
-      console.log(cols)
       return cols
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [columns])
 
-    useImperativeHandle(
-      ref,
-      () => {
-        return {
-          refetch: () => tableQueryResult?.refetch(),
-          selectedRowKeys,
-          selectedOptions,
-        }
-      },
-      [selectedOptions, selectedRowKeys, tableQueryResult]
-    )
+    useImperativeHandle(ref, () => {
+      return {
+        refetch: refetch,
+        selecteds,
+        filters,
+      }
+    })
 
     return (
       <Card
         headerBordered
         header={
-          <div className='flex flex-1 items-center justify-between'>
-            {header || <div className='text-base'>{title}</div>}
+          <div className='flex flex-1 flex-col flex-wrap justify-between gap-2 md:flex-row md:items-center'>
+            <div>
+              {tabs ? (
+                <Radio.Group
+                  variant='default-filled'
+                  value={filters?.tab == undefined ? tabs?.[0]?.value : filters?.tab}
+                  onChange={(value) => {
+                    setFilters({
+                      tab: value,
+                    })
+                  }}
+                >
+                  {tabs.map((item, key) => (
+                    <Radio.Button key={key} value={item.value}>
+                      {item.label}
+                    </Radio.Button>
+                  ))}
+                </Radio.Group>
+              ) : (
+                header || <div className='text-base'>{title}</div>
+              )}
+            </div>
             <div>
               <Form
+                initialData={filters}
                 labelWidth={0}
-                className='flex flex-row gap-2'
-                initialData={initData}
-                onValuesChange={(values) => {
-                  setFilters(formatFilter(values))
-                }}
+                className='flex flex-col gap-2 md:flex-row'
+                onValuesChange={setFilters}
               >
                 {filterRender?.()}
               </Form>
@@ -158,6 +137,7 @@ export const CardTable = React.forwardRef(
         }
       >
         {banner}
+
         <TdTable
           {...table}
           rowKey={rowKey || 'id'}
@@ -166,42 +146,18 @@ export const CardTable = React.forwardRef(
           cellEmptyContent={'-'}
           stripe
           showSortColumnBgColor={true}
-          loading={tableQueryResult.isLoading}
+          loading={loading}
           pagination={{
-            current,
-            pageSize,
-            total,
+            ...pagination,
             showJumper: true,
-            onChange(pageInfo) {
-              setCurrent(pageInfo.current)
-              setPageSize(pageInfo.pageSize)
-            },
             totalContent: batchRender,
             theme: table?.pagination?.theme || size <= sizeMap.xl ? 'simple' : 'default',
           }}
-          sort={sort}
+          sort={sorters}
           multipleSort
-          onSortChange={(sort: TableSort) => {
-            setSort(sort)
-            const sorters = []
-            if (!Array.isArray(sort) && sort !== undefined) {
-              sorters.push(sort)
-            }
-            if (Array.isArray(sort) && sort !== undefined) {
-              sorters.push(...sort)
-            }
-            setSorters(
-              sorters.map((item) => ({
-                field: item.sortBy,
-                order: item.descending ? 'desc' : 'asc',
-              }))
-            )
-          }}
-          selectedRowKeys={selectedRowKeys}
-          onSelectChange={(selectedRowKeys, options) => {
-            setSelectedRowKeys(selectedRowKeys)
-            setSelectedOptions(options)
-          }}
+          onSortChange={setSorters}
+          selectedRowKeys={selecteds}
+          onSelectChange={setSelecteds}
         />
         {footer}
       </Card>
@@ -214,9 +170,10 @@ export interface FilterItemProps {
   children: React.ReactNode
   name: NamePath
 }
+
 export const FilterItem = ({ name, children }: FilterItemProps) => {
   return (
-    <Form.FormItem name={name} className='m-0 p-0'>
+    <Form.FormItem name={name} className='m-0 min-w-50 p-0'>
       {children}
     </Form.FormItem>
   )

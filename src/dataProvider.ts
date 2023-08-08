@@ -30,12 +30,9 @@ export const dataProvider = (apiUrl: string): DataProvider => ({
     const { current = 1, pageSize = 10 } = pagination ?? {}
 
     const quertSorts: Record<string, any> = {}
-    sorters?.map((item, index) => {
-      quertSorts[`sort[${index}][field]`] = item.field
-      quertSorts[`sort[${index}][order]`] = item.order
+    sorters?.map((item) => {
+      quertSorts[item.field + '_sort'] = item.order
     })
-
-    console.log('sort', quertSorts)
 
     const queryFilters = generateFilters(filters)
 
@@ -147,10 +144,9 @@ export const dataProvider = (apiUrl: string): DataProvider => ({
   custom: async ({ url, method, filters, sorters, payload, query, headers, meta }) => {
     const requestUrl = `${url}?`
 
-    const quertSorts = new URLSearchParams()
-    sorters?.map((item, index) => {
-      quertSorts.append(`sort[${index}][field]`, item.field)
-      quertSorts.append(`sort[${index}][order]`, item.order)
+    const quertSorts: Record<string, any> = {}
+    sorters?.map((item) => {
+      quertSorts[item.field] = item.order
     })
 
     const queryFilters = generateFilters(filters)

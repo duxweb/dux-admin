@@ -92,24 +92,27 @@ export const AppProvider = () => {
     ]
 
     const formatResources = (
-      name: string,
       res?: ResourceRouteComposition
     ): ResourceRouteComposition | undefined => {
-      return typeof res === 'string' && name ? ['/' + name, res].join('/') : res
+      return typeof res === 'string' ? ['/:layout', res].join('/') : res
     }
 
-    Object.keys(app.apps).map((name) => {
+    Object.keys(app.apps).map((layout) => {
       const refine = createRefine({
-        prefix: name ? '/' + name : undefined,
+        prefix: layout ? '/:layout' : undefined,
         i18nProvider: app.i18nProvider,
-        authProvider: app.apps[name].authProvider,
-        router: app.apps[name].getRouter(),
-        resources: app.apps[name].getResources().map((item) => {
-          item.list = formatResources(name, item.list)
-          item.create = formatResources(name, item.create)
-          item.clone = formatResources(name, item.clone)
-          item.edit = formatResources(name, item.edit)
-          item.show = formatResources(name, item.show)
+        authProvider: app.apps[layout].authProvider,
+        router: app.apps[layout].getRouter(),
+        resources: app.apps[layout].getResources().map((item) => {
+          item.list = formatResources(item.list)
+          item.create = formatResources(item.create)
+          item.clone = formatResources(item.clone)
+          item.edit = formatResources(item.edit)
+          item.show = formatResources(item.show)
+          item.meta = {
+            ...item.meta,
+            layout: layout,
+          }
           return item
         }),
       })

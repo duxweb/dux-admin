@@ -84,6 +84,20 @@ export const BlogPostList = () => {
       ref={table}
       columns={columns}
       title={translate('blog_posts.fields.title')}
+      tabs={[
+        {
+          label: '全部',
+          value: '0',
+        },
+        {
+          label: '已审核',
+          value: '1',
+        },
+        {
+          label: '未审核',
+          value: '2',
+        },
+      ]}
       headerRender={() => {
         return (
           <>
