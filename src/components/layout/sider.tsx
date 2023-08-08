@@ -1,10 +1,8 @@
 import clsx from 'clsx'
 import { Tooltip } from 'tdesign-react/esm'
-import { useLogout, useMenu, ITreeMenu, useGo } from '@refinedev/core'
-import { useCallback, useMemo, useState } from 'react'
+import { useMenu, useGo } from '@refinedev/core'
+import { useMemo, useState } from 'react'
 import { TreeMenuItem } from '@refinedev/core/dist/hooks/menu/useMenu'
-import { Menu, MessagePlugin, Button } from 'tdesign-react/esm'
-const { HeadMenu, MenuItem, SubMenu } = Menu
 
 interface MenuAppProps {
   name: string

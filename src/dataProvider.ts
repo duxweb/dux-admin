@@ -47,7 +47,7 @@ export const dataProvider = (apiUrl: string): DataProvider => ({
         ...quertSorts,
       },
     })
-    const total = data?.total || data?.list?.length || 0
+    const total = data?.total || data?.length || 0
     return {
       data: data,
       total,

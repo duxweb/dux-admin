@@ -6,6 +6,12 @@ import { lazyComponent } from '@/core/package'
 import BlogPostCreate from './create'
 import { Modal } from '@/components/modal'
 
+const statusNameListMap = {
+  0: { label: '审批通过', theme: 'success' },
+  1: { label: '审批失败', theme: 'danger' },
+  2: { label: '审批过期', theme: 'warning' },
+}
+
 export const BlogPostList = () => {
   const translate = useTranslate()
   const { edit, show, create } = useNavigation()
@@ -14,6 +20,7 @@ export const BlogPostList = () => {
 
   const columns = React.useMemo<PrimaryTableCol[]>(
     () => [
+      { colKey: 'row-select', type: 'multiple' },
       {
         colKey: 'id',
         sorter: true,
@@ -30,6 +37,14 @@ export const BlogPostList = () => {
         colKey: 'status',
         title: translate('blog_posts.fields.status'),
         width: 100,
+        filter: {
+          type: 'single',
+          list: [
+            { label: '审批通过', value: '0' },
+            { label: '已过期', value: '1' },
+            { label: '审批失败', value: '2' },
+          ],
+        },
       },
       {
         colKey: 'createdAt',
@@ -119,13 +134,7 @@ export const BlogPostList = () => {
       }}
       batchRender={
         <>
-          <div
-            onClick={() => {
-              table.current?.refetch()
-            }}
-          >
-            w
-          </div>
+          <Button onClick={() => {}}>批量删除</Button>
         </>
       }
     />

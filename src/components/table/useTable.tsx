@@ -1,70 +1,51 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import {
   useTable as useRefineTable,
   useTableProps as useRefineTableProps,
-  Pagination,
   BaseRecord,
   HttpError,
   LogicalFilter,
   CrudSorting,
   CrudSort,
 } from '@refinedev/core'
-import { TableSort, SortInfo, SortOptions, Form, PaginationProps } from 'tdesign-react/esm'
-import { InternalFormInstance } from 'tdesign-react/esm/form/hooks/interface'
+import {
+  PrimaryTableCol,
+  TableSort,
+  SortInfo,
+  SortOptions,
+  SelectOptions,
+  PaginationProps,
+  FilterValue,
+} from 'tdesign-react/esm'
 
 export interface useTableProps<TQueryFnData, TError, TData>
   extends useRefineTableProps<TQueryFnData, TError, TData> {
-  pagination: Pagination
+  columns?: PrimaryTableCol[]
 }
 
 export interface useTableReturnType<TData> {
-  data: Array<TData>
+  data?: Array<TData>
   filters: Record<string, any>
   setFilters: (values: Record<string, unknown>) => void
+  tableFilters: FilterValue
+  setTableFilters: (values: FilterValue) => void
   sorters: TableSort
   setSorters: (sort: TableSort, options: SortOptions<TData>) => void
-  selecteds: Array<string | number>
-  setSelecteds: (selectedRowKeys: Array<string | number>) => void
+  selecteds?: Array<string | number>
+  selectOptions?: SelectOptions<TData>
+  setSelecteds: (selectedRowKeys: Array<string | number>, options: SelectOptions<TData>) => void
   pagination: PaginationProps
   loading: boolean
   refetch: () => void
 }
-
-const formatFilter = (values: Record<string, any>) => {
-  return Object.keys(values).map((key) => ({
-    field: key,
-    value: values[key],
-  })) as LogicalFilter[]
-}
-
-const formatValues = (filters: LogicalFilter[]) => {
-  return filters.reduce<Record<string, any>>((acc, item) => {
-    acc[item.field] = item.value
-    return acc
-  }, {})
-}
-
-const formatSorters = (sort: TableSort): CrudSorting => {
-  const sorters: Array<SortInfo> = []
-  if (!Array.isArray(sort) && sort !== undefined) {
-    sorters.push(sort)
-  }
-  if (Array.isArray(sort) && sort !== undefined) {
-    sorters.push(...sort)
-  }
-  return sorters.map((item) => ({
-    field: item?.sortBy,
-    order: item?.descending ? 'desc' : 'asc',
-  }))
-}
-
 export const useTable = <
   TQueryFnData extends BaseRecord = BaseRecord,
   TError extends HttpError = HttpError,
   TData extends BaseRecord = TQueryFnData
->(
-  props: useTableProps<TQueryFnData, TError, TData>
-): useTableReturnType<TData> => {
+>({
+  columns,
+  ...props
+}: useTableProps<TQueryFnData, TError, TData>): useTableReturnType<TData> => {
   const {
     tableQueryResult,
     current,
@@ -77,25 +58,53 @@ export const useTable = <
     setFilters,
   } = useRefineTable(props)
 
-  const [data, setData] = useState<Array<any>>([])
-  const [total, setTotal] = useState(0)
-  const [selecteds, setSelecteds] = useState<Array<string | number>>([])
+  const [selecteds, setSelecteds] = useState<Array<string | number>>()
+  const [selectOptions, setSelectOptions] = useState<SelectOptions<TData>>()
+
+  const formatFilter = useCallback((values: Record<string, any>) => {
+    return Object.keys(values).map((key) => ({
+      field: key,
+      value: values[key],
+    })) as LogicalFilter[]
+  }, [])
+
+  const formatValues = useCallback((filters: LogicalFilter[]) => {
+    return filters.reduce<Record<string, any>>((acc, item) => {
+      acc[item.field] = item.value
+      return acc
+    }, {})
+  }, [])
+
+  const formatSorters = useCallback((sort: TableSort): CrudSorting => {
+    const sorters: Array<SortInfo> = []
+    if (!Array.isArray(sort) && sort !== undefined) {
+      sorters.push(sort)
+    }
+    if (Array.isArray(sort) && sort !== undefined) {
+      sorters.push(...sort)
+    }
+    return sorters.map((item) => ({
+      field: item?.sortBy,
+      order: item?.descending ? 'desc' : 'asc',
+    }))
+  }, [])
 
   // Selected
-  const setOnSelecteds = (selectedRowKeys: Array<string | number>) => {
+  const setOnSelecteds = (
+    selectedRowKeys: Array<string | number>,
+    options: SelectOptions<TData>
+  ) => {
     setSelecteds(selectedRowKeys)
+    setSelectOptions(options)
   }
-
-  // Data
-  useEffect(() => {
-    setData(tableQueryResult?.data?.data ?? [])
-    setTotal(tableQueryResult?.data?.total ?? 0)
-  }, [tableQueryResult?.data])
 
   // Sorter
-  const setOnSorters = (sort: TableSort) => {
-    setSorters(formatSorters(sort))
-  }
+  const setOnSorters = useCallback(
+    (sort: TableSort) => {
+      setSorters(formatSorters(sort))
+    },
+    [formatSorters, setSorters]
+  )
 
   const getSorters = useMemo(() => {
     return sorters.map((item: CrudSort) => ({
@@ -105,26 +114,61 @@ export const useTable = <
   }, [sorters])
 
   // Filter
-  const setOnFilters = (values: Record<string, unknown>) => {
-    setFilters(formatFilter(values))
-  }
+  const setOnFilters = useCallback(
+    (values: Record<string, unknown>) => {
+      setFilters(formatFilter(values))
+    },
+    [formatFilter, setFilters]
+  )
+
+  const getTableFilterFields = useMemo(() => {
+    return columns
+      ?.map((item) => {
+        if (item.filter) {
+          return item.colKey
+        }
+      })
+      .filter((v) => v)
+  }, [columns])
+
+  const tableFilters = useMemo(() => {
+    const filterData = filters?.filter((item) => {
+      return getTableFilterFields?.includes((item as LogicalFilter).field)
+    })
+    return formatValues(filterData as LogicalFilter[])
+  }, [filters, formatValues, getTableFilterFields])
+
+  const setTableFilters = useCallback(
+    (values: Record<string, unknown>) => {
+      if (Object.keys(values).length === 0) {
+        const emptyFilter = getTableFilterFields?.map((item) => ({
+          field: item,
+          value: undefined,
+        }))
+        setFilters(emptyFilter as LogicalFilter[])
+        return
+      }
+      setFilters(formatFilter(values))
+    },
+    [formatFilter, getTableFilterFields, setFilters]
+  )
 
   const getFilters = useMemo(() => {
     return formatValues(filters as LogicalFilter[])
-  }, [filters])
+  }, [filters, formatValues])
 
   // Pagination
   const pagination: PaginationProps = useMemo(() => {
     return {
       current,
       pageSize,
-      total,
+      total: tableQueryResult?.data?.total,
       onChange(pageInfo) {
         setCurrent(pageInfo.current)
         setPageSize(pageInfo.pageSize)
       },
     }
-  }, [current, pageSize, setCurrent, setPageSize, total])
+  }, [current, pageSize, setCurrent, setPageSize, tableQueryResult?.data?.total])
 
   // Refetch
   const refetch = useCallback(() => {
@@ -132,12 +176,15 @@ export const useTable = <
   }, [tableQueryResult])
 
   return {
-    data: data,
+    data: tableQueryResult?.data?.data || [],
     filters: getFilters,
     setFilters: setOnFilters,
+    tableFilters: tableFilters,
+    setTableFilters: setTableFilters,
     sorters: getSorters,
     setSorters: setOnSorters,
-    selecteds: selecteds,
+    selecteds: selecteds || [],
+    selectOptions: selectOptions,
     setSelecteds: setOnSelecteds,
     loading: tableQueryResult?.isLoading,
     pagination: pagination,

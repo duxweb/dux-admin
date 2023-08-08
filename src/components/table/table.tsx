@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useMemo } from 'react'
+import React, { useImperativeHandle, useMemo, useState } from 'react'
 import {
   EnhancedTable as TdTable,
   TableProps,
@@ -7,6 +7,8 @@ import {
   Card,
   PrimaryTableCol,
   Radio,
+  SelectOptions,
+  FilterValue,
 } from 'tdesign-react/esm'
 import { useWindowSize } from '@/core/helper'
 import { useTable } from './useTable'
@@ -34,7 +36,8 @@ export interface CardTableProps {
 
 export interface CardTableRef {
   refetch: () => void
-  selecteds: Array<string | number>
+  selecteds?: Array<string | number>
+  selectOptions?: SelectOptions<any>
   filters: Record<string, any>
 }
 
@@ -42,8 +45,7 @@ export const CardTable = React.forwardRef(
   (
     {
       title,
-      filterRender,
-      rowKey,
+      rowKey = 'id',
       table,
       columns,
       header,
@@ -51,6 +53,7 @@ export const CardTable = React.forwardRef(
       banner,
       footer,
       batchRender,
+      filterRender,
     }: CardTableProps,
     ref: React.ForwardedRef<CardTableRef>
   ) => {
@@ -59,10 +62,13 @@ export const CardTable = React.forwardRef(
       pagination,
       selecteds,
       setSelecteds,
+      selectOptions,
       sorters,
       setSorters,
       filters,
       setFilters,
+      tableFilters,
+      setTableFilters,
       refetch,
       loading,
     } = useTable({
@@ -70,29 +76,16 @@ export const CardTable = React.forwardRef(
         current: 0,
         pageSize: 10,
       },
+      columns: columns,
     })
 
     const [size, sizeMap] = useWindowSize()
-
-    const tableCloumns = useMemo(() => {
-      let cols = columns || []
-      if (batchRender) {
-        cols = [
-          {
-            colKey: 'row-select',
-            type: 'multiple',
-          },
-          ...cols,
-        ]
-      }
-      return cols
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [columns])
 
     useImperativeHandle(ref, () => {
       return {
         refetch: refetch,
         selecteds,
+        selectOptions,
         filters,
       }
     })
@@ -102,27 +95,31 @@ export const CardTable = React.forwardRef(
         headerBordered
         header={
           <div className='flex flex-1 flex-col flex-wrap justify-between gap-2 md:flex-row md:items-center'>
-            <div>
-              {tabs ? (
-                <Radio.Group
-                  variant='default-filled'
-                  value={filters?.tab == undefined ? tabs?.[0]?.value : filters?.tab}
-                  onChange={(value) => {
-                    setFilters({
-                      tab: value,
-                    })
-                  }}
-                >
-                  {tabs.map((item, key) => (
-                    <Radio.Button key={key} value={item.value}>
-                      {item.label}
-                    </Radio.Button>
-                  ))}
-                </Radio.Group>
-              ) : (
-                header || <div className='text-base'>{title}</div>
-              )}
-            </div>
+            {selecteds && selecteds.length > 0 && batchRender ? (
+              <div>{batchRender}</div>
+            ) : (
+              <div>
+                {tabs ? (
+                  <Radio.Group
+                    variant='default-filled'
+                    value={filters?.tab == undefined ? tabs?.[0]?.value : filters?.tab}
+                    onChange={(value) => {
+                      setFilters({
+                        tab: value,
+                      })
+                    }}
+                  >
+                    {tabs.map((item, key) => (
+                      <Radio.Button key={key} value={item.value}>
+                        {item.label}
+                      </Radio.Button>
+                    ))}
+                  </Radio.Group>
+                ) : (
+                  header || <div className='text-base'>{title}</div>
+                )}
+              </div>
+            )}
             <div>
               <Form
                 initialData={filters}
@@ -140,8 +137,8 @@ export const CardTable = React.forwardRef(
 
         <TdTable
           {...table}
-          rowKey={rowKey || 'id'}
-          columns={tableCloumns}
+          rowKey={rowKey}
+          columns={columns}
           data={data}
           cellEmptyContent={'-'}
           stripe
@@ -149,15 +146,19 @@ export const CardTable = React.forwardRef(
           loading={loading}
           pagination={{
             ...pagination,
-            showJumper: true,
-            totalContent: batchRender,
+            className: 'app-pagination',
             theme: table?.pagination?.theme || size <= sizeMap.xl ? 'simple' : 'default',
+            showJumper:
+              table?.pagination?.showJumper !== undefined || size <= sizeMap.xl ? false : true,
+            showPageSize:
+              table?.pagination?.showPageSize !== undefined || size <= sizeMap.xl ? false : true,
           }}
           sort={sorters}
-          multipleSort
           onSortChange={setSorters}
           selectedRowKeys={selecteds}
           onSelectChange={setSelecteds}
+          filterValue={tableFilters}
+          onFilterChange={setTableFilters}
         />
         {footer}
       </Card>

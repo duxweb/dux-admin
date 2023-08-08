@@ -5,21 +5,13 @@ import React, {
   createContext,
   ReactNode,
   ReactElement,
-  FC,
   useState,
   useCallback,
   useImperativeHandle,
-  Ref,
   forwardRef,
-  ForwardRefExoticComponent,
   useContext,
 } from 'react'
-import { lazyComponent } from '@/core/package'
-import { Button, Dialog, DialogPlugin } from 'tdesign-react/esm'
-import { LoadingIcon, CloseIcon, CheckCircleFilledIcon } from 'tdesign-icons-react'
-import { create } from 'zustand'
-import { createRoot } from 'react-dom/client'
-import './style.css'
+import { Dialog } from 'tdesign-react/esm'
 
 export interface ModalContextProps {
   onClose?: () => void
