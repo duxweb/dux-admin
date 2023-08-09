@@ -11,13 +11,13 @@ export const TabBar = () => {
   const go = useGo()
   const [open, setOpen] = useState(false)
 
-  const { params } = useParsed<{ layout: string }>()
+  const { params } = useParsed<{ app: string }>()
 
   return (
     <>
       <div className='h-15 flex justify-between border-t bg-container border-component md:hidden'>
         {params &&
-          config.tabBar[params.layout].map((item, index) => (
+          config.tabBar[params.app]?.map((item, index) => (
             <TabBarItem
               key={index}
               name={item.label}
@@ -104,7 +104,14 @@ const CollapseMenu = ({ item, active, setActive, onClose }: CollapseMenuProps) =
     <li>
       <div
         className='flex cursor-pointer items-center justify-between gap-2 rounded p-2 bg-container hover:text-brand'
-        onClick={() => setCollapse(!collapse)}
+        onClick={() => {
+          item.children?.length > 0 && setCollapse(!collapse)
+          if (!item.children?.length && item.route) {
+            go({ to: item.route })
+            setActive([item.key])
+            onClose?.()
+          }
+        }}
       >
         <div className='flex items-center gap-2'>
           <div className='i-tabler:home'></div>
@@ -144,10 +151,10 @@ const CollapseMenu = ({ item, active, setActive, onClose }: CollapseMenuProps) =
                     ])}
                     hover={'color'}
                     onClick={() => {
-                      setActive([sub.key, parent.key, item.key])
                       go({
                         to: sub.route,
                       })
+                      setActive([sub.key, parent.key, item.key])
                       onClose?.()
                     }}
                   >

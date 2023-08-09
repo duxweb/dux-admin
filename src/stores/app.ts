@@ -1,12 +1,12 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 
-interface BearState {
+interface ThemeState {
   dark: boolean
   switchDark: () => void
 }
 
-const useAppStore = create<BearState>()(
+const useAppStore = create<ThemeState>()(
   persist(
     (set, get) => ({
       dark: window.matchMedia('(prefers-color-scheme: dark)').matches,
@@ -16,10 +16,32 @@ const useAppStore = create<BearState>()(
       },
     }),
     {
-      name: 'app',
+      name: 'theme-mode',
       storage: createJSONStorage(() => localStorage),
     }
   )
 )
 
-export { useAppStore }
+interface UserState {
+  token?: string
+  data?: any
+  setUser: (token: string, data?: any) => void
+}
+
+const useUserStore = create<UserState>()(
+  persist(
+    (set) => ({
+      token: undefined,
+      data: undefined,
+      setUser: (token) => {
+        set({ token: token })
+      },
+    }),
+    {
+      name: 'authorization',
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+)
+
+export { useAppStore, useUserStore }

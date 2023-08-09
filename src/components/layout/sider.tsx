@@ -4,69 +4,6 @@ import { useMenu, useGo, useLogout } from '@refinedev/core'
 import { useMemo, useState } from 'react'
 import { TreeMenuItem } from '@refinedev/core/dist/hooks/menu/useMenu'
 
-interface MenuAppProps {
-  name: string
-  icon: string
-  active?: boolean
-  onClick?: () => void
-}
-const MenuApp = ({ name, icon, active, onClick }: MenuAppProps) => {
-  return (
-    <li>
-      <Tooltip
-        content={name}
-        destroyOnClose
-        duration={0}
-        placement='right'
-        showArrow
-        theme='default'
-      >
-        <div
-          className={clsx([
-            'flex items-center justify-center rounded px-2.5 py-1.5 hover:bg-brand-1 cursor-pointer',
-            active ? 'bg-brand text-white hover:bg-brand hover:text-white' : '',
-          ])}
-          onClick={onClick}
-        >
-          <div className={clsx(['h-5 w-5', icon])}></div>
-        </div>
-      </Tooltip>
-    </li>
-  )
-}
-
-interface CollapseMenuProps {
-  item: TreeMenuItem
-  children?: React.ReactNode
-}
-const CollapseMenu = ({ item, children }: CollapseMenuProps) => {
-  const [collapse, setCollapse] = useState(true)
-  return (
-    <div className='my-4 px-2 text-sm'>
-      <div
-        className='mb-1 flex cursor-pointer items-center gap-2 rounded p-2 hover:bg-secondarycontainer'
-        onClick={() => {
-          setCollapse((status) => !status)
-        }}
-      >
-        <div className={clsx(['w-4 h-4', item.icon])}></div>
-        <div className='flex-1'>{item.label}</div>
-        <div>
-          <div
-            className={clsx([
-              'i-tabler:chevron-down transition-all',
-              collapse ? 'rotate-0' : '-rotate-90',
-            ])}
-          ></div>
-        </div>
-      </div>
-      <div className={clsx(['transition-all overflow-hidden', collapse ? 'max-h-200' : 'max-h-0'])}>
-        {children}
-      </div>
-    </div>
-  )
-}
-
 const Sider = () => {
   const { menuItems, defaultOpenKeys } = useMenu()
   const { mutate: logout } = useLogout()
@@ -136,38 +73,143 @@ const Sider = () => {
               <div className='font-bold text-secondary'>{menuInfo?.label}</div>
             )}
           </div>
-          {menuInfo?.children?.map((item: TreeMenuItem, index: number) => (
-            <CollapseMenu key={index} item={item}>
-              {item?.children?.length > 0 && (
-                <ul className='flex flex-col'>
-                  {item.children.map((sub: TreeMenuItem, key: number) => (
-                    <li key={key}>
-                      <div
-                        className={clsx([
-                          'cursor-pointer rounded pr-2 pl-8 py-2',
-                          active[active.length - 1] == menuInfo.key &&
-                          active[active.length - 2] == item.key &&
-                          active[active.length - 3] == sub.key
-                            ? 'text-brand bg-brand-1'
-                            : 'text-secondary hover:bg-secondarycontainer',
-                        ])}
-                        onClick={() => {
-                          setActive([sub.key, item.key, menuInfo.key])
-                          go({
-                            to: sub.route,
-                          })
-                        }}
-                      >
-                        {sub.label}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </CollapseMenu>
-          ))}
+          <div className='flex flex-col gap-2 px-2 text-sm'>
+            {menuInfo?.children?.map((item: TreeMenuItem, index: number) => (
+              <>
+                {console.log(item)}
+                {item.children?.length == 0 && item.route && (
+                  <MenuTitle
+                    label={item?.label}
+                    icon={item?.icon}
+                    active={
+                      active[active.length - 1] == menuInfo.key &&
+                      active[active.length - 2] == item.key
+                    }
+                    onClick={() => {
+                      setActive([item.key, menuInfo.key])
+                      go({
+                        to: item.route,
+                      })
+                    }}
+                  />
+                )}
+                {item?.children?.length > 0 && (
+                  <CollapseMenu key={index} item={item}>
+                    <ul className='flex flex-col'>
+                      {item.children.map((sub: TreeMenuItem, key: number) => (
+                        <li key={key}>
+                          <div
+                            className={clsx([
+                              'cursor-pointer rounded pr-2 pl-8 py-2',
+                              active[active.length - 1] == menuInfo.key &&
+                              active[active.length - 2] == item.key &&
+                              active[active.length - 3] == sub.key
+                                ? 'text-brand bg-brand-1'
+                                : 'text-secondary hover:bg-secondarycontainer',
+                            ])}
+                            onClick={() => {
+                              setActive([sub.key, item.key, menuInfo.key])
+                              go({
+                                to: sub.route,
+                              })
+                            }}
+                          >
+                            {sub.label}
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </CollapseMenu>
+                )}
+              </>
+            ))}
+          </div>
         </div>
       )}
+    </div>
+  )
+}
+
+interface MenuAppProps {
+  name: string
+  icon: string
+  active?: boolean
+  onClick?: () => void
+}
+const MenuApp = ({ name, icon, active, onClick }: MenuAppProps) => {
+  return (
+    <li>
+      <Tooltip
+        content={name}
+        destroyOnClose
+        duration={0}
+        placement='right'
+        showArrow
+        theme='default'
+      >
+        <div
+          className={clsx([
+            'flex items-center justify-center rounded px-2.5 py-1.5 hover:bg-brand-1 cursor-pointer',
+            active ? 'bg-brand text-white hover:bg-brand hover:text-white' : '',
+          ])}
+          onClick={onClick}
+        >
+          <div className={clsx(['h-5 w-5', icon])}></div>
+        </div>
+      </Tooltip>
+    </li>
+  )
+}
+
+interface MenuTitleProps {
+  label?: string
+  icon?: string
+  active?: boolean
+  collapse?: boolean
+  onClick?: () => void
+}
+const MenuTitle = ({ label, icon, active, collapse, onClick }: MenuTitleProps) => {
+  return (
+    <div
+      className={clsx([
+        'mb-1 flex cursor-pointer items-center gap-2 rounded p-2 hover:bg-secondarycontainer',
+        active ? 'text-brand bg-brand-1 hover:bg-brand-1' : '',
+      ])}
+      onClick={onClick}
+    >
+      <div className={clsx(['w-4 h-4', icon])}></div>
+      <div className='flex-1'>{label}</div>
+      {collapse != undefined && (
+        <div
+          className={clsx([
+            'i-tabler:chevron-down transition-all',
+            collapse ? 'rotate-0' : '-rotate-90',
+          ])}
+        ></div>
+      )}
+    </div>
+  )
+}
+
+interface CollapseMenuProps {
+  item: TreeMenuItem
+  children?: React.ReactNode
+}
+const CollapseMenu = ({ item, children }: CollapseMenuProps) => {
+  const [collapse, setCollapse] = useState(true)
+  return (
+    <div>
+      <MenuTitle
+        label={item?.label}
+        icon={item?.icon}
+        collapse={collapse}
+        onClick={() => {
+          setCollapse((status) => !status)
+        }}
+      />
+      <div className={clsx(['transition-all overflow-hidden', collapse ? 'max-h-200' : 'max-h-0'])}>
+        {children}
+      </div>
     </div>
   )
 }

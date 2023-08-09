@@ -13,6 +13,7 @@
         "password": "密码"
       },
       "errors": {
+        "validEmpty": "请输入账号和密码",
         "validEmail": "无效的电子邮件地址"
       },
       "buttons": {

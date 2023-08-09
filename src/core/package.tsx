@@ -26,6 +26,7 @@ export const lazyComponent = (importComp: () => Promise<{ default: ComponentType
 }
 
 export interface createRefineProps {
+  name: string
   prefix?: string
   i18nProvider: I18nProvider
   authProvider: AuthBindings
@@ -34,6 +35,7 @@ export interface createRefineProps {
 }
 
 export const createRefine = ({
+  name,
   prefix,
   i18nProvider,
   authProvider,
@@ -102,7 +104,7 @@ export const createRefine = ({
     path: prefix,
     element: (
       <Refine
-        dataProvider={dataProvider(config.apiUrl)}
+        dataProvider={dataProvider(name, config.apiUrl)}
         authProvider={authProvider}
         i18nProvider={i18nProvider}
         routerProvider={routerBindings}

@@ -1,6 +1,6 @@
 import { appConfig } from '../core/app'
-import system from '../pages/system'
+import admin from '../pages/admin'
 
-const app: appConfig[] = [system]
+const app: appConfig[] = [admin]
 
 export default app

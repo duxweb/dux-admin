@@ -87,23 +87,25 @@ export const AppProvider = () => {
     const routes: RouteObject[] = [
       {
         index: true,
-        element: <Navigate to={'/' + config.defaultLayout} />,
+        element: <Navigate to={'/' + config.defaultApp} />,
       },
     ]
 
     const formatResources = (
       res?: ResourceRouteComposition
     ): ResourceRouteComposition | undefined => {
-      return typeof res === 'string' ? ['/:layout', res].join('/') : res
+      return typeof res === 'string' ? ['/:app', res].join('/') : res
     }
 
-    Object.keys(app.apps).map((layout) => {
+    Object.keys(app.apps).map((name) => {
       const refine = createRefine({
-        prefix: layout ? '/:layout' : undefined,
+        name: name,
+        prefix: name ? '/:app' : undefined,
         i18nProvider: app.i18nProvider,
-        authProvider: app.apps[layout].authProvider,
-        router: app.apps[layout].getRouter(),
-        resources: app.apps[layout].getResources().map((item) => {
+        authProvider: app.apps[name].authProvider,
+        router: app.apps[name].getRouter(),
+        resources: app.apps[name].getResources().map((item) => {
+          item.name = config.resourcesPrefix ? name + '/' + item.name : item.name
           item.list = formatResources(item.list)
           item.create = formatResources(item.create)
           item.clone = formatResources(item.clone)
@@ -111,7 +113,7 @@ export const AppProvider = () => {
           item.show = formatResources(item.show)
           item.meta = {
             ...item.meta,
-            layout: layout,
+            app: name,
           }
           return item
         }),
@@ -119,8 +121,7 @@ export const AppProvider = () => {
       routes.push(refine)
     })
     return createHashRouter(routes)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [app])
 
   return <RouterProvider router={router} />
 }

@@ -4,7 +4,7 @@ export interface TabBarItem {
   route: string
 }
 
-export interface basePath {
+export interface apiPath {
   login: string
   check: string
   register: string
@@ -12,10 +12,11 @@ export interface basePath {
   updatePassword: string
 }
 
-export interface AppConfig {
+export interface Config {
   projectId: string
   apiUrl: string
-  basePath: basePath
-  defaultLayout: string
+  apiPath: apiPath
+  defaultApp: string
+  resourcesPrefix: boolean
   tabBar: Record<string, Array<TabBarItem>>
 }

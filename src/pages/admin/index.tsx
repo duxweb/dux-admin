@@ -11,7 +11,7 @@ const init = (context: appContext) => {
   context.createApp(
     'admin',
     createApp({
-      authProvider: authProvider,
+      authProvider: authProvider('admin'),
     })
   )
   context.addI18n('zh', 'common', zhLang)

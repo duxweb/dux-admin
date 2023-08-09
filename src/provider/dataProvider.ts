@@ -11,7 +11,7 @@ export const client = axios.create({
 
 client.interceptors.response.use(
   (response) => {
-    return response
+    return response?.data
   },
   (error) => {
     const customError: HttpError = {
@@ -25,7 +25,7 @@ client.interceptors.response.use(
   }
 )
 
-export const dataProvider = (apiUrl: string): DataProvider => ({
+export const dataProvider = (app: string, apiUrl: string): DataProvider => ({
   getList: async ({ resource, pagination, sorters, filters, meta }) => {
     const url = `${apiUrl}/${resource}`
     const { current = 1, pageSize = 10 } = pagination ?? {}
@@ -47,6 +47,10 @@ export const dataProvider = (apiUrl: string): DataProvider => ({
         ...queryFilters,
         ...quertSorts,
       },
+      headers: {
+        Authorization: getToken(app),
+        ...meta?.headers,
+      },
     })
     const total = data?.total || data?.length || 0
     return {
@@ -67,6 +71,10 @@ export const dataProvider = (apiUrl: string): DataProvider => ({
     const url = `${apiUrl}/${resource}/${id}`
     const { data } = await client.post(url, variables, {
       params: meta?.params,
+      headers: {
+        Authorization: getToken(app),
+        ...meta?.headers,
+      },
     })
     return {
       data,
@@ -77,6 +85,10 @@ export const dataProvider = (apiUrl: string): DataProvider => ({
     const { data } = await client.delete(url, {
       data: variables,
       params: meta?.params,
+      headers: {
+        Authorization: getToken(app),
+        ...meta?.headers,
+      },
     })
     return {
       data,
@@ -87,6 +99,10 @@ export const dataProvider = (apiUrl: string): DataProvider => ({
     const url = `${apiUrl}/${resource}/${id}`
     const { data } = await client.get(url, {
       params: meta?.params,
+      headers: {
+        Authorization: getToken(app),
+        ...meta?.headers,
+      },
     })
     return {
       data,
@@ -99,6 +115,10 @@ export const dataProvider = (apiUrl: string): DataProvider => ({
         ids: ids.join(','),
         ...meta?.params,
       },
+      headers: {
+        Authorization: getToken(app),
+        ...meta?.headers,
+      },
     })
     return {
       data,
@@ -108,6 +128,10 @@ export const dataProvider = (apiUrl: string): DataProvider => ({
     const url = `${apiUrl}/${resource}`
     const { data } = await client.post(url, variables, {
       params: meta?.params,
+      headers: {
+        Authorization: getToken(app),
+        ...meta?.headers,
+      },
     })
     return {
       data,
@@ -119,6 +143,10 @@ export const dataProvider = (apiUrl: string): DataProvider => ({
       params: {
         ids: ids.join(','),
         ...meta?.params,
+      },
+      headers: {
+        Authorization: getToken(app),
+        ...meta?.headers,
       },
     })
     return {
@@ -135,6 +163,10 @@ export const dataProvider = (apiUrl: string): DataProvider => ({
           ids: ids.join(','),
           ...meta?.params,
         },
+        headers: {
+          Authorization: getToken(app),
+          ...meta?.headers,
+        },
       }
     )
 
@@ -143,8 +175,6 @@ export const dataProvider = (apiUrl: string): DataProvider => ({
     }
   },
   custom: async ({ url, method, filters, sorters, payload, query, headers, meta }) => {
-    const requestUrl = `${url}?`
-
     const quertSorts: Record<string, any> = {}
     sorters?.map((item) => {
       quertSorts[item.field] = item.order
@@ -173,17 +203,29 @@ export const dataProvider = (apiUrl: string): DataProvider => ({
       case 'patch':
         axiosResponse = await client[method](url, payload, {
           params: params,
+          headers: {
+            Authorization: getToken(app),
+            ...meta?.headers,
+          },
         })
         break
       case 'delete':
         axiosResponse = await client.delete(url, {
           data: payload,
           params: params,
+          headers: {
+            Authorization: getToken(app),
+            ...meta?.headers,
+          },
         })
         break
       default:
-        axiosResponse = await client.get(requestUrl, {
+        axiosResponse = await client.get(url, {
           params: params,
+          headers: {
+            Authorization: getToken(app),
+            ...meta?.headers,
+          },
         })
         break
     }
@@ -191,6 +233,15 @@ export const dataProvider = (apiUrl: string): DataProvider => ({
     return { data }
   },
 })
+
+const getToken = (app: string) => {
+  const auth = localStorage.getItem(app + ':auth')
+  if (!auth) {
+    return
+  }
+  const { token } = JSON.parse(auth)
+  return token
+}
 
 const generateFilters = (filters?: CrudFilters) => {
   const queryFilters: { [key: string]: string } = {}

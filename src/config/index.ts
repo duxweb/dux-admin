@@ -1,16 +1,17 @@
-import { AppConfig } from '@/core/config'
+import { Config } from '@/core/config'
 
-const config: AppConfig = {
+const config: Config = {
   projectId: '75z1iv-x6xVpm-suPmVP',
-  apiUrl: 'http://share-cloud.test',
-  defaultLayout: 'admin',
-  basePath: {
+  apiUrl: 'http://0.0.0.0:3000',
+  apiPath: {
     login: 'login',
     check: 'check',
     register: 'register',
     forgotPassword: 'forgot-password',
     updatePassword: 'update-password',
   },
+  defaultApp: 'admin',
+  resourcesPrefix: false,
   tabBar: {
     admin: [
       {

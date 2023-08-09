@@ -1,5 +1,5 @@
-import { useLogin } from '@refinedev/core'
-import { Form, Input, Button, MessagePlugin, SubmitContext, Alert } from 'tdesign-react/esm'
+import { useLogin, useTranslate } from '@refinedev/core'
+import { Form, Input, Button, SubmitContext, Alert } from 'tdesign-react/esm'
 import { DesktopIcon, LockOnIcon } from 'tdesign-icons-react'
 import { useAppStore } from '../../../stores/app'
 import { useState } from 'react'
@@ -12,35 +12,34 @@ type LoginVariables = {
 }
 
 export const Login = () => {
-  const { mutate: login } = useLogin<LoginVariables>()
-  const [error, setError] = useState<string | undefined>(undefined)
+  const { mutate: login } = useLogin<LoginVariables>({})
+  const [loading, setLoading] = useState<boolean>()
+  const [error, setError] = useState<string>()
   const switchDark = useAppStore((state) => state.switchDark)
+
+  const translate = useTranslate()
 
   const onSubmit = (context: SubmitContext) => {
     if (context.validateResult === false) {
       setError(context.firstError || 'Please check the form')
     }
-
+    setLoading(true)
     login(
       {
         ...context.fields,
-        layout: 'admin',
+        app: 'admin',
       },
       {
         onSuccess: (data) => {
+          setLoading(false)
           if (!data.success) {
-            // handle error
-            console.log('login error', data)
-            setError(data.error.message)
+            setError(translate(data.error.message))
             return
           }
-
-          // handle success
         },
         onError: (error) => {
-          // handle error
-          console.log('login error', error)
-          setError(error.message)
+          setLoading(false)
+          setError(translate(error?.message))
         },
       }
     )
@@ -65,7 +64,14 @@ export const Login = () => {
             <img src='/public/images/common/logo.svg' width={50} />
             <div className='mt-4 text-lg'>Dux Admin</div>
           </div>
-          <Form statusIcon={true} onSubmit={onSubmit} colon={true} labelWidth={0} className='my-6'>
+          <Form
+            statusIcon={true}
+            onSubmit={onSubmit}
+            colon={true}
+            labelWidth={0}
+            className='my-6'
+            disabled={loading}
+          >
             <FormItem name='username'>
               <Input
                 size='large'
@@ -90,7 +96,7 @@ export const Login = () => {
               </FormItem>
             )}
             <FormItem>
-              <Button theme='primary' type='submit' block size='large'>
+              <Button theme='primary' type='submit' block size='large' loading={loading}>
                 登录
               </Button>
             </FormItem>
