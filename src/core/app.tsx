@@ -87,7 +87,7 @@ export const AppProvider = () => {
     const routes: RouteObject[] = [
       {
         index: true,
-        element: <Navigate to={config.defaultPath} />,
+        element: <Navigate to={'/' + config.defaultLayout} />,
       },
     ]
 

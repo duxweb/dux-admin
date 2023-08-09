@@ -16,12 +16,5 @@ export const Layout = ({ children }: PropsWithChildren) => {
         <TabBar />
       </div>
     </div>
-    // <div className='layout'>
-    //   <Menu />
-    //   <div className='content'>
-    //     <Breadcrumb />
-    //     <div>{children}</div>
-    //   </div>
-    // </div>
   )
 }

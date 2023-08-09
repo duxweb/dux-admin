@@ -14,7 +14,7 @@ import { ForgotPassword } from '../pages/admin/forgotPassword'
 import { Login } from '../pages/admin/login'
 import { Register } from '../pages/admin/register'
 import config from '../config'
-import { dataProvider } from '@/dataProvider'
+import { dataProvider } from '@/provider/dataProvider'
 
 export const lazyComponent = (importComp: () => Promise<{ default: ComponentType<any> }>) => {
   const Comp = lazy(importComp)
@@ -45,8 +45,8 @@ export const createRefine = ({
   const notificationProvider: NotificationProvider = {
     open: ({ message, description, key, type, cancelMutation, undoableTimeout }) => {
       const notifyConfig = {
-        title: description,
-        content: message,
+        title: message,
+        content: description,
         offset: [-20, 20],
         closeBtn: true,
         onCloseBtnClick: () => {

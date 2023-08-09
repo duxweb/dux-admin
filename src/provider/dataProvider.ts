@@ -1,7 +1,7 @@
 import { DataProvider, HttpError, CrudOperators, CrudFilters } from '@refinedev/core'
 import axios, { AxiosHeaderValue } from 'axios'
 
-const client = axios.create({
+export const client = axios.create({
   timeout: 10000,
   headers: {
     Accept: 'application/json',
@@ -17,6 +17,7 @@ client.interceptors.response.use(
     const customError: HttpError = {
       ...error,
       message: error.response?.data?.message,
+      data: error.response?.data?.data,
       statusCode: error.response?.status,
     }
 

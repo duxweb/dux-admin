@@ -4,9 +4,18 @@ export interface TabBarItem {
   route: string
 }
 
+export interface basePath {
+  login: string
+  check: string
+  register: string
+  forgotPassword: string
+  updatePassword: string
+}
+
 export interface AppConfig {
   projectId: string
   apiUrl: string
-  defaultPath: string
+  basePath: basePath
+  defaultLayout: string
   tabBar: Record<string, Array<TabBarItem>>
 }

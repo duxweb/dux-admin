@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { Tooltip } from 'tdesign-react/esm'
-import { useMenu, useGo } from '@refinedev/core'
+import { useMenu, useGo, useLogout } from '@refinedev/core'
 import { useMemo, useState } from 'react'
 import { TreeMenuItem } from '@refinedev/core/dist/hooks/menu/useMenu'
 
@@ -69,6 +69,7 @@ const CollapseMenu = ({ item, children }: CollapseMenuProps) => {
 
 const Sider = () => {
   const { menuItems, defaultOpenKeys } = useMenu()
+  const { mutate: logout } = useLogout()
   const go = useGo()
 
   const [active, setActive] = useState<string[]>(defaultOpenKeys)
@@ -111,7 +112,13 @@ const Sider = () => {
         </ul>
         <div className='mb-2 flex flex-none'>
           <ul className='flex flex-1 flex-col items-center gap-3 p-2 text-secondary'>
-            <MenuApp name='Home' icon='i-tabler:logout-2' />
+            <MenuApp
+              name='Logout'
+              icon='i-tabler:logout-2'
+              onClick={() => {
+                logout()
+              }}
+            />
           </ul>
         </div>
       </div>

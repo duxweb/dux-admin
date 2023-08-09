@@ -21,17 +21,29 @@ export const Login = () => {
       setError(context.firstError || 'Please check the form')
     }
 
-    login(context.fields, {
-      onSuccess: (data) => {
-        if (!data.success) {
-          // handle error
-          setError(data.error.message)
-          return
-        }
-
-        // handle success
+    login(
+      {
+        ...context.fields,
+        layout: 'admin',
       },
-    })
+      {
+        onSuccess: (data) => {
+          if (!data.success) {
+            // handle error
+            console.log('login error', data)
+            setError(data.error.message)
+            return
+          }
+
+          // handle success
+        },
+        onError: (error) => {
+          // handle error
+          console.log('login error', error)
+          setError(error.message)
+        },
+      }
+    )
   }
 
   return (
@@ -50,7 +62,7 @@ export const Login = () => {
         </div>
         <div className='flex flex-1 flex-col'>
           <div className='mt-4 flex flex-col items-center justify-center'>
-            <img src='/public/images/logo.svg' />
+            <img src='/public/images/common/logo.svg' width={50} />
             <div className='mt-4 text-lg'>Dux Admin</div>
           </div>
           <Form statusIcon={true} onSubmit={onSubmit} colon={true} labelWidth={0} className='my-6'>

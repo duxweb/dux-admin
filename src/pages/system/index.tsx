@@ -1,5 +1,5 @@
 import { appConfig, appContext } from '../../core/app'
-import { authProvider } from './provider/authProvider'
+import { authProvider } from '@/provider/authProvider'
 
 import { createApp } from '../../core/helper'
 import { adminRouter } from './config/router'

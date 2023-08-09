@@ -2,8 +2,15 @@ import { AppConfig } from '@/core/config'
 
 const config: AppConfig = {
   projectId: '75z1iv-x6xVpm-suPmVP',
-  apiUrl: 'https://api.fake-rest.refine.dev',
-  defaultPath: '/admin',
+  apiUrl: 'http://share-cloud.test',
+  defaultLayout: 'admin',
+  basePath: {
+    login: 'login',
+    check: 'check',
+    register: 'register',
+    forgotPassword: 'forgot-password',
+    updatePassword: 'update-password',
+  },
   tabBar: {
     admin: [
       {
