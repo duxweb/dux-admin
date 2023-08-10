@@ -19,8 +19,8 @@ const Sider = () => {
   return (
     <div className='z-1 hidden flex-none flex-row md:flex'>
       <div className='h-screen w-18 flex flex-col border-r bg-container border-component'>
-        <div className='h-14 flex items-center justify-center gap-2'>
-          <div className='text-5 font-bold font-sans'>Dux</div>
+        <div className='h-16 flex items-center justify-center gap-2'>
+          <img src='/public/images/common/logo.svg' width={50} />
         </div>
         <ul className='mt-6 flex flex-1 flex-col items-center gap-3 p-2 text-secondary'>
           {menuItems.map((item, index) => {
@@ -73,7 +73,7 @@ const Sider = () => {
               <div className='font-bold text-secondary'>{menuInfo?.label}</div>
             )}
           </div>
-          <div className='flex flex-col gap-2 px-2 text-sm'>
+          <div className='flex flex-col px-2 text-sm'>
             {menuInfo?.children?.map((item: TreeMenuItem, index: number) => (
               <>
                 {console.log(item)}

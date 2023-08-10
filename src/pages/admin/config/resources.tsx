@@ -5,7 +5,7 @@ import { Button } from 'tdesign-react/esm'
 export const adminResources = (app: App) => {
   app.addResources([
     {
-      name: 'Index',
+      name: 'index',
       list: 'index',
       meta: {
         label: 'Dashboard',

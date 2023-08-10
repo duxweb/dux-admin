@@ -52,7 +52,7 @@ const Menu = ({ onClose }: MenuProps) => {
   return (
     <div
       className={clsx([
-        'fixed inset-0 z-100  items-center justify-center overflow-hidden bg-black/50 p-10',
+        'fixed inset-0 z-100  items-center justify-center overflow-hidden bg-black/50 p-4',
       ])}
     >
       <motion.div
@@ -73,7 +73,7 @@ const Menu = ({ onClose }: MenuProps) => {
             <Button shape='circle' icon={<CloseIcon />} variant='outline' onClick={onClose} />
           </div>
         </div>
-        <ul className='flex flex-1 flex-col gap-2 py-4'>
+        <ul className='flex flex-1 flex-col gap-2 py-4 text-sm'>
           {menuItems.map((item, index) => {
             return (
               <CollapseMenu
@@ -98,76 +98,126 @@ interface CollapseMenuProps {
   onClose: () => void
 }
 const CollapseMenu = ({ item, active, setActive, onClose }: CollapseMenuProps) => {
-  const go = useGo()
   const [collapse, setCollapse] = useState(active[active.length - 1] == item.key)
   return (
-    <li>
-      <div
-        className='flex cursor-pointer items-center justify-between gap-2 rounded p-2 bg-container hover:text-brand'
-        onClick={() => {
-          item.children?.length > 0 && setCollapse(!collapse)
-          if (!item.children?.length && item.route) {
-            go({ to: item.route })
-            setActive([item.key])
-            onClose?.()
-          }
-        }}
-      >
-        <div className='flex items-center gap-2'>
-          <div className='i-tabler:home'></div>
-          {item.label}
+    <li className={clsx(['rounded bg-container'])}>
+      <CollapseMenuTitle {...{ item, collapse, setCollapse, active, setActive, onClose }} />
+      <div className={clsx(['p-2', item.children?.length != 0 && collapse ? 'block' : 'hidden'])}>
+        <div className='rounded bg-gray-1 p-1'>
+          <CollapseMenuTree
+            items={item.children}
+            path={[item.key]}
+            active={active}
+            setActive={setActive}
+            onClose={onClose}
+          />
         </div>
-        {item.children?.length > 0 && (
-          <div
-            className={clsx([
-              'i-tabler:chevron-down transition-all',
-              collapse ? 'rotate-0' : '-rotate-90',
-            ])}
-          ></div>
-        )}
       </div>
-      <ul
-        className={clsx([
-          'transition-all overflow-hidden flex flex-col',
-          collapse ? 'max-h-200' : 'max-h-0',
-        ])}
-      >
-        {item.children?.map((parent: TreeMenuItem, index: number) => (
-          <li key={index} className='py-1'>
-            <div className='flex cursor-pointer items-center gap-2 rounded px-4 py-2 text-sm opacity-50'>
-              {parent.label}
-            </div>
-            <ul className='flex flex-col rounded bg-white/50 divide-y divide-gray-4 dark:bg-white/5 dark:divide-black'>
-              {parent.children?.map((sub: TreeMenuItem, key: number) => (
-                <li key={key}>
-                  <Link
-                    className={clsx([
-                      'block px-4 py-2',
-                      active[active.length - 1] == item.key &&
-                      active[active.length - 2] == parent.key &&
-                      active[active.length - 3] == sub.key
-                        ? 'text-brand'
-                        : '',
-                    ])}
-                    hover={'color'}
-                    onClick={() => {
-                      go({
-                        to: sub.route,
-                      })
-                      setActive([sub.key, parent.key, item.key])
-                      onClose?.()
-                    }}
-                  >
-                    {sub.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ul>
     </li>
   )
+}
+
+interface MenuTitleProps {
+  item: TreeMenuItem
+  collapse: boolean
+  active: string[]
+  setCollapse: (collapse: boolean) => void
+  setActive: (active: string[]) => void
+  onClose: () => void
+}
+
+const CollapseMenuTitle = ({
+  item,
+  collapse,
+  setCollapse,
+  active,
+  setActive,
+  onClose,
+}: MenuTitleProps) => {
+  const go = useGo()
+  return (
+    <div
+      className={clsx([
+        'flex cursor-pointer items-center justify-between gap-2 p-4 py-3',
+        active[active.length - 1] == item.key ? 'text-brand' : '',
+      ])}
+      onClick={() => {
+        item.children?.length > 0 && setCollapse(!collapse)
+        if (!item.children?.length && item.route) {
+          go({ to: item.route })
+          setActive([item.key])
+          onClose?.()
+        }
+      }}
+    >
+      <div className='flex items-center gap-2'>
+        <div className={item.icon}></div>
+        {item.label}
+      </div>
+      {item.children?.length > 0 && (
+        <div
+          className={clsx([
+            'i-tabler:chevron-down transition-all',
+            collapse ? 'rotate-0' : '-rotate-90',
+          ])}
+        ></div>
+      )}
+    </div>
+  )
+}
+
+interface CollapseMenuTreeProps {
+  items: TreeMenuItem[]
+  path: string[]
+  active: string[]
+  setActive: (active: string[]) => void
+  onClose: () => void
+}
+
+const CollapseMenuTree = ({ items, path, active, setActive, onClose }: CollapseMenuTreeProps) => {
+  const go = useGo()
+
+  return items?.map((item, index) => (
+    <ul key={index}>
+      <li>
+        <Link
+          className={clsx([
+            'block flex items-center gap-2 px-4 py-2',
+            JSON.stringify(active) === JSON.stringify([item.key, ...path]) ? 'text-brand' : '',
+          ])}
+          hover={'color'}
+          onClick={() => {
+            if (!item.route) {
+              return
+            }
+            go({
+              to: item.route,
+            })
+            onClose?.()
+            setActive([item.key, ...path])
+          }}
+        >
+          {item.children?.length > 0 ? (
+            <div className='i-tabler:caret-down-filled opacity-40'></div>
+          ) : (
+            <div className='w-3'></div>
+          )}
+          {item.label}
+        </Link>
+        {item.children?.length > 0 && (
+          <div className='pl-4'>
+            <CollapseMenuTree
+              items={item.children}
+              path={[item.key, ...path]}
+              active={active}
+              setActive={setActive}
+              onClose={onClose}
+            />
+          </div>
+        )}
+      </li>
+    </ul>
+  ))
 }
 
 interface TabBarItemProps {

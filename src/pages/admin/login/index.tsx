@@ -1,5 +1,5 @@
 import { useLogin, useTranslate } from '@refinedev/core'
-import { Form, Input, Button, SubmitContext, Alert } from 'tdesign-react/esm'
+import { Form, Input, Button, SubmitContext } from 'tdesign-react/esm'
 import { DesktopIcon, LockOnIcon } from 'tdesign-icons-react'
 import { useAppStore } from '../../../stores/app'
 import { useState } from 'react'
@@ -14,14 +14,13 @@ type LoginVariables = {
 export const Login = () => {
   const { mutate: login } = useLogin<LoginVariables>({})
   const [loading, setLoading] = useState<boolean>()
-  const [error, setError] = useState<string>()
   const switchDark = useAppStore((state) => state.switchDark)
 
   const translate = useTranslate()
 
   const onSubmit = (context: SubmitContext) => {
     if (context.validateResult === false) {
-      setError(context.firstError || 'Please check the form')
+      // error
     }
     setLoading(true)
     login(
@@ -30,16 +29,11 @@ export const Login = () => {
         app: 'admin',
       },
       {
-        onSuccess: (data) => {
+        onSuccess: () => {
           setLoading(false)
-          if (!data.success) {
-            setError(translate(data.error.message))
-            return
-          }
         },
-        onError: (error) => {
+        onError: () => {
           setLoading(false)
-          setError(translate(error?.message))
         },
       }
     )
@@ -61,7 +55,7 @@ export const Login = () => {
         </div>
         <div className='flex flex-1 flex-col'>
           <div className='mt-4 flex flex-col items-center justify-center'>
-            <img src='/public/images/common/logo.svg' width={50} />
+            <img src='/public/images/common/logo.svg' width={100} />
             <div className='mt-4 text-lg'>Dux Admin</div>
           </div>
           <Form
@@ -90,11 +84,6 @@ export const Login = () => {
                 autocomplete='new-password'
               />
             </FormItem>
-            {error && (
-              <FormItem>
-                <Alert className='w-full' theme='error' message={error} />
-              </FormItem>
-            )}
             <FormItem>
               <Button theme='primary' type='submit' block size='large' loading={loading}>
                 登录

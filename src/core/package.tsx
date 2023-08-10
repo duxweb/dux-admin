@@ -5,8 +5,8 @@ import type {
   ResourceProps,
   NotificationProvider,
 } from '@refinedev/core'
-import { ComponentType, Suspense, lazy, useCallback, useMemo } from 'react'
-import { NotificationPlugin, NotificationInstance, Button } from 'tdesign-react/esm'
+import { ComponentType, Suspense, lazy } from 'react'
+import { MessagePlugin, MessageInstance, TdMessageProps } from 'tdesign-react/esm'
 import { RouteObject, Outlet } from 'react-router-dom'
 import routerBindings, { CatchAllNavigate, NavigateToResource } from '@refinedev/react-router-v6'
 import { Layout } from '../components/layout'
@@ -42,50 +42,33 @@ export const createRefine = ({
   router,
   resources,
 }: createRefineProps): RouteObject => {
-  const notifyMaps: Record<string, Promise<NotificationInstance>> = {}
+  const notifyMaps: Record<string, Promise<MessageInstance>> = {}
 
   const notificationProvider: NotificationProvider = {
-    open: ({ message, description, key, type, cancelMutation, undoableTimeout }) => {
-      const notifyConfig = {
-        title: message,
-        content: description,
-        offset: [-20, 20],
-        closeBtn: true,
-        onCloseBtnClick: () => {
-          if (key) {
-            delete notifyMaps[key]
-          }
-        },
-        onDurationEnd: () => {
+    open: ({ message, description, key, type, undoableTimeout }) => {
+      const notifyConfig: TdMessageProps = {
+        content: description || message,
+        onClose: () => {
           if (key) {
             delete notifyMaps[key]
           }
         },
       }
-
       if (type === 'success') {
-        const msg = NotificationPlugin.success(notifyConfig)
+        const msg = MessagePlugin.success(notifyConfig)
         if (key) {
           notifyMaps[key] = msg
         }
       }
       if (type === 'error') {
-        const msg = NotificationPlugin.error(notifyConfig)
+        const msg = MessagePlugin.error(notifyConfig)
         if (key) {
           notifyMaps[key] = msg
         }
       }
       if (type === 'progress') {
-        const msg = NotificationPlugin.warning({
+        const msg = MessagePlugin.warning({
           ...notifyConfig,
-          closeBtn: false,
-          footer: (
-            <div slot='footer'>
-              <Button theme='default' variant='text' onClick={cancelMutation}>
-                撤销
-              </Button>
-            </div>
-          ),
           duration: undoableTimeout,
         })
         if (key) {
@@ -95,7 +78,7 @@ export const createRefine = ({
     },
     close: (key) => {
       if (Object.prototype.hasOwnProperty.call(notifyMaps, key)) {
-        NotificationPlugin.close(notifyMaps[key])
+        MessagePlugin.close(notifyMaps[key])
       }
     },
   }

@@ -14,7 +14,7 @@ export const authProvider = (app: string): AuthBindings => {
           }
         )
         .then((res) => {
-          localStorage.setItem(app + ':auth', JSON.stringify(res?.data))
+          localStorage.setItem(app + ':auth', JSON.stringify(res))
           return {
             success: true,
             redirectTo: '/' + app,
@@ -23,7 +23,7 @@ export const authProvider = (app: string): AuthBindings => {
         .catch((error) => {
           return {
             success: false,
-            error: error as HttpError,
+            error: error,
           }
         })
     },
@@ -57,10 +57,11 @@ export const authProvider = (app: string): AuthBindings => {
     getIdentity: async () => {
       const auth = localStorage.getItem(app + ':auth')
       if (auth) {
+        console.log('auth', auth)
         const { userInfo } = JSON.parse(auth)
         return userInfo
       }
-      return null
+      return undefined
     },
     register: async ({ username, password }) => {
       return await client
@@ -72,7 +73,7 @@ export const authProvider = (app: string): AuthBindings => {
           }
         )
         .then((res) => {
-          localStorage.setItem(app + ':auth', JSON.stringify(res.data))
+          localStorage.setItem(app + ':auth', JSON.stringify(res))
           return {
             success: true,
             redirectTo: `/${app}/login`,
@@ -98,7 +99,7 @@ export const authProvider = (app: string): AuthBindings => {
           }
         )
         .then((res) => {
-          localStorage.setItem(app + ':auth', JSON.stringify(res.data))
+          localStorage.setItem(app + ':auth', JSON.stringify(res))
           return {
             success: true,
             redirectTo: `/${app}/login`,
@@ -122,7 +123,7 @@ export const authProvider = (app: string): AuthBindings => {
           }
         )
         .then((res) => {
-          localStorage.setItem(app + ':auth', JSON.stringify(res.data))
+          localStorage.setItem(app + ':auth', JSON.stringify(res))
           return {
             success: true,
             redirectTo: `/${app}/login`,
