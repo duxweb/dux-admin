@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { Tooltip } from 'tdesign-react/esm'
 import { useMenu, useGo, useLogout } from '@refinedev/core'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { TreeMenuItem } from '@refinedev/core/dist/hooks/menu/useMenu'
 
 const Sider = () => {
@@ -9,7 +9,9 @@ const Sider = () => {
   const { mutate: logout } = useLogout()
   const go = useGo()
 
-  const [active, setActive] = useState<string[]>(defaultOpenKeys)
+  const [active, setActive] = useState<string[]>(
+    defaultOpenKeys.length > 0 ? defaultOpenKeys : ['/index']
+  )
   const [collapse, setCollapse] = useState(true)
 
   const menuInfo = useMemo<TreeMenuItem>(() => {
@@ -23,10 +25,10 @@ const Sider = () => {
           <img src='/public/images/common/logo.svg' width={50} />
         </div>
         <ul className='mt-6 flex flex-1 flex-col items-center gap-3 p-2 text-secondary'>
-          {menuItems.map((item, index) => {
+          {menuItems.map((item) => {
             return (
               <MenuApp
-                key={index}
+                key={item.name}
                 name={item.label}
                 icon={item.icon}
                 active={active[active.length - 1] == item.key}
@@ -73,57 +75,55 @@ const Sider = () => {
               <div className='font-bold text-secondary'>{menuInfo?.label}</div>
             )}
           </div>
-          <div className='flex flex-col px-2 text-sm'>
-            {menuInfo?.children?.map((item: TreeMenuItem, index: number) => (
-              <>
-                {console.log(item)}
-                {item.children?.length == 0 && item.route && (
-                  <MenuTitle
-                    label={item?.label}
-                    icon={item?.icon}
-                    active={
-                      active[active.length - 1] == menuInfo.key &&
-                      active[active.length - 2] == item.key
-                    }
-                    onClick={() => {
-                      setActive([item.key, menuInfo.key])
-                      go({
-                        to: item.route,
-                      })
-                    }}
-                  />
-                )}
-                {item?.children?.length > 0 && (
-                  <CollapseMenu key={index} item={item}>
-                    <ul className='flex flex-col'>
-                      {item.children.map((sub: TreeMenuItem, key: number) => (
-                        <li key={key}>
-                          <div
-                            className={clsx([
-                              'cursor-pointer rounded pr-2 pl-8 py-2',
-                              active[active.length - 1] == menuInfo.key &&
-                              active[active.length - 2] == item.key &&
-                              active[active.length - 3] == sub.key
-                                ? 'text-brand bg-brand-1'
-                                : 'text-secondary hover:bg-secondarycontainer',
-                            ])}
-                            onClick={() => {
-                              setActive([sub.key, item.key, menuInfo.key])
-                              go({
-                                to: sub.route,
-                              })
-                            }}
-                          >
-                            {sub.label}
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                  </CollapseMenu>
-                )}
-              </>
-            ))}
-          </div>
+          {menuInfo?.children?.map((item: TreeMenuItem, index: number) => (
+            <div key={index} className='flex flex-col px-2 text-sm'>
+              {item.children?.length == 0 && item.route && (
+                <MenuTitle
+                  key={item.name}
+                  label={item?.label}
+                  icon={item?.icon}
+                  active={
+                    active[active.length - 1] == menuInfo.key &&
+                    active[active.length - 2] == item.key
+                  }
+                  onClick={() => {
+                    setActive([item.key, menuInfo.key])
+                    go({
+                      to: item.route,
+                    })
+                  }}
+                />
+              )}
+              {item?.children?.length > 0 && (
+                <CollapseMenu key={item.name} item={item}>
+                  <ul className='flex flex-col'>
+                    {item.children.map((sub: TreeMenuItem) => (
+                      <li key={sub.name}>
+                        <div
+                          className={clsx([
+                            'cursor-pointer rounded pr-2 pl-8 py-2',
+                            active[active.length - 1] == menuInfo.key &&
+                            active[active.length - 2] == item.key &&
+                            active[active.length - 3] == sub.key
+                              ? 'text-brand bg-brand-1'
+                              : 'text-secondary hover:bg-secondarycontainer',
+                          ])}
+                          onClick={() => {
+                            setActive([sub.key, item.key, menuInfo.key])
+                            go({
+                              to: sub.route,
+                            })
+                          }}
+                        >
+                          {sub.label}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </CollapseMenu>
+              )}
+            </div>
+          ))}
         </div>
       )}
     </div>

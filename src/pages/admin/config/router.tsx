@@ -1,15 +1,14 @@
 import { App } from '@/core/helper'
 
-import { NavigateToResource } from '@refinedev/react-router-v6'
 import { BlogPostList } from '../blog-posts'
-import { CategoryCreate, CategoryEdit, CategoryList, CategoryShow } from '../categories'
 import { lazyComponent } from '@/core/package'
+import { Navigate } from 'react-router-dom'
 
 export const adminRouter = (app: App) => {
   app.addRouter([
     {
       index: true,
-      element: <NavigateToResource resource='index' />,
+      element: <Navigate to='index' />,
     },
     {
       path: 'index',

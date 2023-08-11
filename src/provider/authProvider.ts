@@ -57,9 +57,8 @@ export const authProvider = (app: string): AuthBindings => {
     getIdentity: async () => {
       const auth = localStorage.getItem(app + ':auth')
       if (auth) {
-        console.log('auth', auth)
-        const { userInfo } = JSON.parse(auth)
-        return userInfo
+        const data = JSON.parse(auth)
+        return data
       }
       return undefined
     },

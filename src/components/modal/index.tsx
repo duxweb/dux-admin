@@ -59,7 +59,16 @@ const ModalComp = forwardRef<ModalContextProps, ModalProps>(
             },
           })}
         <context.Provider value={{ onClose: onCloseFun }}>
-          <Dialog visible={open} onClose={onCloseFun} destroyOnClose header={title} footer={null}>
+          <Dialog
+            visible={open}
+            onClose={onCloseFun}
+            destroyOnClose
+            header={title}
+            footer={null}
+            closeOnOverlayClick={false}
+            closeOnEscKeydown={false}
+            draggable={true}
+          >
             {component ? (
               <Suspense>
                 {AsyncContent && <AsyncContent {...componentProps} onClose={onCloseFun} />}

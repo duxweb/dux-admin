@@ -1,3 +1,4 @@
+import config from '@/config'
 import { DataProvider, HttpError, CrudOperators, CrudFilters } from '@refinedev/core'
 import axios, { AxiosHeaderValue } from 'axios'
 
@@ -27,7 +28,7 @@ client.interceptors.response.use(
 
 export const dataProvider = (app: string, apiUrl: string): DataProvider => ({
   getList: async ({ resource, pagination, sorters, filters, meta }) => {
-    const url = `${apiUrl}/${resource}`
+    const url = `${apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${resource}`
     const { current = 1, pageSize = 10 } = pagination ?? {}
 
     const quertSorts: Record<string, any> = {}
@@ -54,12 +55,12 @@ export const dataProvider = (app: string, apiUrl: string): DataProvider => ({
     })
     const total = data?.total || data?.length || 0
     return {
-      data: data,
+      data: data?.list || data,
       total,
     }
   },
   create: async ({ resource, variables, meta }) => {
-    const url = `${apiUrl}/${resource}`
+    const url = `${apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${resource}`
     const { data } = await client.post(url, variables, {
       params: meta?.params,
     })
@@ -68,7 +69,7 @@ export const dataProvider = (app: string, apiUrl: string): DataProvider => ({
     }
   },
   update: async ({ resource, id, variables, meta }) => {
-    const url = `${apiUrl}/${resource}/${id}`
+    const url = `${apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${resource}/${id}`
     const { data } = await client.post(url, variables, {
       params: meta?.params,
       headers: {
@@ -81,7 +82,7 @@ export const dataProvider = (app: string, apiUrl: string): DataProvider => ({
     }
   },
   deleteOne: async ({ resource, id, variables, meta }) => {
-    const url = `${apiUrl}/${resource}/${id}`
+    const url = `${apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${resource}/${id}`
     const { data } = await client.delete(url, {
       data: variables,
       params: meta?.params,
@@ -96,7 +97,7 @@ export const dataProvider = (app: string, apiUrl: string): DataProvider => ({
   },
   getOne: async ({ resource, id, meta }) => {
     console.log('meta', meta)
-    const url = `${apiUrl}/${resource}/${id}`
+    const url = `${apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${resource}/${id}`
     const { data } = await client.get(url, {
       params: meta?.params,
       headers: {
@@ -110,22 +111,25 @@ export const dataProvider = (app: string, apiUrl: string): DataProvider => ({
   },
   getApiUrl: () => apiUrl,
   getMany: async ({ resource, ids, meta }) => {
-    const { data } = await client.get(`${apiUrl}/${resource}`, {
-      params: {
-        ids: ids.join(','),
-        ...meta?.params,
-      },
-      headers: {
-        Authorization: getToken(app),
-        ...meta?.headers,
-      },
-    })
+    const { data } = await client.get(
+      `${apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${resource}`,
+      {
+        params: {
+          ids: ids.join(','),
+          ...meta?.params,
+        },
+        headers: {
+          Authorization: getToken(app),
+          ...meta?.headers,
+        },
+      }
+    )
     return {
       data,
     }
   },
   createMany: async ({ resource, variables, meta }) => {
-    const url = `${apiUrl}/${resource}`
+    const url = `${apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${resource}`
     const { data } = await client.post(url, variables, {
       params: meta?.params,
       headers: {
@@ -138,7 +142,7 @@ export const dataProvider = (app: string, apiUrl: string): DataProvider => ({
     }
   },
   deleteMany: async ({ resource, ids, meta }) => {
-    const url = `${apiUrl}/${resource}`
+    const url = `${apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${resource}`
     const { data } = await client.delete(url, {
       params: {
         ids: ids.join(','),
@@ -154,7 +158,7 @@ export const dataProvider = (app: string, apiUrl: string): DataProvider => ({
     }
   },
   updateMany: async ({ resource, ids, variables, meta }) => {
-    const url = `${apiUrl}/${resource}`
+    const url = `${apiUrl}/${config.resourcesPrefix ? meta?.app + '/' : ''}${resource}`
     const { data } = await client.post(
       url,
       { variables },
@@ -234,7 +238,7 @@ export const dataProvider = (app: string, apiUrl: string): DataProvider => ({
   },
 })
 
-const getToken = (app: string) => {
+export const getToken = (app: string) => {
   const auth = localStorage.getItem(app + ':auth')
   if (!auth) {
     return

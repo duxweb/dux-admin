@@ -10,6 +10,7 @@ export interface apiPath {
   register: string
   forgotPassword: string
   updatePassword: string
+  upload: string
 }
 
 export interface Config {

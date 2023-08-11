@@ -37,7 +37,7 @@ export const adminResources = (app: App) => {
       },
     },
     {
-      name: 'article',
+      name: 'articles',
       list: 'article',
       create: 'article/create',
       edit: 'article/edit/:id',

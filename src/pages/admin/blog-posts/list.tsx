@@ -81,6 +81,7 @@ export const BlogPostList = () => {
                 {translate('buttons.show')}
               </button>
               <Modal
+                title='编辑'
                 trigger={<Button>{translate('buttons.edit')}</Button>}
                 component={() => import('./edit')}
                 componentProps={{ id: row.id }}
@@ -116,7 +117,11 @@ export const BlogPostList = () => {
       headerRender={() => {
         return (
           <>
-            <Modal trigger={<Button>创建</Button>} component={() => import('./create')}></Modal>
+            <Modal
+              title='创建'
+              trigger={<Button>创建</Button>}
+              component={() => import('./create')}
+            ></Modal>
           </>
         )
       }}
@@ -134,7 +139,7 @@ export const BlogPostList = () => {
       }}
       batchRender={
         <>
-          <Button onClick={() => {}}>批量删除</Button>
+          <Button>批量删除</Button>
         </>
       }
     />

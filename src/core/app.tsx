@@ -105,7 +105,6 @@ export const AppProvider = () => {
         authProvider: app.apps[name].authProvider,
         router: app.apps[name].getRouter(),
         resources: app.apps[name].getResources().map((item) => {
-          item.name = config.resourcesPrefix ? name + '/' + item.name : item.name
           item.list = formatResources(item.list)
           item.create = formatResources(item.create)
           item.clone = formatResources(item.clone)

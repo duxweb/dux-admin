@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { Form, Button, SubmitContext } from 'tdesign-react/esm'
 import { Modal, useModal } from '@/components/modal'
-import { useForm, FormAction, MetaQuery, BaseKey } from '@refinedev/core'
+import { useForm } from './useForm'
+import { FormAction, MetaQuery, BaseKey } from '@refinedev/core'
 
 export interface FormModalProps {
   children?: React.ReactNode
@@ -12,8 +13,10 @@ export interface FormModalProps {
 }
 export const FormModal = ({ children, onClose, id, params, action = 'create' }: FormModalProps) => {
   const modal = useModal()
+  const [form] = Form.useForm()
 
   const { formLoading, onFinish, queryResult } = useForm({
+    form: form,
     action: action,
     id: id,
     redirect: false,
@@ -23,8 +26,6 @@ export const FormModal = ({ children, onClose, id, params, action = 'create' }: 
   })
 
   const data = queryResult?.data?.data
-
-  const [form] = Form.useForm()
 
   useEffect(() => {
     if (data) {
@@ -40,8 +41,14 @@ export const FormModal = ({ children, onClose, id, params, action = 'create' }: 
     }
   }
   return (
-    <Form onSubmit={onSubmit} disabled={formLoading} initialData={data} form={form}>
-      <div className='p-4'>{children}</div>
+    <Form
+      onSubmit={onSubmit}
+      disabled={formLoading}
+      initialData={data}
+      form={form}
+      labelAlign={'right'}
+    >
+      <div className='p-6'>{children}</div>
       <Modal.Footer>
         <Button
           variant='outline'
