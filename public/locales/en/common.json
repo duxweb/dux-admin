@@ -1,26 +1,18 @@
 {
   "common": {
-    "search": "Search"
-  },
-  "pages": {
+    "search": "Search",
     "login": {
-      "title": "Sign in to your account",
       "signin": "Sign in",
       "signup": "Sign up",
       "divider": "or",
       "fields": {
-        "email": "Email",
+        "username": "Username",
         "password": "Password"
-      },
-      "errors": {
-        "validEmpty": "请输入账号和密码",
-        "validEmail": "Invalid email address"
       },
       "buttons": {
         "submit": "Login",
         "forgotPassword": "Forgot password?",
-        "noAccount": "Don’t have an account?",
-        "rememberMe": "Remember me"
+        "noAccount": "Don’t have an account?"
       }
     },
     "forgotPassword": {
@@ -61,7 +53,9 @@
       "buttons": {
         "submit": "Update"
       }
-    },
+    }
+  },
+  "pages": {
     "error": {
       "info": "You may have forgotten to add the {{action}} component to {{resource}} resource.",
       "404": "Sorry, the page you visited does not exist.",

@@ -1,8 +1,9 @@
-import { useLogin, useTranslate } from '@refinedev/core'
+import { useLogin, useParsed, useTranslate } from '@refinedev/core'
 import { Form, Input, Button, SubmitContext } from 'tdesign-react/esm'
 import { DesktopIcon, LockOnIcon } from 'tdesign-icons-react'
 import { useAppStore } from '../../../stores/app'
 import { useState } from 'react'
+import { DuxLogo } from '@/components/logo'
 
 const { FormItem } = Form
 
@@ -15,6 +16,8 @@ export const Login = () => {
   const { mutate: login } = useLogin<LoginVariables>({})
   const [loading, setLoading] = useState<boolean>()
   const switchDark = useAppStore((state) => state.switchDark)
+
+  const { params } = useParsed<{ app?: string }>()
 
   const translate = useTranslate()
 
@@ -55,8 +58,8 @@ export const Login = () => {
         </div>
         <div className='flex flex-1 flex-col'>
           <div className='mt-4 flex flex-col items-center justify-center'>
-            <img src='/public/images/common/logo.svg' width={100} />
-            <div className='mt-4 text-lg'>Dux Admin</div>
+            <DuxLogo className='w-30 text-white' />
+            <div className='mt-4 text-lg'>{translate(`${params?.app}.title`)}</div>
           </div>
           <Form
             statusIcon={true}
@@ -71,7 +74,7 @@ export const Login = () => {
                 size='large'
                 clearable={true}
                 prefixIcon={<DesktopIcon />}
-                placeholder='请输入账户名'
+                placeholder={translate(`common.login.fields.username`)}
               />
             </FormItem>
             <FormItem name='password'>
@@ -80,19 +83,17 @@ export const Login = () => {
                 type='password'
                 prefixIcon={<LockOnIcon />}
                 clearable={true}
-                placeholder='请输入密码'
+                placeholder={translate(`common.login.fields.password`)}
                 autocomplete='new-password'
               />
             </FormItem>
             <FormItem>
               <Button theme='primary' type='submit' block size='large' loading={loading}>
-                登录
+                {translate(`common.login.buttons.submit`)}
               </Button>
             </FormItem>
           </Form>
-          <div className='text-center text-sm text-placeholder'>
-            All rights reserved © duxweb 2023
-          </div>
+          <div className='text-center text-sm text-placeholder'>{translate(`admin.copyright`)}</div>
         </div>
       </div>
     </div>

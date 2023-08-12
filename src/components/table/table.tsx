@@ -8,7 +8,6 @@ import {
   PrimaryTableCol,
   Radio,
   SelectOptions,
-  FilterValue,
 } from 'tdesign-react/esm'
 import { useWindowSize } from '@/core/helper'
 import { useTable } from './useTable'

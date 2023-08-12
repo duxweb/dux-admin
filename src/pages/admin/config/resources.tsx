@@ -13,7 +13,7 @@ export const adminResources = (app: App) => {
       },
     },
     {
-      name: 'content-top',
+      name: 'content',
       meta: {
         label: 'Content',
         icon: 'i-tabler:basket',
@@ -23,15 +23,15 @@ export const adminResources = (app: App) => {
       name: 'setting',
       list: 'setting',
       meta: {
-        parent: 'content-top',
+        parent: 'content',
         label: 'Setting',
         icon: 'i-tabler:book',
       },
     },
     {
-      name: 'article-parent',
+      name: 'articles-manage',
       meta: {
-        parent: 'content-top',
+        parent: 'content',
         label: 'Article',
         icon: 'i-tabler:book',
       },
@@ -44,7 +44,7 @@ export const adminResources = (app: App) => {
       show: 'article/show/:id',
       meta: {
         label: 'Article',
-        parent: 'article-parent',
+        parent: 'articles-manage',
       },
     },
   ])

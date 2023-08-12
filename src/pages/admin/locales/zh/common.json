@@ -1,5 +1,24 @@
 {
+  "admin": {
+    "title": "中后台管理系统",
+    "copyright": "All rights reserved © duxweb 2023"
+  },
   "system": {
     "SourceRate": "来源比例"
+  },
+  "index": {
+    "name": "仪表盘"
+  },
+  "content": {
+    "name": "内容"
+  },
+  "articles-manage": {
+    "name": "文章管理"
+  },
+  "articles": {
+    "name": "文章列表"
+  },
+  "setting": {
+    "name": "设置"
   }
 }

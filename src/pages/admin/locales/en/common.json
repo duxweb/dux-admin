@@ -1,5 +1,24 @@
 {
+  "admin": {
+    "title": "management system",
+    "copyright": "All rights reserved © duxweb 2023"
+  },
   "system": {
     "SourceRate": "Source proportion"
+  },
+  "index": {
+    "name": "Dashboard"
+  },
+  "content": {
+    "name": "Content"
+  },
+  "articles-manage": {
+    "name": "Article"
+  },
+  "articles": {
+    "name": "Article"
+  },
+  "setting": {
+    "name": "Setting"
   }
 }

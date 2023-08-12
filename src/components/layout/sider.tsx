@@ -1,8 +1,9 @@
 import clsx from 'clsx'
 import { Tooltip } from 'tdesign-react/esm'
-import { useMenu, useGo, useLogout } from '@refinedev/core'
-import { useEffect, useMemo, useState } from 'react'
+import { useMenu, useGo, useLogout, useTranslate } from '@refinedev/core'
+import { useMemo, useState } from 'react'
 import { TreeMenuItem } from '@refinedev/core/dist/hooks/menu/useMenu'
+import { DuxLogo } from '../logo'
 
 const Sider = () => {
   const { menuItems, defaultOpenKeys } = useMenu()
@@ -18,18 +19,20 @@ const Sider = () => {
     return menuItems.find((item) => active[active.length - 1] == item.key)
   }, [active, menuItems])
 
+  const translate = useTranslate()
+
   return (
     <div className='z-1 hidden flex-none flex-row md:flex'>
       <div className='h-screen w-18 flex flex-col border-r bg-container border-component'>
         <div className='h-16 flex items-center justify-center gap-2'>
-          <img src='/public/images/common/logo.svg' width={50} />
+          <DuxLogo className='w-12' />
         </div>
         <ul className='mt-6 flex flex-1 flex-col items-center gap-3 p-2 text-secondary'>
           {menuItems.map((item) => {
             return (
               <MenuApp
                 key={item.name}
-                name={item.label}
+                name={translate(`${item.name}.name`) || item?.label}
                 icon={item.icon}
                 active={active[active.length - 1] == item.key}
                 onClick={() => {
@@ -72,7 +75,9 @@ const Sider = () => {
         >
           <div className='h-14 flex items-center px-4'>
             {menuInfo?.meta?.element || (
-              <div className='font-bold text-secondary'>{menuInfo?.label}</div>
+              <div className='font-bold text-secondary'>
+                {translate(`${menuInfo.name}.name`) || menuInfo?.label}
+              </div>
             )}
           </div>
           {menuInfo?.children?.map((item: TreeMenuItem, index: number) => (
@@ -80,7 +85,7 @@ const Sider = () => {
               {item.children?.length == 0 && item.route && (
                 <MenuTitle
                   key={item.name}
-                  label={item?.label}
+                  label={translate(`${item.name}.name`) || item?.label}
                   icon={item?.icon}
                   active={
                     active[active.length - 1] == menuInfo.key &&
@@ -115,7 +120,7 @@ const Sider = () => {
                             })
                           }}
                         >
-                          {sub.label}
+                          {translate(`${sub.name}.name`) || sub?.label}
                         </div>
                       </li>
                     ))}
@@ -197,10 +202,11 @@ interface CollapseMenuProps {
 }
 const CollapseMenu = ({ item, children }: CollapseMenuProps) => {
   const [collapse, setCollapse] = useState(true)
+  const translate = useTranslate()
   return (
     <div>
       <MenuTitle
-        label={item?.label}
+        label={translate(`${item.name}.name`) || item?.label}
         icon={item?.icon}
         collapse={collapse}
         onClick={() => {

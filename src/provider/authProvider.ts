@@ -14,7 +14,7 @@ export const authProvider = (app: string): AuthBindings => {
           }
         )
         .then((res) => {
-          localStorage.setItem(app + ':auth', JSON.stringify(res))
+          localStorage.setItem(app + ':auth', JSON.stringify(res?.data))
           return {
             success: true,
             redirectTo: '/' + app,

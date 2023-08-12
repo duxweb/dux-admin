@@ -1,16 +1,18 @@
-import { PropsWithChildren, useEffect } from 'react'
-import { useSetLocale, useTranslate, useGetLocale } from '@refinedev/core'
+import { PropsWithChildren } from 'react'
+import { useSetLocale, useTranslate, useGetIdentity } from '@refinedev/core'
 import { Avatar, Dropdown, Button, DropdownOption, Radio } from 'tdesign-react/esm'
 import { TranslateIcon, SearchIcon } from 'tdesign-icons-react'
 import { useAppStore } from '@/stores/app'
 
 const User = () => {
+  const { data } = useGetIdentity<{
+    userInfo: Record<string, any>
+  }>()
   return (
     <>
       <Avatar image='https://tdesign.gtimg.com/site/avatar.jpg' shape='circle' />
       <div className='flex flex-col'>
-        <div className='leading-4'>Admin</div>
-        <div className='text-sm leading-4 text-placeholder'>Group Name</div>
+        <div>{data?.userInfo?.nickname}</div>
       </div>
     </>
   )
@@ -18,8 +20,7 @@ const User = () => {
 
 const Lang = () => {
   const changeLanguage = useSetLocale()
-  const locale = useGetLocale()
-  console.log('lang', locale())
+
   const options: DropdownOption[] = [
     {
       value: 'en',
