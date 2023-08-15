@@ -1,10 +1,5 @@
-import { FormModal } from '@/components/form'
-import { Modal } from '@/components/modal'
-import { formatUploadFile, useUpload } from '@/components/upload/useUpload'
-import config from '@/config'
-import { getToken } from '@/provider/dataProvider'
-import { useApiUrl, useGetIdentity } from '@refinedev/core'
-import { Button, Form, Input, Upload, TdUploadProps } from 'tdesign-react/esm'
+import { FormModal, Modal, formatUploadFile, useUpload } from '@duxweb/dux-refine'
+import { Form, Input, Upload } from 'tdesign-react/esm'
 
 const BlogPostCreate = (props) => {
   const uploadParams = useUpload()

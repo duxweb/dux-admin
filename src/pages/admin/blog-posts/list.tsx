@@ -1,10 +1,7 @@
 import React, { lazy, useRef } from 'react'
 import { useNavigation, useTranslate } from '@refinedev/core'
 import { PrimaryTableCol, Button, Input, DialogPlugin } from 'tdesign-react/esm'
-import { PageTable, FilterItem, CardTableRef } from '@/components/table'
-import { lazyComponent } from '@/core/package'
-import BlogPostCreate from './create'
-import { Modal } from '@/components/modal'
+import { PageTable, FilterItem, CardTableRef, lazyComponent, Modal } from '@duxweb/dux-refine'
 
 const statusNameListMap = {
   0: { label: '审批通过', theme: 'success' },

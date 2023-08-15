@@ -1,4 +1,4 @@
-import { Config } from '@/core/config'
+import { Config } from '@duxweb/dux-refine'
 
 const config: Config = {
   projectId: '75z1iv-x6xVpm-suPmVP',

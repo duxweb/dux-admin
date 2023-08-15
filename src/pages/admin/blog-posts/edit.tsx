@@ -1,5 +1,4 @@
-import { FormModal } from '@/components/form'
-import { Modal } from '@/components/modal'
+import { FormModal, Modal } from '@duxweb/dux-refine'
 import { Button, Form, Input } from 'tdesign-react/esm'
 
 const BlogPostEdit = (props) => {

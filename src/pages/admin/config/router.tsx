@@ -1,7 +1,6 @@
-import { App } from '@/core/helper'
+import { App, lazyComponent } from '@duxweb/dux-refine'
 
 import { BlogPostList } from '../blog-posts'
-import { lazyComponent } from '@/core/package'
 import { Navigate } from 'react-router-dom'
 
 export const adminRouter = (app: App) => {

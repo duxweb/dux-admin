@@ -1,11 +1,12 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
+import { DuxApp } from '@duxweb/dux-refine'
 
-import App from './App'
 import '@unocss/reset/tailwind-compat.css'
 import 'virtual:uno.css'
-import './theme/theme.css'
-import './i18n'
+
+import app from './config/app'
+import config from './config'
 
 const container = document.getElementById('root') as HTMLElement
 const root = createRoot(container)
@@ -13,7 +14,7 @@ const root = createRoot(container)
 root.render(
   <React.StrictMode>
     <React.Suspense fallback='loading'>
-      <App />
+      <DuxApp appsData={app} config={config} />
     </React.Suspense>
   </React.StrictMode>
 )

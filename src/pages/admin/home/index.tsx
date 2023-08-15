@@ -1,12 +1,6 @@
-import { ChartBar, ChartLine, ChartArea, ChartRing } from '@/components/charts'
-import { MainHeader } from '@/components/main/header'
-import { Main } from '@/components/main/main'
-import { StatsCard } from '@/components/dashboard/StatsCard'
-import { StatsChart } from '@/components/dashboard/StatsChart'
+import { ChartBar, ChartLine, ChartArea, ChartRing,MainHeader, Main,StatsCard,StatsChart,MediaText, List} from '@duxweb/dux-refine'
 import { Card, Link, Space } from 'tdesign-react/esm'
-import Descriptions from '@/components/descriptions'
-import MediaText from '@/components/mediaText'
-import { List } from '@/components/list'
+
 import { useTranslate } from '@refinedev/core'
 
 const Index = () => {

@@ -1,4 +1,4 @@
-import { App } from '@/core/helper'
+import { App } from '@duxweb/dux-refine'
 import { useGo } from '@refinedev/core'
 import { Button } from 'tdesign-react/esm'
 
