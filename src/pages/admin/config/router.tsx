@@ -1,13 +1,14 @@
 import { App, lazyComponent } from '@duxweb/dux-refine'
 
 import { BlogPostList } from '../blog-posts'
-import { Navigate } from 'react-router-dom'
+import { Navigate, redirect } from 'react-router-dom'
 
 export const adminRouter = (app: App) => {
   app.addRouter([
     {
       index: true,
-      element: <Navigate to='index' />,
+      loader: () => redirect('index'),
+      //element: <Navigate to='index' />,
     },
     {
       path: 'index',

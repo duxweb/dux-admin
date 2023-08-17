@@ -456,7 +456,7 @@
     unocss "^0.53.5"
     zustand "^4.3.9"
 
-"@duxweb/dux-refine@file:../../dux-refine":
+"@duxweb/dux-refine@file:../dux-refine":
   version "0.0.3"
   dependencies:
     "@iconify-json/tabler" "^1.1.85"

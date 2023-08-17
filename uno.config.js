@@ -25,9 +25,8 @@ export default defineConfig({
         // the default
         /\.(vue|svelte|[jt]sx|mdx?|astro|elm|php|phtml|html)($|\?)/,
         // include js/ts files
-        'src/**/*.{js,ts}',
-        /(.*\/)dux-ui(.*)\.(c|m)?(js)(x?)$/,
-        'node_modules/@duxweb/dux-ui/dist/*.{jsx,tsx,js,ts}',
+        'src/**/*.{js,ts,jsx,tsx}',
+        /dux-refine\.(js)(x?)$/,
       ],
       // exclude files
       exclude: [],
