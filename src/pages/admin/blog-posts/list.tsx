@@ -79,7 +79,7 @@ export const BlogPostList = () => {
               </button>
               <Modal
                 title='编辑'
-                trigger={<Button>{translate('buttons.edit')}</Button>}
+                trigger={<Button>{translate('common.search')}</Button>}
                 component={() => import('./edit')}
                 componentProps={{ id: row.id }}
               ></Modal>

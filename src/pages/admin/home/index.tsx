@@ -2,9 +2,15 @@ import { ChartBar, ChartLine, ChartArea, ChartRing,MainHeader, Main,StatsCard,St
 import { Card, Link, Space } from 'tdesign-react/esm'
 
 import { useTranslate } from '@refinedev/core'
+import { useTranslation } from 'react-i18next'
 
 const Index = () => {
   const translate = useTranslate()
+
+  const { t, i18n } = useTranslation()
+
+
+  console.log(i18n)
 
   const demoData = [100, 300, 200, 600, 200, 400, 800]
 

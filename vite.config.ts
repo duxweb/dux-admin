@@ -2,7 +2,7 @@ import react from '@vitejs/plugin-react'
 import * as path from 'path'
 import UnoCSS from 'unocss/vite'
 import { defineConfig } from 'vite'
-import { DuxUI } from '@duxweb/dux-refine/lib/vite'
+import { DuxUI, DuxTheme } from '@duxweb/dux-refine/lib/plugin'
 
 export default defineConfig({
   plugins: [react(), UnoCSS(), DuxUI()],
@@ -14,7 +14,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       less: {
-        //modifyVars: theme(),
+        modifyVars: DuxTheme(),
       },
     },
   },

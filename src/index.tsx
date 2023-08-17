@@ -7,15 +7,15 @@ import 'virtual:uno.css'
 
 import app from './config/app'
 import config from './config'
+
 import '@duxweb/dux-refine/es/i18n'
+import '@duxweb/dux-refine/es/index.css'
 
 const container = document.getElementById('root') as HTMLElement
 const root = createRoot(container)
 
 root.render(
   <React.StrictMode>
-    <React.Suspense fallback='loading'>
-      <DuxApp appsData={app} config={config} />
-    </React.Suspense>
+    <DuxApp appsData={app} config={config} />
   </React.StrictMode>
 )
