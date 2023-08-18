@@ -2,6 +2,7 @@ import { App, lazyComponent } from '@duxweb/dux-refine'
 
 import { BlogPostList } from '../blog-posts'
 import { Navigate, redirect } from 'react-router-dom'
+import Index from '../home'
 
 export const adminRouter = (app: App) => {
   app.addRouter([
@@ -12,11 +13,11 @@ export const adminRouter = (app: App) => {
     },
     {
       path: 'index',
-      element: lazyComponent(() => import('../home/index')),
+      element: <Index />,
     },
     {
       path: 'setting',
-      element: lazyComponent(() => import('../home/index')),
+      element: <Index />,
     },
     {
       path: 'article',

@@ -5,7 +5,7 @@ import {
   presetUno,
   transformerDirectives,
 } from 'unocss'
-import { presetDux } from '@duxweb/dux-refine/lib/plugin'
+import { presetDux } from '@duxweb/dux-plugin'
 
 export default defineConfig({
   presets: [

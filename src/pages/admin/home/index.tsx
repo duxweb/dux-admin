@@ -1,16 +1,22 @@
-import { ChartBar, ChartLine, ChartArea, ChartRing,MainHeader, Main,StatsCard,StatsChart,MediaText, List} from '@duxweb/dux-refine'
+import {
+  ChartBar,
+  ChartLine,
+  ChartArea,
+  ChartRing,
+  MainHeader,
+  Main,
+  StatsCard,
+  StatsChart,
+  MediaText,
+  List,
+} from '@duxweb/dux-refine'
 import { Card, Link, Space } from 'tdesign-react/esm'
 
-import { useTranslate } from '@refinedev/core'
-import { useTranslation } from 'react-i18next'
+import { useTranslate, useGetLocale } from '@refinedev/core'
 
 const Index = () => {
   const translate = useTranslate()
-
-  const { t, i18n } = useTranslation()
-
-
-  console.log(i18n)
+  const locale = useGetLocale()
 
   const demoData = [100, 300, 200, 600, 200, 400, 800]
 
