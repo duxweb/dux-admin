@@ -8,8 +8,6 @@ import 'virtual:uno.css'
 import app from './config/app'
 import config from './config'
 
-import '@duxweb/dux-refine/dist/index.css'
-
 const container = document.getElementById('root') as HTMLElement
 const root = createRoot(container)
 

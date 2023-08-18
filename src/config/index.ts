@@ -16,12 +16,12 @@ const config: Config = {
   tabBar: {
     admin: [
       {
-        label: 'Dashboard',
+        label: 'dashboard',
         icon: 'i-tabler:home',
         route: 'index',
       },
       {
-        label: 'Blog',
+        label: 'articles',
         icon: 'i-tabler:basket',
         route: 'blog-posts',
       },

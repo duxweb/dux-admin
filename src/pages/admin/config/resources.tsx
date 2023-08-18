@@ -1,6 +1,4 @@
 import { App } from '@duxweb/dux-refine'
-import { useGo } from '@refinedev/core'
-import { Button } from 'tdesign-react/esm'
 
 export const adminResources = (app: App) => {
   app.addResources([
@@ -8,14 +6,14 @@ export const adminResources = (app: App) => {
       name: 'index',
       list: 'index',
       meta: {
-        label: 'Dashboard',
+        label: 'dashboard',
         icon: 'i-tabler:home',
       },
     },
     {
       name: 'content',
       meta: {
-        label: 'Content',
+        label: 'content',
         icon: 'i-tabler:basket',
       },
     },
@@ -24,7 +22,7 @@ export const adminResources = (app: App) => {
       list: 'setting',
       meta: {
         parent: 'content',
-        label: 'Setting',
+        label: 'setting',
         icon: 'i-tabler:book',
       },
     },
@@ -32,7 +30,7 @@ export const adminResources = (app: App) => {
       name: 'articles-manage',
       meta: {
         parent: 'content',
-        label: 'Article',
+        label: 'articles-manage',
         icon: 'i-tabler:book',
       },
     },
@@ -43,8 +41,15 @@ export const adminResources = (app: App) => {
       edit: 'article/edit/:id',
       show: 'article/show/:id',
       meta: {
-        label: 'Article',
+        label: 'articles',
         parent: 'articles-manage',
+      },
+    },
+    {
+      name: 'common',
+      meta: {
+        label: 'common',
+        icon: 'i-tabler:basket',
       },
     },
   ])

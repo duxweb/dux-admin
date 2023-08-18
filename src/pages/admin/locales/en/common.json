@@ -6,7 +6,7 @@
   "system": {
     "SourceRate": "Source proportion"
   },
-  "index": {
+  "dashboard": {
     "name": "Dashboard"
   },
   "content": {

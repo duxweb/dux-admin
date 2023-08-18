@@ -8,8 +8,7 @@ export const adminRouter = (app: App) => {
   app.addRouter([
     {
       index: true,
-      loader: () => redirect('index'),
-      //element: <Navigate to='index' />,
+      element: <Navigate to='index' />,
     },
     {
       path: 'index',
