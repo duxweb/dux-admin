@@ -10,7 +10,7 @@ import {
   MediaText,
   List,
 } from '@duxweb/dux-refine'
-import { Card, Link, Space } from 'tdesign-react/esm'
+import { Card, Space } from 'tdesign-react/esm'
 
 import { useTranslate, useGetLocale } from '@refinedev/core'
 
@@ -38,7 +38,7 @@ const Index = () => {
       <div className='grid mb-4 gap-4 lg:grid-cols-2 xl:grid-cols-4'>
         <div>
           <StatsChart name={translate('system.SourceRate')} data={'1,000'}>
-            <div className='h-46.5'>
+            <div className='h-46.5 w-full'>
               <ChartRing
                 data={[
                   { value: 1048, name: 'Search Engine' },
@@ -53,7 +53,7 @@ const Index = () => {
         </div>
         <div>
           <StatsChart name='商品数量' data={'1,000'}>
-            <div className='h-46.5'>
+            <div className='h-46.5 w-full'>
               <ChartRing
                 data={[
                   { value: 1048, name: 'Search Engine' },
@@ -108,7 +108,7 @@ const Index = () => {
       <div className='grid mb-4 gap-4 md:grid-cols-2'>
         <div>
           <Card bordered title='Overall User Acquisition'>
-            <div className='h-100'>
+            <div className='h-100 w-full'>
               <ChartBar
                 labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
                 data={[
@@ -122,7 +122,7 @@ const Index = () => {
         </div>
         <div>
           <Card bordered title='Overall User Acquisition'>
-            <div className='h-100'>
+            <div className='h-100 w-full'>
               <ChartBar
                 labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
                 data={[
@@ -187,7 +187,7 @@ const Index = () => {
                   append={
                     <Space>
                       <div className='font-bold'>$400.00</div>
-                      <div className='h-6'>
+                      <div className='h-6 w-30'>
                         <ChartArea
                           labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
                           data={[{ name: 'test', data: demoData }]}
@@ -212,7 +212,7 @@ const Index = () => {
                   append={
                     <Space>
                       <div className='font-bold'>$400.00</div>
-                      <div className='h-6'>
+                      <div className='h-6 w-30'>
                         <ChartArea
                           labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}
                           data={[{ name: 'test', data: demoData }]}
