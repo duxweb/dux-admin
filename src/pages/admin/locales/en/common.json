@@ -1,7 +1,9 @@
 {
-  "admin": {
-    "title": "management system",
+  "common": {
     "copyright": "All rights reserved © duxweb 2023"
+  },
+  "admin": {
+    "title": "management system"
   },
   "system": {
     "SourceRate": "Source proportion"

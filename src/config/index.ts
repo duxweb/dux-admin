@@ -27,5 +27,11 @@ const config: Config = {
       },
     ],
   },
+  moduleApp: {
+    admin: {
+      register: true,
+      forgotPassword: true,
+    },
+  },
 }
 export default config

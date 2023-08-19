@@ -1,7 +1,9 @@
 {
-  "admin": {
-    "title": "中后台管理系统",
+  "common": {
     "copyright": "All rights reserved © duxweb 2023"
+  },
+  "admin": {
+    "title": "中后台管理系统"
   },
   "system": {
     "SourceRate": "来源比例"
