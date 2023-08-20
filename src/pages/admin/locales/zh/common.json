@@ -1,6 +1,7 @@
 {
-  "common": {
-    "copyright": "All rights reserved © duxweb 2023"
+  "copyright": "All rights reserved © duxweb 2023",
+  "userMenu": {
+    "setting": "设置"
   },
   "admin": {
     "title": "中后台管理系统"
@@ -9,6 +10,8 @@
     "SourceRate": "来源比例"
   },
   "dashboard": {
+    "dashboard": "仪表盘",
+    "label": "仪表盘",
     "name": "仪表盘"
   },
   "content": {

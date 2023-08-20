@@ -1,6 +1,7 @@
 {
-  "common": {
-    "copyright": "All rights reserved © duxweb 2023"
+  "copyright": "All rights reserved © duxweb 2023",
+  "userMenu": {
+    "setting": "setting"
   },
   "admin": {
     "title": "management system"

@@ -244,7 +244,9 @@ app.post('/login', (req, res) => {
         avatar: '',
       },
       token: 'admin',
-      permission: [],
+      permission: {
+        articles: true,
+      },
     })
   } else {
     res.status(500).json({

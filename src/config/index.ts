@@ -13,20 +13,6 @@ const config: Config = {
   },
   defaultApp: 'admin',
   resourcesPrefix: false,
-  tabBar: {
-    admin: [
-      {
-        label: 'dashboard',
-        icon: 'i-tabler:home',
-        route: 'index',
-      },
-      {
-        label: 'articles',
-        icon: 'i-tabler:basket',
-        route: 'blog-posts',
-      },
-    ],
-  },
   moduleApp: {
     admin: {
       register: true,

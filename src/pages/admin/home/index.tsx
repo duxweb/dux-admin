@@ -12,11 +12,14 @@ import {
 } from '@duxweb/dux-refine'
 import { Card, Space } from 'tdesign-react/esm'
 
-import { useTranslate, useGetLocale } from '@refinedev/core'
+import { useTranslate, useGetLocale, useResource } from '@refinedev/core'
 
 const Index = () => {
   const translate = useTranslate()
   const locale = useGetLocale()
+
+  const { resources } = useResource()
+  console.log('resources', resources)
 
   const demoData = [100, 300, 200, 600, 200, 400, 800]
 
