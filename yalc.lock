@@ -2,7 +2,7 @@
   "version": "v1",
   "packages": {
     "@duxweb/dux-refine": {
-      "signature": "be99d0cc477ce7e1c9b8f3505cb1e79b",
+      "signature": "644001d064c7816067cc689e1948c031",
       "file": true
     }
   }
