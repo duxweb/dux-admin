@@ -5,7 +5,7 @@ import { defineConfig } from 'vite'
 import { DuxUI, DuxTheme } from '@duxweb/dux-plugin'
 
 export default defineConfig({
-  plugins: [react(), UnoCSS(), DuxUI()],
+  plugins: [react(), UnoCSS(), DuxUI(path.resolve(__dirname, 'src'))],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
