@@ -4,8 +4,6 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@duxweb/dux-plugin": "/Volumes/Web/dux-plugin",
-    "@duxweb/dux-refine": "file:.yalc/@duxweb/dux-refine"
   },
   "devDependencies": {
     "@types/node": "^18.16.2",

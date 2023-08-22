@@ -1,9 +1,0 @@
-{
-  "version": "v1",
-  "packages": {
-    "@duxweb/dux-refine": {
-      "signature": "644001d064c7816067cc689e1948c031",
-      "file": true
-    }
-  }
-}
