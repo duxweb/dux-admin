@@ -1,6 +1,6 @@
 import { App, lazyComponent } from '@duxweb/dux-refine'
 
-import { BlogPostList } from '../blog-posts'
+import { BlogPostList } from '../article'
 import { Navigate, redirect } from 'react-router-dom'
 import Index from '../home'
 
