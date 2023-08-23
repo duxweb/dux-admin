@@ -14,15 +14,6 @@ export const adminResources = (app: App) => {
       name: 'content',
       meta: {
         label: 'content',
-        icon: 'i-tabler:basket',
-      },
-    },
-    {
-      name: 'setting',
-      list: 'setting',
-      meta: {
-        parent: 'content',
-        label: 'setting',
         icon: 'i-tabler:book',
       },
     },
@@ -35,7 +26,7 @@ export const adminResources = (app: App) => {
       },
     },
     {
-      name: 'articles',
+      name: 'article',
       list: 'article',
       create: 'article/create',
       edit: 'article/edit/:id',
@@ -46,10 +37,14 @@ export const adminResources = (app: App) => {
       },
     },
     {
-      name: 'common',
+      name: 'category',
+      list: 'category',
+      create: 'category/create',
+      edit: 'category/edit/:id',
+      show: 'category/show/:id',
       meta: {
-        label: 'common',
-        icon: 'i-tabler:basket',
+        label: 'categorys',
+        parent: 'articles-manage',
       },
     },
   ])

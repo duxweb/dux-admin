@@ -1,22 +1,9 @@
-import React, { lazy, useRef } from 'react'
+import React, { useRef } from 'react'
 import { useNavigation, useTranslate } from '@refinedev/core'
-import { PrimaryTableCol, Button, Input, DialogPlugin } from 'tdesign-react/esm'
-import {
-  PageTable,
-  FilterItem,
-  CardTableRef,
-  lazyComponent,
-  Modal,
-  ModalOpen,
-} from '@duxweb/dux-refine'
+import { PrimaryTableCol, Button, Input, Tag } from 'tdesign-react/esm'
+import { PageTable, FilterItem, CardTableRef, Modal } from '@duxweb/dux-refine'
 
-const statusNameListMap = {
-  0: { label: '审批通过', theme: 'success' },
-  1: { label: '审批失败', theme: 'danger' },
-  2: { label: '审批过期', theme: 'warning' },
-}
-
-export const BlogPostList = () => {
+const List = () => {
   const translate = useTranslate()
   const { edit, show, create } = useNavigation()
 
@@ -29,35 +16,50 @@ export const BlogPostList = () => {
         colKey: 'id',
         sorter: true,
         sortType: 'all',
-        title: translate('blog_posts.fields.id'),
+        title: 'ID',
         width: 100,
       },
       {
         colKey: 'title',
-        title: translate('blog_posts.fields.title'),
+        title: translate('articles.fields.title'),
         minWidth: 200,
       },
       {
         colKey: 'status',
-        title: translate('blog_posts.fields.status'),
-        width: 100,
+        title: translate('articles.fields.status'),
+        width: 150,
         filter: {
           type: 'single',
           list: [
-            { label: '审批通过', value: '0' },
-            { label: '已过期', value: '1' },
-            { label: '审批失败', value: '2' },
+            { label: translate('articles.tab.all'), value: '0' },
+            { label: translate('articles.tab.published'), value: '1' },
+            { label: translate('articles.tab.unpublished'), value: '2' },
           ],
+        },
+        cell: ({ row }) => {
+          return (
+            <>
+              {row.status ? (
+                <Tag theme='warning' variant='outline'>
+                  {translate('articles.tab.published')}
+                </Tag>
+              ) : (
+                <Tag theme='success' variant='outline'>
+                  {translate('articles.tab.unpublished')}
+                </Tag>
+              )}
+            </>
+          )
         },
       },
       {
         colKey: 'createdAt',
-        title: translate('blog_posts.fields.createdAt'),
+        title: translate('articles.fields.createdAt'),
         sorter: true,
         sortType: 'all',
         width: 200,
         cell: ({ row }) => {
-          return new Date(row.createdAt).toLocaleString(undefined, {
+          return new Date(row.create_at).toLocaleString(undefined, {
             timeZone: 'UTC',
           })
         },
@@ -66,37 +68,24 @@ export const BlogPostList = () => {
         colKey: 'link',
         title: translate('table.actions'),
         fixed: 'right',
-        width: 180,
+        align: 'center',
+        width: 120,
         cell: ({ row }) => {
           return (
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                gap: '4px',
-              }}
-            >
-              <button
-                onClick={() => {
-                  show('blog_posts', row.id)
-                }}
-              >
-                {translate('buttons.show')}
-              </button>
+            <div className='flex justify-center gap-2'>
               <Modal
-                title='编辑'
-                trigger={<Button>{translate('common.search')}</Button>}
+                title={translate('buttons.edit')}
+                trigger={<Button>{translate('buttons.edit')}</Button>}
                 component={() => import('./edit')}
                 componentProps={{ id: row.id }}
-              ></Modal>
+              />
             </div>
           )
         },
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [translate]
   )
 
   return (
@@ -106,15 +95,15 @@ export const BlogPostList = () => {
       title={translate('blog_posts.fields.title')}
       tabs={[
         {
-          label: '全部',
+          label: translate('articles.tab.all'),
           value: '0',
         },
         {
-          label: '已审核',
+          label: translate('articles.tab.published'),
           value: '1',
         },
         {
-          label: '未审核',
+          label: translate('articles.tab.unpublished'),
           value: '2',
         },
       ]}
@@ -122,8 +111,8 @@ export const BlogPostList = () => {
         return (
           <>
             <Modal
-              title='创建'
-              trigger={<Button>创建</Button>}
+              title={translate('buttons.edit')}
+              trigger={<Button>{translate('buttons.create')}</Button>}
               component={() => import('./create')}
             ></Modal>
           </>
@@ -132,10 +121,7 @@ export const BlogPostList = () => {
       filterRender={() => {
         return (
           <>
-            <FilterItem name={'test1'}>
-              <Input />
-            </FilterItem>
-            <FilterItem name={'test2'}>
+            <FilterItem name='keyword'>
               <Input />
             </FilterItem>
           </>
@@ -149,3 +135,5 @@ export const BlogPostList = () => {
     />
   )
 }
+
+export default List

@@ -18,10 +18,23 @@
     "name": "内容"
   },
   "articles-manage": {
-    "name": "文章管理"
+    "name": "文章"
   },
   "articles": {
-    "name": "文章列表"
+    "name": "文章列表",
+    "tab": {
+      "all": "全部",
+      "published": "已发布",
+      "unpublished": "未发布"
+    },
+    "fields": {
+      "title": "标题",
+      "status": "状态",
+      "createdAt": "创建时间"
+    }
+  },
+  "categorys": {
+    "name": "文章分类"
   },
   "setting": {
     "name": "设置"

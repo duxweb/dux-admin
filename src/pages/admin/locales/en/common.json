@@ -4,7 +4,7 @@
     "setting": "setting"
   },
   "admin": {
-    "title": "management system"
+    "title": "Management System"
   },
   "system": {
     "SourceRate": "Source proportion"
@@ -19,7 +19,25 @@
     "name": "Article"
   },
   "articles": {
-    "name": "Article"
+    "name": "List",
+    "list": {
+      "auditAll": "Audit all",
+      "audited": "Audited",
+      "unaudited": "Unaudited"
+    },
+    "tab": {
+      "all": "All",
+      "published": "Published",
+      "unpublished": "Unpublished"
+    },
+    "fields": {
+      "title": "Title",
+      "status": "Status",
+      "createdAt": "Created At"
+    }
+  },
+  "categorys": {
+    "name": "Category"
   },
   "setting": {
     "name": "Setting"
