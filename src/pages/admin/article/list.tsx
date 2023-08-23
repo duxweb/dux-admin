@@ -111,7 +111,7 @@ const List = () => {
         return (
           <>
             <Modal
-              title={translate('buttons.edit')}
+              title={translate('buttons.create')}
               trigger={<Button>{translate('buttons.create')}</Button>}
               component={() => import('./create')}
             ></Modal>
