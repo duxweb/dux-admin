@@ -3,7 +3,7 @@ import { users } from '../data'
 import { faker } from '@faker-js/faker'
 
 export default defineAPIMock({
-  url: '/user/:id',
+  url: '/user',
   method: 'POST',
   response(req, res) {
     const data = req.body

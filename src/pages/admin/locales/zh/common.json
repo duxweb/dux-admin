@@ -29,6 +29,7 @@
     },
     "fields": {
       "title": "标题",
+      "image": "封面图",
       "status": "状态",
       "createdAt": "创建时间"
     }

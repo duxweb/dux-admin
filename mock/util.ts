@@ -23,7 +23,7 @@ export const validate = (data: Record<string, any>, rules: Record<string, string
     }
   }
   if (Object.keys(errors).length) {
-    return send(422, 'Incomplete information', errors)
+    return send(422, 'Incomplete information', [errors])
   }
   return true
 }

@@ -7,13 +7,38 @@ export default defineAPIMock({
   response(req, res) {
     const page = parseInt(req.query.page) || 1
     const pageSize = parseInt(req.query.pageSize) || 10
+
+    let data = [...articles]
+
+    if (req.query?.keyword) {
+      data = data.filter((v) => v.title.includes(req.query?.keyword))
+    }
+
+    if (req.query?.status == 1) {
+      data = data.filter((v) => v.status)
+    } else if (req.query?.status == 2) {
+      data = data.filter((v) => !v.status)
+    }
+
+    if (req.query?.id_sort === 'asc') {
+      data.sort((a, b) => a.id - b.id)
+    } else {
+      data.sort((a, b) => b.id - a.id)
+    }
+
+    if (req.query?.created_at_sort === 'desc') {
+      data.sort((a, b) => new Date(b.create_at).getTime() - new Date(a.create_at).getTime())
+    } else if (req.query?.created_at_sort === 'asc') {
+      data.sort((a, b) => new Date(a.create_at).getTime() - new Date(b.create_at).getTime())
+    }
+
     const startIndex = (page - 1) * pageSize
     const endIndex = startIndex + pageSize
-    const data = articles.slice(startIndex, endIndex)
+    const list = data.slice(startIndex, endIndex)
     res.end(
       send(200, 'success', {
-        list: data,
-        total: articles.length,
+        list: list,
+        total: data.length,
         Page: page,
       })
     )

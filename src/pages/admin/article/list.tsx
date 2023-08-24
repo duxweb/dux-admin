@@ -1,11 +1,12 @@
 import React, { useRef } from 'react'
-import { useNavigation, useTranslate } from '@refinedev/core'
-import { PrimaryTableCol, Button, Input, Tag } from 'tdesign-react/esm'
+import { useNavigation, useTranslate, useDelete, useResource } from '@refinedev/core'
+import { PrimaryTableCol, Button, Input, Tag, Link, Popconfirm } from 'tdesign-react/esm'
 import { PageTable, FilterItem, CardTableRef, Modal } from '@duxweb/dux-refine'
 
 const List = () => {
   const translate = useTranslate()
   const { edit, show, create } = useNavigation()
+  const { mutate } = useDelete()
 
   const table = useRef<CardTableRef>(null)
 
@@ -31,7 +32,6 @@ const List = () => {
         filter: {
           type: 'single',
           list: [
-            { label: translate('articles.tab.all'), value: '0' },
             { label: translate('articles.tab.published'), value: '1' },
             { label: translate('articles.tab.unpublished'), value: '2' },
           ],
@@ -53,7 +53,7 @@ const List = () => {
         },
       },
       {
-        colKey: 'createdAt',
+        colKey: 'created_at',
         title: translate('articles.fields.createdAt'),
         sorter: true,
         sortType: 'all',
@@ -72,13 +72,28 @@ const List = () => {
         width: 120,
         cell: ({ row }) => {
           return (
-            <div className='flex justify-center gap-2'>
+            <div className='flex justify-center gap-4'>
               <Modal
                 title={translate('buttons.edit')}
-                trigger={<Button>{translate('buttons.edit')}</Button>}
-                component={() => import('./edit')}
+                trigger={<Link theme='primary'>{translate('buttons.edit')}</Link>}
+                component={() => import('./save')}
                 componentProps={{ id: row.id }}
               />
+              <Popconfirm
+                content='确认删除吗'
+                destroyOnClose
+                placement='top'
+                showArrow
+                theme='default'
+                onConfirm={() => {
+                  mutate({
+                    resource: 'article',
+                    id: row.id,
+                  })
+                }}
+              >
+                <Link theme='danger'>{translate('buttons.delete')}</Link>
+              </Popconfirm>
             </div>
           )
         },
@@ -113,7 +128,7 @@ const List = () => {
             <Modal
               title={translate('buttons.create')}
               trigger={<Button>{translate('buttons.create')}</Button>}
-              component={() => import('./create')}
+              component={() => import('./save')}
             ></Modal>
           </>
         )

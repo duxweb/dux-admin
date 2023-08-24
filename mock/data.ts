@@ -1,6 +1,8 @@
 import { faker } from '@faker-js/faker'
 
+// eslint-disable-next-line no-var
 export const articles: Record<string, any>[] = []
+// eslint-disable-next-line no-var
 export const categories: Record<string, any>[] = []
 
 const generateArticle = (id: number) => {

@@ -21,9 +21,6 @@
   "articles": {
     "name": "List",
     "list": {
-      "auditAll": "Audit all",
-      "audited": "Audited",
-      "unaudited": "Unaudited"
     },
     "tab": {
       "all": "All",
@@ -32,6 +29,7 @@
     },
     "fields": {
       "title": "Title",
+      "image": "Cover",
       "status": "Status",
       "createdAt": "Created At"
     }

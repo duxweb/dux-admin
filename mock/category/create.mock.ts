@@ -2,7 +2,7 @@ import { defineAPIMock, send, validate } from '../util'
 import { categories } from '../data'
 
 export default defineAPIMock({
-  url: '/category/:id',
+  url: '/category',
   method: 'POST',
   response(req, res) {
     const data = req.body
