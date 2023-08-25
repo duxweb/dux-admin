@@ -1,5 +1,6 @@
 import { defineAPIMock, send, validate } from '../util'
-import { articles } from '../data'
+import MockData, { Article } from '../data'
+const Database = MockData.getInstance()
 
 export default defineAPIMock({
   url: '/article',
@@ -16,9 +17,7 @@ export default defineAPIMock({
       return
     }
 
-    data.id = articles.length + 1
-    data.create_at = new Date().toISOString()
-    articles.push(data)
+    Database.createArticle(data as Article)
 
     res.end(send(200, 'success'))
   },

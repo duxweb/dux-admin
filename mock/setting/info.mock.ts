@@ -1,5 +1,6 @@
 import { defineAPIMock, send } from '../util'
-import { setting } from '../data'
+import MockData from '../data'
+const Database = MockData.getInstance()
 
 export default defineAPIMock({
   url: '/setting',
@@ -7,7 +8,7 @@ export default defineAPIMock({
   response(req, res) {
     res.end(
       send(200, 'success', {
-        info: setting,
+        info: Database.oneSetting(),
       })
     )
   },

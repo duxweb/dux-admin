@@ -1,18 +1,13 @@
 import { defineAPIMock, send } from '../util'
-import { articles } from '../data'
+import MockData from '../data'
+const Database = MockData.getInstance()
 
 export default defineAPIMock({
   url: '/article/:id',
   method: 'DELETE',
   response(req, res) {
     const id = parseInt(req.params.id)
-    const index = articles.findIndex((a) => a.id === id)
-    if (!index) {
-      req.statusCode = 404
-      res.end()
-      return
-    }
-    articles.splice(index, 1)
+    Database.delArticle(id)
     res.end(send(200, 'success'))
   },
 })

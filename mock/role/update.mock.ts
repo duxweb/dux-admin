@@ -1,5 +1,6 @@
 import { defineAPIMock, send, validate } from '../util'
-import { roles } from '../data'
+import MockData, { Role } from '../data'
+const Database = MockData.getInstance()
 
 export default defineAPIMock({
   url: '/role/:id',
@@ -16,14 +17,7 @@ export default defineAPIMock({
       res.end(result)
       return
     }
-
-    const index = roles.findIndex((a) => a.id === id)
-    if (!index) {
-      req.statusCode = 404
-      res.end()
-      return
-    }
-    roles[index] = { ...roles[index], ...data }
+    Database.editRole({ ...data, id: id } as Role)
     res.end(send(200, 'success'))
   },
 })

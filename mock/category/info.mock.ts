@@ -1,12 +1,14 @@
 import { defineAPIMock, send } from '../util'
-import { categories } from '../data'
+import MockData from '../data'
+const Database = MockData.getInstance()
 
 export default defineAPIMock({
   url: '/category/:id',
   method: 'GET',
   response(req, res) {
     const id = parseInt(req.params.id)
-    const data = categories.find((a) => a.id === id)
+
+    const data = Database.oneCategory(id)
     if (data) {
       res.end(
         send(200, 'success', {
@@ -14,7 +16,7 @@ export default defineAPIMock({
         })
       )
     } else {
-      req.statusCode = 404
+      res.statusCode = 404
       res.end()
     }
   },

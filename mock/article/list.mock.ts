@@ -1,5 +1,6 @@
 import { defineAPIMock, send } from '../util'
-import { articles } from '../data'
+import MockData from '../data'
+const Database = MockData.getInstance()
 
 export default defineAPIMock({
   url: '/article',
@@ -8,7 +9,7 @@ export default defineAPIMock({
     const page = parseInt(req.query.page) || 1
     const pageSize = parseInt(req.query.pageSize) || 10
 
-    let data = [...articles]
+    let data = Database.listArticles()
 
     if (req.query?.keyword) {
       data = data.filter((v) => v.title.includes(req.query?.keyword))
@@ -27,9 +28,9 @@ export default defineAPIMock({
     }
 
     if (req.query?.created_at_sort === 'desc') {
-      data.sort((a, b) => new Date(b.create_at).getTime() - new Date(a.create_at).getTime())
+      data.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
     } else if (req.query?.created_at_sort === 'asc') {
-      data.sort((a, b) => new Date(a.create_at).getTime() - new Date(b.create_at).getTime())
+      data.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
     }
 
     const startIndex = (page - 1) * pageSize

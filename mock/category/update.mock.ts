@@ -1,5 +1,6 @@
 import { defineAPIMock, send, validate } from '../util'
-import { categories } from '../data'
+import MockData, { Category } from '../data'
+const Database = MockData.getInstance()
 
 export default defineAPIMock({
   url: '/category/:id',
@@ -16,14 +17,8 @@ export default defineAPIMock({
       res.end(result)
       return
     }
-    const index = categories.findIndex((a) => a.id === id)
 
-    if (!index) {
-      req.statusCode = 404
-      res.end()
-      return
-    }
-    categories[index] = { ...categories[index], ...data }
+    Database.editCategory({ ...data, id: id } as Category)
     res.end(send(200, 'success'))
   },
 })

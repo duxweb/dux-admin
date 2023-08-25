@@ -28,7 +28,6 @@ export default defineConfig({
   },
   server: {
     cors: false,
-    // 在 proxy 中配置的 代理前缀， mock-dev-server 才会拦截并mock
     proxy: {
       '^/api': {
         target: '',

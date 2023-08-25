@@ -1,5 +1,6 @@
 import { defineAPIMock, send } from '../util'
-import { users } from '../data'
+import MockData from '../data'
+const Database = MockData.getInstance()
 
 export default defineAPIMock({
   url: '/user/:id',
@@ -11,13 +12,7 @@ export default defineAPIMock({
       res.end(send(500, 'user 1 can not be deleted'))
       return
     }
-    const index = users.findIndex((a) => a.id === id)
-    if (!index) {
-      req.statusCode = 404
-      res.end()
-      return
-    }
-    users.splice(index, 1)
+    Database.delUser(id)
     res.end(send(200, 'success'))
   },
 })

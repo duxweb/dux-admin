@@ -1,5 +1,6 @@
 import { defineAPIMock, send, validate } from '../util'
-import { setting } from '../data'
+import MockData, { Setting } from '../data'
+const Database = MockData.getInstance()
 
 export default defineAPIMock({
   url: '/setting',
@@ -15,16 +16,7 @@ export default defineAPIMock({
       return
     }
 
-    setting.title = body.title
-    setting.logo = body?.logo || ''
-    setting.favicon = body?.favicon || ''
-    setting.footer = body?.footer || ''
-    setting.theme = body?.theme || 'default'
-    setting.layout = body?.layout || 'side'
-    setting.fixedHeader = body?.fixedHeader || false
-    setting.fixedSideBar = body?.fixedSideBar || false
-    setting.fixedTabs = body?.fixedTabs || false
-
+    Database.editSetting(body as Setting)
     res.end(send(200, 'success'))
   },
 })

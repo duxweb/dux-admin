@@ -1,5 +1,6 @@
 import { defineAPIMock, send, validate } from '../util'
-import { articles } from '../data'
+import MockData, { Article } from '../data'
+const Database = MockData.getInstance()
 
 export default defineAPIMock({
   url: '/article/:id',
@@ -16,14 +17,7 @@ export default defineAPIMock({
     }
 
     const id = parseInt(req.params.id)
-    const index = articles.findIndex((a) => a.id === id)
-
-    if (!index) {
-      req.statusCode = 404
-      res.end()
-      return
-    }
-    articles[index] = { ...articles[index], ...data }
+    Database.editArticle({ ...data, id: id } as Article)
     res.end(send(200, 'success'))
   },
 })

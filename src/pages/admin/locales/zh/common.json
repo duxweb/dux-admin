@@ -35,7 +35,11 @@
     }
   },
   "categorys": {
-    "name": "文章分类"
+    "name": "文章分类",
+    "fields": {
+      "parent": "上级分类",
+      "name": "名称"
+    }
   },
   "setting": {
     "name": "设置"

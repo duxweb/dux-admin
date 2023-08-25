@@ -1,10 +1,12 @@
-import { users, roles } from './data'
 import { defineAPIMock, send } from './util'
+import MockData from './data'
+const Database = MockData.getInstance()
 
 export default defineAPIMock({
   url: '/check',
   method: 'POST',
   response(req, res) {
+    const users = Database.listUsers()
     const { body } = req
     if (!body?.token) {
       res.statusCode = 500

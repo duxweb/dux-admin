@@ -1,11 +1,11 @@
 import React, { useRef } from 'react'
-import { useNavigation, useTranslate, useDelete, useResource } from '@refinedev/core'
-import { PrimaryTableCol, Button, Input, Tag, Link, Popconfirm } from 'tdesign-react/esm'
+import { useTranslate, useDelete } from '@refinedev/core'
+import { PrimaryTableCol, Button, Input, Link, Popconfirm } from 'tdesign-react/esm'
+import { MoveIcon } from 'tdesign-icons-react'
 import { PageTable, FilterItem, CardTableRef, Modal } from '@duxweb/dux-refine'
 
 const List = () => {
   const translate = useTranslate()
-  const { edit, show, create } = useNavigation()
   const { mutate } = useDelete()
 
   const table = useRef<CardTableRef>(null)
@@ -14,43 +14,23 @@ const List = () => {
     () => [
       { colKey: 'row-select', type: 'multiple' },
       {
+        colKey: 'drag',
+        title: '排序',
+        cell: () => <MoveIcon />,
+        width: 46,
+        align: 'center',
+      },
+      {
         colKey: 'id',
         sorter: true,
         sortType: 'all',
         title: 'ID',
-        width: 100,
-      },
-      {
-        colKey: 'title',
-        title: translate('articles.fields.title'),
-        minWidth: 200,
-      },
-      {
-        colKey: 'status',
-        title: translate('articles.fields.status'),
         width: 150,
-        filter: {
-          type: 'single',
-          list: [
-            { label: translate('articles.tab.published'), value: '1' },
-            { label: translate('articles.tab.unpublished'), value: '2' },
-          ],
-        },
-        cell: ({ row }) => {
-          return (
-            <>
-              {row.status ? (
-                <Tag theme='warning' variant='outline'>
-                  {translate('articles.tab.published')}
-                </Tag>
-              ) : (
-                <Tag theme='success' variant='outline'>
-                  {translate('articles.tab.unpublished')}
-                </Tag>
-              )}
-            </>
-          )
-        },
+      },
+      {
+        colKey: 'name',
+        title: translate('categorys.fields.name'),
+        ellipsis: true,
       },
       {
         colKey: 'created_at',
@@ -69,7 +49,7 @@ const List = () => {
         title: translate('table.actions'),
         fixed: 'right',
         align: 'center',
-        width: 120,
+        width: 200,
         cell: ({ row }) => {
           return (
             <div className='flex justify-center gap-4'>
@@ -107,6 +87,11 @@ const List = () => {
     <PageTable
       ref={table}
       columns={columns}
+      table={{
+        rowKey: 'id',
+        tree: { childrenKey: 'children', treeNodeColumnIndex: 2, defaultExpandAll: true },
+        pagination: undefined,
+      }}
       title={translate('blog_posts.fields.title')}
       tabs={[
         {

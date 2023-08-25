@@ -1,5 +1,6 @@
 import { defineAPIMock, send, validate } from '../util'
-import { categories } from '../data'
+import MockData, { Category } from '../data'
+const Database = MockData.getInstance()
 
 export default defineAPIMock({
   url: '/category',
@@ -16,8 +17,7 @@ export default defineAPIMock({
       return
     }
 
-    data.id = categories.length + 1
-    categories.push(data)
+    Database.createCategory(data as Category)
 
     res.end(send(200, 'success'))
   },

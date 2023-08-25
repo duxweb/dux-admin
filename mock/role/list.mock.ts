@@ -1,10 +1,12 @@
 import { defineAPIMock, send } from '../util'
-import { roles } from '../data'
+import MockData from '../data'
+const Database = MockData.getInstance()
 
 export default defineAPIMock({
   url: '/role',
   method: 'GET',
   response(req, res) {
+    const roles = Database.listRoles()
     const page = parseInt(req.query.page) || 1
     const pageSize = parseInt(req.query.pageSize) || 10
     const startIndex = (page - 1) * pageSize

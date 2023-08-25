@@ -1,6 +1,7 @@
 import { defineAPIMock, send, validate } from '../util'
-import { users } from '../data'
+import MockData, { User } from '../data'
 import { faker } from '@faker-js/faker'
+const Database = MockData.getInstance()
 
 export default defineAPIMock({
   url: '/user',
@@ -18,9 +19,7 @@ export default defineAPIMock({
       res.end(result)
       return
     }
-    data.id = users.length + 1
-    data.avatar = faker.image.url()
-    users.push(data)
+    Database.createUser({ ...data, avatar: data?.avatar || faker.image.url() } as User)
     res.end(send(200, 'success'))
   },
 })

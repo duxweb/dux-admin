@@ -35,7 +35,11 @@
     }
   },
   "categorys": {
-    "name": "Category"
+    "name": "Category",
+    "fields": {
+      "parent": "Parent",
+      "name": "Name"
+    }
   },
   "setting": {
     "name": "Setting"

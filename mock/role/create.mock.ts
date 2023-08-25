@@ -1,5 +1,6 @@
 import { defineAPIMock, send, validate } from '../util'
-import { roles } from '../data'
+import MockData, { Role } from '../data'
+const Database = MockData.getInstance()
 
 export default defineAPIMock({
   url: '/role',
@@ -14,8 +15,7 @@ export default defineAPIMock({
       res.end(result)
       return
     }
-    data.id = roles.length + 1
-    roles.push(data)
+    Database.createRole(data as Role)
     res.end(send(200, 'success'))
   },
 })

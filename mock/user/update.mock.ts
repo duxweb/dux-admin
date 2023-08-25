@@ -1,13 +1,12 @@
 import { defineAPIMock, send, validate } from '../util'
-import { users } from '../data'
+import MockData, { User } from '../data'
+const Database = MockData.getInstance()
 
 export default defineAPIMock({
   url: '/user/:id',
   method: 'POST',
   response(req, res) {
     const id = parseInt(req.params.id)
-    const index = users.findIndex((a) => a.id === id)
-
     const data = req.body
     const result = validate(data, {
       username: 'username is empty',
@@ -19,16 +18,13 @@ export default defineAPIMock({
       res.end(result)
       return
     }
+    const info = Database.oneUser(id)
     if (!data?.password) {
-      data.password = users[index]?.password
+      data.password = info?.password
     }
 
-    if (!index) {
-      req.statusCode = 404
-      res.end()
-      return
-    }
-    users[index] = { ...users[index], ...data }
+    Database.editUser({ ...data, id: id } as User)
+
     res.end(send(200, 'success'))
   },
 })

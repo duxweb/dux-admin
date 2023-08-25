@@ -26,5 +26,14 @@ export const adminRouter = (app: App) => {
         },
       ],
     },
+    {
+      path: 'category',
+      children: [
+        {
+          index: true,
+          element: lazyComponent(() => import('../category/list')),
+        },
+      ],
+    },
   ])
 }
