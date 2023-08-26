@@ -35,7 +35,7 @@ const register = (context: appContext) => {
       route: 'index',
     },
     {
-      label: 'articles',
+      label: 'article',
       icon: 'i-tabler:basket',
       route: 'blog-posts',
     },

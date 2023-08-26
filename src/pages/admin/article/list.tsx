@@ -22,18 +22,18 @@ const List = () => {
       },
       {
         colKey: 'title',
-        title: translate('articles.fields.title'),
+        title: translate('article.fields.title'),
         minWidth: 200,
       },
       {
         colKey: 'status',
-        title: translate('articles.fields.status'),
+        title: translate('article.fields.status'),
         width: 150,
         filter: {
           type: 'single',
           list: [
-            { label: translate('articles.tab.published'), value: '1' },
-            { label: translate('articles.tab.unpublished'), value: '2' },
+            { label: translate('article.tab.published'), value: '1' },
+            { label: translate('article.tab.unpublished'), value: '2' },
           ],
         },
         cell: ({ row }) => {
@@ -41,11 +41,11 @@ const List = () => {
             <>
               {row.status ? (
                 <Tag theme='warning' variant='outline'>
-                  {translate('articles.tab.published')}
+                  {translate('article.tab.published')}
                 </Tag>
               ) : (
                 <Tag theme='success' variant='outline'>
-                  {translate('articles.tab.unpublished')}
+                  {translate('article.tab.unpublished')}
                 </Tag>
               )}
             </>
@@ -54,7 +54,7 @@ const List = () => {
       },
       {
         colKey: 'created_at',
-        title: translate('articles.fields.createdAt'),
+        title: translate('article.fields.createdAt'),
         sorter: true,
         sortType: 'all',
         width: 200,
@@ -110,15 +110,15 @@ const List = () => {
       title={translate('blog_posts.fields.title')}
       tabs={[
         {
-          label: translate('articles.tab.all'),
+          label: translate('article.tab.all'),
           value: '0',
         },
         {
-          label: translate('articles.tab.published'),
+          label: translate('article.tab.published'),
           value: '1',
         },
         {
-          label: translate('articles.tab.unpublished'),
+          label: translate('article.tab.unpublished'),
           value: '2',
         },
       ]}

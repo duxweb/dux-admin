@@ -6,19 +6,16 @@
   "admin": {
     "title": "Management System"
   },
-  "system": {
-    "SourceRate": "Source proportion"
-  },
   "dashboard": {
     "name": "Dashboard"
   },
   "content": {
     "name": "Content"
   },
-  "articles-manage": {
+  "article-manage": {
     "name": "Article"
   },
-  "articles": {
+  "article": {
     "name": "List",
     "list": {
     },
@@ -34,12 +31,25 @@
       "createdAt": "Created At"
     }
   },
-  "categorys": {
+  "category": {
     "name": "Category",
     "fields": {
       "parent": "Parent",
       "name": "Name"
     }
+  },
+  "user": {
+    "name": "User"
+  },
+  "role": {
+    "name": "Role",
+    "fields": {
+      "permission": "Permission",
+      "name": "Name"
+    }
+  },
+  "system": {
+    "name": "System"
   },
   "setting": {
     "name": "Setting"

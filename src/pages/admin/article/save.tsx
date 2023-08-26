@@ -18,16 +18,16 @@ const Page = (props: Record<string, any>) => {
         return data
       }}
     >
-      <Form.FormItem label={translate('articles.fields.title')} name='title'>
+      <Form.FormItem label={translate('article.fields.title')} name='title'>
         <Input />
       </Form.FormItem>
-      <Form.FormItem label={translate('articles.fields.image')} name='image'>
+      <Form.FormItem label={translate('article.fields.image')} name='image'>
         <Upload {...uploadParams} theme='image' accept='image/*' />
       </Form.FormItem>
-      <Form.FormItem label={translate('articles.fields.status')} name='status' initialData={true}>
+      <Form.FormItem label={translate('article.fields.status')} name='status' initialData={true}>
         <Radio.Group>
-          <Radio value={true}>{translate('articles.tab.published')}</Radio>
-          <Radio value={false}>{translate('articles.tab.unpublished')}</Radio>
+          <Radio value={true}>{translate('article.tab.published')}</Radio>
+          <Radio value={false}>{translate('article.tab.unpublished')}</Radio>
         </Radio.Group>
       </Form.FormItem>
     </FormModal>

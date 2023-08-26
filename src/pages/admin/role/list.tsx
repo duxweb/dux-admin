@@ -20,7 +20,7 @@ const List = () => {
       },
       {
         colKey: 'name',
-        title: translate('category.fields.name'),
+        title: translate('role.fields.name'),
         ellipsis: true,
       },
       {
@@ -71,7 +71,7 @@ const List = () => {
         tree: { childrenKey: 'children', treeNodeColumnIndex: 1, defaultExpandAll: true },
         pagination: undefined,
       }}
-      title={translate('category.name')}
+      title={translate('role.name')}
       headerRender={() => {
         return (
           <>
