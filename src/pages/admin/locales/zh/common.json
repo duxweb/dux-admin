@@ -42,10 +42,10 @@
     "name": "系统管理"
   },
   "user": {
-    "name": "管理员"
+    "name": "用户列表"
   },
   "role": {
-    "name": "角色",
+    "name": "角色列表",
     "fields": {
       "permission": "权限",
       "name": "名称"

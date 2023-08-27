@@ -1,6 +1,6 @@
 import { defineAPIMock, send, validate } from '../util'
-import MockData, { Setting } from '../data'
-const Database = MockData.getInstance()
+import Database from '../mockData'
+import { Setting } from 'mock/data'
 
 export default defineAPIMock({
   url: '/setting',
@@ -16,7 +16,7 @@ export default defineAPIMock({
       return
     }
 
-    Database.editSetting(body as Setting)
+    Database.value().editSetting(body as Setting)
     res.end(send(200, 'success'))
   },
 })

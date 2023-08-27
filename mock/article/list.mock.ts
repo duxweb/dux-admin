@@ -1,6 +1,5 @@
 import { defineAPIMock, send } from '../util'
-import MockData from '../data'
-const Database = MockData.getInstance()
+import Database from '../mockData'
 
 export default defineAPIMock({
   url: '/article',
@@ -9,7 +8,7 @@ export default defineAPIMock({
     const page = parseInt(req.query.page) || 1
     const pageSize = parseInt(req.query.pageSize) || 10
 
-    let data = Database.listArticles()
+    let data = Database.value().listArticles()
 
     if (req.query?.keyword) {
       data = data.filter((v) => v.title.includes(req.query?.keyword))

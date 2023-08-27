@@ -1,13 +1,12 @@
 import { defineAPIMock, send } from '../util'
-import MockData from '../data'
-const Database = MockData.getInstance()
+import Database from '../mockData'
 
 export default defineAPIMock({
   url: '/role/:id',
   method: 'GET',
   response(req, res) {
     const id = parseInt(req.params.id)
-    const data = Database.oneRole(id)
+    const data = Database.value().oneRole(id)
     if (data) {
       res.end(
         send(200, 'success', {

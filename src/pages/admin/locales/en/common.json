@@ -39,10 +39,17 @@
     }
   },
   "user": {
-    "name": "User"
+    "name": "User List",
+    "fields": {
+      "role": "Role",
+      "nickname": "Nickname",
+      "username": "Username",
+      "avatar": "Avatar",
+      "password": "Password"
+    }
   },
   "role": {
-    "name": "Role",
+    "name": "User Group",
     "fields": {
       "permission": "Permission",
       "name": "Name"

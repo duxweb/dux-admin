@@ -1,6 +1,5 @@
 import { defineAPIMock, send } from '../util'
-import MockData from '../data'
-const Database = MockData.getInstance()
+import Database from '../mockData'
 
 export default defineAPIMock({
   url: '/user/:id',
@@ -12,7 +11,7 @@ export default defineAPIMock({
       res.end(send(500, 'user 1 can not be deleted'))
       return
     }
-    Database.delUser(id)
+    Database.value().delUser(id)
     res.end(send(200, 'success'))
   },
 })

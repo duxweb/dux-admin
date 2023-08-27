@@ -1,6 +1,6 @@
 import { defineAPIMock, send, validate } from '../util'
-import MockData, { Article } from '../data'
-const Database = MockData.getInstance()
+import Database from '../mockData'
+import { Article } from 'mock/data'
 
 export default defineAPIMock({
   url: '/article/:id',
@@ -17,7 +17,7 @@ export default defineAPIMock({
     }
 
     const id = parseInt(req.params.id)
-    Database.editArticle({ ...data, id: id } as Article)
+    Database.value().editArticle({ ...data, id: id } as Article)
     res.end(send(200, 'success'))
   },
 })

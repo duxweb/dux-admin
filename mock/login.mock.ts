@@ -1,13 +1,12 @@
 import { defineAPIMock, send } from './util'
-import MockData from './data'
-const Database = MockData.getInstance()
+import Database from './mockData'
 
 export default defineAPIMock({
   url: '/login',
   method: 'POST',
   response(req, res) {
-    const users = Database.listUsers()
-    const roles = Database.listRoles()
+    const users = Database.value().listUsers()
+    const roles = Database.value().listRoles()
     const { body } = req
     const user = users.find((a) => a.username === body?.username)
     if (!user || user.password != body?.password) {

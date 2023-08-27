@@ -44,5 +44,14 @@ export const adminRouter = (app: App) => {
         },
       ],
     },
+    {
+      path: 'user',
+      children: [
+        {
+          index: true,
+          element: lazyComponent(() => import('../user/list')),
+        },
+      ],
+    },
   ])
 }

@@ -97,40 +97,38 @@ class MockData {
     this.createDefaultRole()
   }
 
-  private createRandomCategories(
-    parent_id: number | null = null,
-    depth = 0,
-    maxDepth = 3
-  ): Category {
-    const newCategory: Category = {
-      id: this.generateCategoryId(),
-      parent_id: parent_id,
-      name: faker.lorem.words(),
+  private createRandomCategories(levels: number, parentId: number | null = null): Category[] {
+    if (levels === 0) {
+      return []
     }
 
-    if (depth < maxDepth) {
-      const numSubcategories = faker.number.int({ min: 1, max: 5 })
-      newCategory.children = []
-      for (let i = 1; i <= numSubcategories; i++) {
-        const subcategory = this.createRandomCategories(newCategory.id, depth + 1, maxDepth)
-        newCategory.children.push(subcategory)
+    const categories = []
+
+    for (let i = 1; i <= 10; i++) {
+      const id = parentId === null ? i : parentId * 10 + i
+      const category = {
+        id: id,
+        parent_id: parentId,
+        name: faker.lorem.words({
+          min: 1,
+          max: 4,
+        }),
+        children: this.createRandomCategories(levels - 1, id),
       }
+      categories.push(category)
     }
 
-    return newCategory
+    return categories
   }
 
   private createCategories(): void {
-    for (let i = 1; i <= 10; i++) {
-      const newCategory = this.createRandomCategories()
-      this.createCategory(newCategory)
-    }
+    this.categories = this.createRandomCategories(3)
   }
 
   private createRandomArticles(category: Category): void {
     for (let i = 1; i <= 100; i++) {
       this.createArticle({
-        id: this.generateArticleId(category.id), // 使用生成的 ID
+        id: this.generateArticleId(category.id),
         category_id: category.id,
         title: faker.lorem.sentences(),
         image: faker.image.url(),

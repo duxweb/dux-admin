@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { useTranslate, useDelete } from '@refinedev/core'
 import { PrimaryTableCol, Button, Link, Popconfirm } from 'tdesign-react/esm'
-import { PageTable, CardTableRef, Modal } from '@duxweb/dux-refine'
+import { PageTable, CardTableRef, Modal, MediaText } from '@duxweb/dux-refine'
 
 const List = () => {
   const translate = useTranslate()
@@ -19,8 +19,21 @@ const List = () => {
         width: 150,
       },
       {
-        colKey: 'name',
-        title: translate('role.fields.name'),
+        colKey: 'nickname',
+        title: translate('user.fields.nickname'),
+        ellipsis: true,
+        cell: ({ row }) => {
+          return (
+            <MediaText>
+              <MediaText.Avatar image={row.avatar} />
+              <MediaText.Title>{row.nickname}</MediaText.Title>
+            </MediaText>
+          )
+        },
+      },
+      {
+        colKey: 'username',
+        title: translate('user.fields.username'),
         ellipsis: true,
       },
       {
@@ -46,7 +59,7 @@ const List = () => {
                 theme='default'
                 onConfirm={() => {
                   mutate({
-                    resource: 'role',
+                    resource: 'user',
                     id: row.id,
                   })
                 }}
@@ -69,7 +82,7 @@ const List = () => {
       table={{
         rowKey: 'id',
       }}
-      title={translate('role.name')}
+      title={translate('user.name')}
       headerRender={() => {
         return (
           <>

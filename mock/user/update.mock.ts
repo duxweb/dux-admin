@@ -1,6 +1,6 @@
 import { defineAPIMock, send, validate } from '../util'
-import MockData, { User } from '../data'
-const Database = MockData.getInstance()
+import Database from '../mockData'
+import { User } from 'mock/data'
 
 export default defineAPIMock({
   url: '/user/:id',
@@ -18,12 +18,12 @@ export default defineAPIMock({
       res.end(result)
       return
     }
-    const info = Database.oneUser(id)
+    const info = Database.value().oneUser(id)
     if (!data?.password) {
       data.password = info?.password
     }
 
-    Database.editUser({ ...data, id: id } as User)
+    Database.value().editUser({ ...data, id: id } as User)
 
     res.end(send(200, 'success'))
   },
