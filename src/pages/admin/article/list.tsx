@@ -1,11 +1,10 @@
 import React, { useRef } from 'react'
-import { useNavigation, useTranslate, useDelete, useResource } from '@refinedev/core'
+import { useTranslate, useDelete } from '@refinedev/core'
 import { PrimaryTableCol, Button, Input, Tag, Link, Popconfirm } from 'tdesign-react/esm'
 import { PageTable, FilterItem, CardTableRef, Modal } from '@duxweb/dux-refine'
 
 const List = () => {
   const translate = useTranslate()
-  const { edit, show, create } = useNavigation()
   const { mutate } = useDelete()
 
   const table = useRef<CardTableRef>(null)
@@ -122,17 +121,15 @@ const List = () => {
           value: '2',
         },
       ]}
-      headerRender={() => {
-        return (
-          <>
-            <Modal
-              title={translate('buttons.create')}
-              trigger={<Button>{translate('buttons.create')}</Button>}
-              component={() => import('./save')}
-            ></Modal>
-          </>
-        )
-      }}
+      headerRender={
+        <>
+          <Modal
+            title={translate('buttons.create')}
+            trigger={<Button>{translate('buttons.create')}</Button>}
+            component={() => import('./save')}
+          ></Modal>
+        </>
+      }
       filterRender={() => {
         return (
           <>

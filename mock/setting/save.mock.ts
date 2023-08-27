@@ -17,6 +17,6 @@ export default defineAPIMock({
     }
 
     Database.value().editSetting(body as Setting)
-    res.end(send(200, 'success'))
+    res.end(send(200, 'setting success'))
   },
 })

@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { useTranslate } from '@refinedev/core'
 import { FormModal, useUpload, useSelect } from '@duxweb/dux-refine'
 import { Form, Input, Upload, Select } from 'tdesign-react/esm'

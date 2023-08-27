@@ -53,5 +53,14 @@ export const adminRouter = (app: App) => {
         },
       ],
     },
+    {
+      path: 'setting',
+      children: [
+        {
+          index: true,
+          element: lazyComponent(() => import('../setting/page')),
+        },
+      ],
+    },
   ])
 }

@@ -8,6 +8,7 @@ export default defineAPIMock({
     const id = parseInt(req.params.id)
     const data = Database.value().oneUser(id)
     if (data) {
+      data.password = ''
       res.end(
         send(200, 'success', {
           info: data,

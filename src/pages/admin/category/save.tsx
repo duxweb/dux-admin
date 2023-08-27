@@ -1,9 +1,8 @@
 import { useTranslate, useList } from '@refinedev/core'
-import { FormModal, useUpload } from '@duxweb/dux-refine'
+import { FormModal } from '@duxweb/dux-refine'
 import { Form, Input, Cascader } from 'tdesign-react/esm'
 
 const Page = (props: Record<string, any>) => {
-  const uploadParams = useUpload()
   const translate = useTranslate()
 
   const { data, isLoading } = useList({

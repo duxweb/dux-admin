@@ -70,17 +70,13 @@ const List = () => {
         rowKey: 'id',
       }}
       title={translate('role.name')}
-      headerRender={() => {
-        return (
-          <>
-            <Modal
-              title={translate('buttons.create')}
-              trigger={<Button>{translate('buttons.create')}</Button>}
-              component={() => import('./save')}
-            ></Modal>
-          </>
-        )
-      }}
+      headerRender={
+        <Modal
+          title={translate('buttons.create')}
+          trigger={<Button>{translate('buttons.create')}</Button>}
+          component={() => import('./save')}
+        ></Modal>
+      }
     />
   )
 }

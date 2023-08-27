@@ -7,7 +7,20 @@
     "title": "Management System"
   },
   "dashboard": {
-    "name": "Dashboard"
+    "name": "Dashboard",
+    "fields": {
+      "sourceRate": "Source proportion",
+      "mallRate": "Goods proportion",
+      "saleValue": "Sales volume",
+      "userValue": "Number of users",
+      "mallValue": "Commodity volume",
+      "supplyValue": "Supply quantity",
+      "userTrend": "User trend",
+      "saleTrend": "Sales trend",
+      "mallTotalRank": "Total Product Ranking",
+      "mallDayRank": "Product Day Ranking",
+      "mallMonthRank": "Product Monthly Ranking"
+    }
   },
   "content": {
     "name": "Content"
@@ -59,6 +72,20 @@
     "name": "System"
   },
   "setting": {
-    "name": "Setting"
+    "name": "Setting",
+    "fields": {
+      "title": "Title",
+      "titleHelp": "System header title",
+      "logo": "Logo",
+      "logoHelp": "System Branding Display",
+      "favicon": "Favicon",
+      "faviconHelp": "System Favorites Icon",
+      "footer": "Copyright",
+      "footerHelp": "Copyright information at the bottom of the system",
+      "fixedHeader": "Floating head",
+      "fixedHeaderHelp": "Fixed head to top",
+      "fixedSideBar": "Floating sidebar",
+      "fixedSideBarHelp": "Fixed sidebar to the left side"
+    }
   }
 }
