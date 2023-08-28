@@ -34,7 +34,6 @@
     "dev": "refine dev",
     "build": "tsc && refine build",
     "preview": "refine start",
-    "refine": "refine",
-    "fake": "json-server --watch ./fake/db.json"
+    "refine": "refine"
   }
 }
