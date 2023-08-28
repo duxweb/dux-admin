@@ -1,10 +1,15 @@
-import { useTranslate } from '@refinedev/core'
+import { useTranslate, useList } from '@refinedev/core'
 import { FormModal, formatUploadSingle, getUploadSingle, useUpload } from '@duxweb/dux-refine'
-import { Form, Input, Upload, Radio } from 'tdesign-react/esm'
+import { Form, Input, Upload, Radio, Cascader } from 'tdesign-react/esm'
 
 const Page = (props: Record<string, any>) => {
   const uploadParams = useUpload()
   const translate = useTranslate()
+
+  const { data, isLoading } = useList({
+    resource: 'category',
+  })
+  const list = data?.data || []
 
   return (
     <FormModal
@@ -18,6 +23,17 @@ const Page = (props: Record<string, any>) => {
         return data
       }}
     >
+      <Form.FormItem label={translate('category.fields.parent')} name='category_id'>
+        <Cascader
+          loading={isLoading}
+          options={list}
+          keys={{
+            label: 'name',
+            value: 'id',
+          }}
+          clearable
+        />
+      </Form.FormItem>
       <Form.FormItem label={translate('article.fields.title')} name='title'>
         <Input />
       </Form.FormItem>

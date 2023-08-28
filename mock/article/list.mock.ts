@@ -22,14 +22,14 @@ export default defineAPIMock({
 
     if (req.query?.id_sort === 'asc') {
       data.sort((a, b) => a.id - b.id)
-    } else {
+    } else if (req.query?.id_sort === 'desc') {
       data.sort((a, b) => b.id - a.id)
     }
 
-    if (req.query?.created_at_sort === 'desc') {
-      data.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-    } else if (req.query?.created_at_sort === 'asc') {
+    if (req.query?.created_at_sort === 'asc') {
       data.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
+    } else {
+      data.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
     }
 
     const startIndex = (page - 1) * pageSize

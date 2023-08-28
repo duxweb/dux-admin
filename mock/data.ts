@@ -105,7 +105,7 @@ class MockData {
     const categories = []
 
     for (let i = 1; i <= 10; i++) {
-      const id = parentId === null ? i : parentId * 10 + i
+      const id = this.generateCategoryId()
       const category = {
         id: id,
         parent_id: parentId,
@@ -205,7 +205,7 @@ class MockData {
   }
 
   createCategory(newCategory: Category): void {
-    if (newCategory.parent_id === null) {
+    if (!newCategory.parent_id) {
       this.categories.push({ ...newCategory, id: this.generateCategoryId() })
     } else {
       const parentCategory = this.findCategoryRecursive(this.categories, newCategory.parent_id)
@@ -213,7 +213,7 @@ class MockData {
         if (!parentCategory.children) {
           parentCategory.children = []
         }
-        parentCategory.children.push(newCategory)
+        parentCategory.children.push({ ...newCategory, id: this.generateCategoryId() })
       }
     }
   }

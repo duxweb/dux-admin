@@ -10,6 +10,7 @@ export default defineAPIMock({
 
     const result = validate(data, {
       title: 'Article title is empty',
+      category_id: 'Category is not select',
     })
     if (result !== true) {
       res.statusCode = 422
