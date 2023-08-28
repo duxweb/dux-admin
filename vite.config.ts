@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [
     react(),
     UnoCSS(),
-    DuxUI(path.resolve(__dirname, 'src')),
+    DuxUI(),
     mockDevServerPlugin({
       include: 'mock/**/*.mock.{ts,js,cjs,mjs,json,json5}',
     }),
