@@ -26,6 +26,7 @@ export default defineConfig({
         /\.(vue|svelte|[jt]sx|mdx?|astro|elm|php|phtml|html)($|\?)/,
         // include js/ts files
         'src/**/*.{js,ts,jsx,tsx}',
+        // dux refine
         /dux-refine\.(js)(x?)$/,
       ],
       // exclude files
@@ -33,7 +34,6 @@ export default defineConfig({
     },
   },
 
-  //theme: presetDux().theme,
   shortcuts: {},
   screens: {},
 })
