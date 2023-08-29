@@ -415,10 +415,10 @@
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
   integrity sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==
 
-"@duxweb/dux-plugin@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@duxweb/dux-plugin/-/dux-plugin-0.0.5.tgz#835deded659db7c1b4198c379f9d8d9bf8d5fe6a"
-  integrity sha512-RDJcycawKzOEtC8AG+0+UtsUkDOyZQhjIJ/m+cEdFdpDVa7WGAgbNxXx4t+mT5p5jYln111NxEEhjXNiX5nnrA==
+"@duxweb/dux-plugin@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@duxweb/dux-plugin/-/dux-plugin-0.0.6.tgz#82a439128926ce5f6281cdb2a783c57db0250bb9"
+  integrity sha512-c6nk1LDwf3SVn7YwTY4EUHMENUjHwO0KEIdJ0Qb4hMZYzdnC/IuCOH78nNl2Bo1+hDFPKxaq3mVbBiPttpICBQ==
 
 "@duxweb/dux-refine@^0.0.7":
   version "0.0.7"
