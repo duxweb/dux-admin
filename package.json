@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@duxweb/dux-plugin": "^0.0.6",
-    "@duxweb/dux-refine": "^0.0.8"
+    "@duxweb/dux-refine": "^0.0.9"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",

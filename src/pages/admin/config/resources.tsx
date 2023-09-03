@@ -68,7 +68,6 @@ export const adminResources = (app: App) => {
         parent: 'system',
       },
     },
-
     {
       name: 'setting',
       list: 'setting',
@@ -76,10 +75,6 @@ export const adminResources = (app: App) => {
         label: 'setting',
         parent: 'system',
       },
-    },
-    {
-      name: 'permission',
-      list: 'permission',
     },
   ])
 }
