@@ -420,10 +420,10 @@
   resolved "https://registry.yarnpkg.com/@duxweb/dux-plugin/-/dux-plugin-0.0.6.tgz#82a439128926ce5f6281cdb2a783c57db0250bb9"
   integrity sha512-c6nk1LDwf3SVn7YwTY4EUHMENUjHwO0KEIdJ0Qb4hMZYzdnC/IuCOH78nNl2Bo1+hDFPKxaq3mVbBiPttpICBQ==
 
-"@duxweb/dux-refine@^0.0.12":
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/@duxweb/dux-refine/-/dux-refine-0.0.12.tgz#58d8b125f002a4f7be35000b5891aff1246f1352"
-  integrity sha512-wnCnSib3M3xAnt83g7TQyApqbUIG5LXMrIw5GjwreEliuZrGFHDyKdBQKV4WBGVXO+XDKtqHLYhBb+qSftaZ7w==
+"@duxweb/dux-refine@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@duxweb/dux-refine/-/dux-refine-0.1.0.tgz#df3763f2adc6485da5dc0e8472763ff2f054c3dd"
+  integrity sha512-vcQrXAQpQ5KpeIh858mHYxnafu2dUhEMl/zgt65w6G5A43/TTFYj46CEjSycjhvpfCeQsGkl6qVAOKULo2ueTA==
   dependencies:
     axios "^1.4.0"
     clsx "^2.0.0"
@@ -439,7 +439,6 @@
     query-string "^8.1.0"
     react-i18next "^13.1.2"
     remeda "^1.24.0"
-    tdesign-react "^1.2.3"
     zustand "^4.3.9"
 
 "@emotion/is-prop-valid@^0.8.2":
@@ -6518,10 +6517,10 @@ tdesign-icons-react@^0.3.0:
     "@babel/runtime" "^7.16.5"
     classnames "^2.2.6"
 
-tdesign-react@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/tdesign-react/-/tdesign-react-1.2.3.tgz#06340432bf757ddffdec252071766dd9c0dd260a"
-  integrity sha512-wQ6VCtGLi7GC/xaPza12lrZJ4eZucWo4OJYvTeemS2QiBy/wU5rrBYVX6umZV26m22JjbzL6ly7Lf2TgkmAsFw==
+tdesign-react@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/tdesign-react/-/tdesign-react-1.2.4.tgz#3e002a189e9d3217db4ede55cbe37767974b20ea"
+  integrity sha512-gX0phL+DLBnwVol+B+3Vhn4EneifTri74URBDR4zdGShPQjg685dHFjteBuix7hoOlBPmW+S6SAESvR43G1kVw==
   dependencies:
     "@babel/runtime" "~7.17.2"
     "@popperjs/core" "~2.11.2"
