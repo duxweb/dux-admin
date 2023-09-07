@@ -420,15 +420,11 @@
   resolved "https://registry.yarnpkg.com/@duxweb/dux-plugin/-/dux-plugin-0.0.6.tgz#82a439128926ce5f6281cdb2a783c57db0250bb9"
   integrity sha512-c6nk1LDwf3SVn7YwTY4EUHMENUjHwO0KEIdJ0Qb4hMZYzdnC/IuCOH78nNl2Bo1+hDFPKxaq3mVbBiPttpICBQ==
 
-"@duxweb/dux-refine@^0.0.11":
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/@duxweb/dux-refine/-/dux-refine-0.0.11.tgz#1880e2b66f55f685976f15b3b56d60dfffb2ff2d"
-  integrity sha512-Fp6mhYF5wUgPEtn0mW0LRcBcIeY50VREAQx5LRZgXKp7Cn6AP9Z9BogbZRUr2rtGlrwgQtvqRKsg3M+FU19DCQ==
+"@duxweb/dux-refine@^0.0.12":
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/@duxweb/dux-refine/-/dux-refine-0.0.12.tgz#58d8b125f002a4f7be35000b5891aff1246f1352"
+  integrity sha512-wnCnSib3M3xAnt83g7TQyApqbUIG5LXMrIw5GjwreEliuZrGFHDyKdBQKV4WBGVXO+XDKtqHLYhBb+qSftaZ7w==
   dependencies:
-    "@iconify-json/tabler" "^1.1.85"
-    "@refinedev/cli" "2.7.6"
-    "@refinedev/core" "4.34.0"
-    "@refinedev/react-router-v6" "4.5.0"
     axios "^1.4.0"
     clsx "^2.0.0"
     deepmerge "^4.3.1"
@@ -444,7 +440,6 @@
     react-i18next "^13.1.2"
     remeda "^1.24.0"
     tdesign-react "^1.2.3"
-    unocss "^0.53.5"
     zustand "^4.3.9"
 
 "@emotion/is-prop-valid@^0.8.2":

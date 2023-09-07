@@ -4,7 +4,12 @@
   "private": true,
   "dependencies": {
     "@duxweb/dux-plugin": "^0.0.6",
-    "@duxweb/dux-refine": "^0.0.11"
+    "@duxweb/dux-refine": "^0.0.12",
+    "@refinedev/cli": "2.7.6",
+    "@refinedev/core": "4.34.0",
+    "@refinedev/react-router-v6": "4.5.0",
+    "unocss": "^0.53.5",
+    "@iconify-json/tabler": "^1.1.85"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
