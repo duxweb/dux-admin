@@ -420,10 +420,10 @@
   resolved "https://registry.yarnpkg.com/@duxweb/dux-plugin/-/dux-plugin-0.0.6.tgz#82a439128926ce5f6281cdb2a783c57db0250bb9"
   integrity sha512-c6nk1LDwf3SVn7YwTY4EUHMENUjHwO0KEIdJ0Qb4hMZYzdnC/IuCOH78nNl2Bo1+hDFPKxaq3mVbBiPttpICBQ==
 
-"@duxweb/dux-refine@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@duxweb/dux-refine/-/dux-refine-0.1.1.tgz#6e6cc9e3a305c070f2895f7471cc01e7fd83952c"
-  integrity sha512-WL4rqG8AU1Vt1Uux9qoOgQOq8cM7GDwpIvEh1umfh+dhKTfy4e00PcSANXbiTtHN/HKjr8c9kOsh+LvGaQZAIQ==
+"@duxweb/dux-refine@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@duxweb/dux-refine/-/dux-refine-0.1.2.tgz#73e858f8a1e82746e3fc4b32a146c4a0d31e00fd"
+  integrity sha512-F74l4tMnwk2BSn1OPBZV6yBP+ncAO8ZbWI9qOFQILW/MJXXuB362DUX3jNhezREoO1Vf17WqlHlQboZfezg+nQ==
   dependencies:
     axios "^1.4.0"
     clsx "^2.0.0"
