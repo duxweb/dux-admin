@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@duxweb/dux-plugin": "^0.0.6",
-    "@duxweb/dux-refine": "file:.yalc/@duxweb/dux-refine",
+    "@duxweb/dux-refine": "^0.1.1",
     "@iconify-json/tabler": "^1.1.85",
     "@refinedev/cli": "2.9.0",
     "@refinedev/core": "4.36.2",
