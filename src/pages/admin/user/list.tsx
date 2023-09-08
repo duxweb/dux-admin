@@ -82,14 +82,13 @@ const List = () => {
       table={{
         rowKey: 'id',
       }}
-      title={translate('user.name')}
-      headerRender={
+      actionRender={() => (
         <Modal
           title={translate('buttons.create')}
           trigger={<Button>{translate('buttons.create')}</Button>}
           component={() => import('./save')}
         ></Modal>
-      }
+      )}
     />
   )
 }

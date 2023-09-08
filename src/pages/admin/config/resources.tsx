@@ -18,20 +18,13 @@ export const adminResources = (app: App) => {
       },
     },
     {
-      name: 'article-manage',
-      meta: {
-        parent: 'content',
-        label: 'article-manage',
-        icon: 'i-tabler:book',
-      },
-    },
-    {
       name: 'article',
       list: 'article',
       create: 'article/create',
       meta: {
         label: 'article',
-        parent: 'article-manage',
+        parent: 'content',
+        icon: 'i-tabler:article',
       },
     },
     {
@@ -40,7 +33,8 @@ export const adminResources = (app: App) => {
       create: 'category/create',
       meta: {
         label: 'category',
-        parent: 'article-manage',
+        parent: 'content',
+        icon: 'i-tabler:category',
       },
     },
     {
@@ -57,6 +51,7 @@ export const adminResources = (app: App) => {
       meta: {
         label: 'user',
         parent: 'system',
+        icon: 'i-tabler:user',
       },
     },
     {
@@ -66,6 +61,7 @@ export const adminResources = (app: App) => {
       meta: {
         label: 'role',
         parent: 'system',
+        icon: 'i-tabler:users',
       },
     },
     {
@@ -74,6 +70,7 @@ export const adminResources = (app: App) => {
       meta: {
         label: 'setting',
         parent: 'system',
+        icon: 'i-tabler:settings',
       },
     },
   ])

@@ -4,7 +4,7 @@ import { Role } from 'mock/data'
 
 export default defineAPIMock({
   url: '/role/:id',
-  method: 'POST',
+  method: 'PUT',
   response(req, res) {
     const id = parseInt(req.params.id)
 

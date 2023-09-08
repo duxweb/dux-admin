@@ -106,7 +106,6 @@ const List = () => {
     <PageTable
       ref={table}
       columns={columns}
-      title={translate('blog_posts.fields.title')}
       tabs={[
         {
           label: translate('article.tab.all'),
@@ -121,15 +120,13 @@ const List = () => {
           value: '2',
         },
       ]}
-      headerRender={
-        <>
-          <Modal
-            title={translate('buttons.create')}
-            trigger={<Button>{translate('buttons.create')}</Button>}
-            component={() => import('./save')}
-          ></Modal>
-        </>
-      }
+      actionRender={() => (
+        <Modal
+          title={translate('buttons.create')}
+          trigger={<Button>{translate('buttons.create')}</Button>}
+          component={() => import('./save')}
+        ></Modal>
+      )}
       filterRender={() => {
         return (
           <>
@@ -139,11 +136,7 @@ const List = () => {
           </>
         )
       }}
-      batchRender={
-        <>
-          <Button>批量删除</Button>
-        </>
-      }
+      batchRender={() => <Button>批量删除</Button>}
     />
   )
 }

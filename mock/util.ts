@@ -7,11 +7,17 @@ export const defineAPIMock = createDefineMock((mock) => {
   mock.type = 'json'
 })
 
-export const send = (code: number, message: string, data?: Record<string, any>) => {
+export const send = (
+  code: number,
+  message: string,
+  data?: Record<string, any> | Array<any>,
+  meta?: Record<string, any>
+) => {
   return JSON.stringify({
     code,
     message,
     data: data || [],
+    meta: meta || {},
   })
 }
 

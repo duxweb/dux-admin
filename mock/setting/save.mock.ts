@@ -4,7 +4,7 @@ import { Setting } from 'mock/data'
 
 export default defineAPIMock({
   url: '/setting',
-  method: 'POST',
+  method: 'PUT',
   response(req, res) {
     const { body } = req
     const result = validate(body, {

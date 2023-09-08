@@ -4,7 +4,7 @@ import { Article } from 'mock/data'
 
 export default defineAPIMock({
   url: '/article/:id',
-  method: 'POST',
+  method: 'PUT',
   response(req, res) {
     const data = req.body
     const result = validate(data, {

@@ -27,19 +27,6 @@ const register = (context: appContext) => {
       route: 'index',
     },
   ])
-
-  admin.setTabar([
-    {
-      label: 'dashboard',
-      icon: 'i-tabler:home',
-      route: 'index',
-    },
-    {
-      label: 'article',
-      icon: 'i-tabler:basket',
-      route: 'blog-posts',
-    },
-  ])
 }
 
 const config: appConfig = {

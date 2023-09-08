@@ -4,7 +4,7 @@ import { Category } from 'mock/data'
 
 export default defineAPIMock({
   url: '/category/:id',
-  method: 'POST',
+  method: 'PUT',
   response(req, res) {
     const id = parseInt(req.params.id)
     const data = req.body

@@ -4,7 +4,7 @@ import { User } from 'mock/data'
 
 export default defineAPIMock({
   url: '/user/:id',
-  method: 'POST',
+  method: 'PUT',
   response(req, res) {
     const id = parseInt(req.params.id)
     const data = req.body

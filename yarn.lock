@@ -420,10 +420,8 @@
   resolved "https://registry.yarnpkg.com/@duxweb/dux-plugin/-/dux-plugin-0.0.6.tgz#82a439128926ce5f6281cdb2a783c57db0250bb9"
   integrity sha512-c6nk1LDwf3SVn7YwTY4EUHMENUjHwO0KEIdJ0Qb4hMZYzdnC/IuCOH78nNl2Bo1+hDFPKxaq3mVbBiPttpICBQ==
 
-"@duxweb/dux-refine@^0.1.0":
+"@duxweb/dux-refine@file:.yalc/@duxweb/dux-refine":
   version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@duxweb/dux-refine/-/dux-refine-0.1.0.tgz#df3763f2adc6485da5dc0e8472763ff2f054c3dd"
-  integrity sha512-vcQrXAQpQ5KpeIh858mHYxnafu2dUhEMl/zgt65w6G5A43/TTFYj46CEjSycjhvpfCeQsGkl6qVAOKULo2ueTA==
   dependencies:
     axios "^1.4.0"
     clsx "^2.0.0"
@@ -881,10 +879,10 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
 
-"@refinedev/cli@2.7.6":
-  version "2.7.6"
-  resolved "https://registry.yarnpkg.com/@refinedev/cli/-/cli-2.7.6.tgz#fd5a273a0af9048213815d70b8d031401e7eef1e"
-  integrity sha512-SDI4D8ol8zmPhltCjkaiAjYb8fsgnbqzQ2I+qdyNLKx2+bKuXemPQICL+sxp2R7DvDnvKvfXxEVsRYZ0+hWUoQ==
+"@refinedev/cli@2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@refinedev/cli/-/cli-2.9.0.tgz#4d05c64653733f1a4c961de583e72ceb0744f710"
+  integrity sha512-IfPzymuX5G2+TPL3F+YvamAwRz8kz3gHSYrd1xkozLtXBgekhjZG4qDTmtfLgU0YgoFEfWI/z+MjaxTNfQbWug==
   dependencies:
     boxen "^5.1.2"
     cardinal "^2.1.1"
@@ -917,10 +915,10 @@
     temp "^0.9.4"
     tslib "^2.3.1"
 
-"@refinedev/core@4.34.0":
-  version "4.34.0"
-  resolved "https://registry.yarnpkg.com/@refinedev/core/-/core-4.34.0.tgz#e30088b507099f82b495f0d5105b71226b86cc6b"
-  integrity sha512-DSdqV3/vhGbPFu6k/n/HTCZ5DRtFdHSFQHow7U6Fs1745McKApG2m42VftOno/kYEmDmTVgPc4yh8J9HuylLdA==
+"@refinedev/core@4.36.2":
+  version "4.36.2"
+  resolved "https://registry.yarnpkg.com/@refinedev/core/-/core-4.36.2.tgz#6ba7e1932dc8a53f6e96123f88ca04eafbcc835f"
+  integrity sha512-kCWtMCNZ+ZBWBQ8gzSkFPrBSpY9etiu2avFpklPX9M7Ld3gnlIbHpWVRzJ6VevDJGcUWfboPy6sM9qZh6WtEFQ==
   dependencies:
     "@tanstack/react-query" "^4.10.1"
     export-to-csv-fix-source-map "^0.2.1"

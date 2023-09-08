@@ -36,10 +36,9 @@ export default defineAPIMock({
     const endIndex = startIndex + pageSize
     const list = data.slice(startIndex, endIndex)
     res.end(
-      send(200, 'success', {
-        list: list,
+      send(200, 'success', list, {
         total: data.length,
-        Page: page,
+        page: page,
       })
     )
   },

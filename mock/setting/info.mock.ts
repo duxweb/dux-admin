@@ -5,10 +5,6 @@ export default defineAPIMock({
   url: '/setting',
   method: 'GET',
   response(req, res) {
-    res.end(
-      send(200, 'success', {
-        info: Database.value().oneSetting(),
-      })
-    )
+    res.end(send(200, 'success', Database.value().oneSetting()))
   },
 })
