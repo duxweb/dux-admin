@@ -39,7 +39,7 @@ const Index = () => {
   }, [])
 
   return (
-    <Main>
+    <Main title={translate('dashboard.dashboard.name')} icon='i-tabler:home'>
       <MainHeader></MainHeader>
       <div className='grid mb-4 gap-4 lg:grid-cols-2 xl:grid-cols-4'>
         <div>
