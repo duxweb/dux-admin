@@ -1,5 +1,11 @@
 import { useTranslate } from '@refinedev/core'
-import { FormModal, useUpload, useSelect } from '@duxweb/dux-refine'
+import {
+  FormModal,
+  useUpload,
+  useSelect,
+  formatUploadSingle,
+  getUploadSingle,
+} from '@duxweb/dux-refine'
 import { Form, Input, Upload, Select } from 'tdesign-react/esm'
 
 const Page = (props: Record<string, any>) => {
@@ -13,7 +19,17 @@ const Page = (props: Record<string, any>) => {
   })
 
   return (
-    <FormModal id={props?.id}>
+    <FormModal
+      id={props?.id}
+      initFormat={(data) => {
+        data.image = formatUploadSingle(data.image)
+        return data
+      }}
+      saveFormat={(data) => {
+        data.image = getUploadSingle(data.image)
+        return data
+      }}
+    >
       <Form.FormItem label={translate('user.fields.role')} name='role_id'>
         <Select filterable onSearch={onSearch} options={options} />
       </Form.FormItem>

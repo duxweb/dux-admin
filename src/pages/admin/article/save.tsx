@@ -15,11 +15,11 @@ const Page = (props: Record<string, any>) => {
     <FormModal
       id={props?.id}
       initFormat={(data) => {
-        data.image = data.image && formatUploadSingle(data.image)
+        data.image = formatUploadSingle(data.image)
         return data
       }}
       saveFormat={(data) => {
-        data.image = data.image && getUploadSingle(data.image)
+        data.image = getUploadSingle(data.image)
         return data
       }}
     >
